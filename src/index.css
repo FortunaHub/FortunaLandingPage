@@ -1,0 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  
+  --color-fortuna-pink: #D11A5E;
+  --color-fortuna-pink-dark: #8E1141;
+  --color-fortuna-grey: #404040;
+  --color-fortuna-dark: #050505;
+  --color-fortuna-card: #0A0A0C;
+}
+
+@layer base {
+  body {
+    @apply bg-fortuna-dark text-white font-sans antialiased;
+  }
+}
+
+.glass-card {
+  @apply bg-fortuna-card border border-white/5 rounded-xl overflow-hidden;
+}
+
+.text-gradient {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-white to-white/60;
+}
+
+.pink-gradient {
+  @apply bg-gradient-to-r from-fortuna-pink to-[#8E1141];
+}

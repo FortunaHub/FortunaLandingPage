@@ -1,0 +1,5 @@
+{
+  "name": "K8S Fortuna",
+  "description": "A modern Kubernetes workload management and security platform by FortunaHub, providing visibility and runtime protection.",
+  "requestFramePermissions": []
+}
