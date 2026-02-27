@@ -38,9 +38,9 @@ export default function LandingPage() {
   ];
 
   return (
-    <div className="overflow-hidden">
+    <div className="overflow-x-hidden">
       {/* Hero Section */}
-      <section id="platform" className="relative min-h-[90vh] flex items-center pt-20 bg-[#050505] overflow-hidden">
+      <section id="platform" className="relative min-h-[90vh] flex items-center pt-20 pb-16 bg-[#050505] overflow-hidden scroll-mt-[5.5rem]">
         {/* Tech Background Elements */}
         <div className="absolute inset-0 z-0">
           {/* Grid Dots */}
@@ -120,50 +120,99 @@ export default function LandingPage() {
       </section>
 
       {/* Stats/Intro Section */}
-      <section className="py-24 bg-fortuna-dark relative">
+      <section className="py-24 bg-fortuna-dark relative min-h-0">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-16">
             <span className="text-xs font-bold uppercase tracking-[0.3em] text-fortuna-pink mb-4 block">Why K8S Fortuna?</span>
             <h2 className="text-5xl md:text-7xl font-black tracking-tighter uppercase leading-none">
               Visibility First. <br />
-              <span className="text-white/40">Security Follows.</span>
+              <span className="text-white/40">Security Always.</span>
             </h2>
           </div>
         </div>
       </section>
 
-      {/* Features Grid */}
-      <section id="solutions" className="py-24 bg-fortuna-dark border-t border-white/5">
+      {/* Solutions Showcase - Platform Screenshots */}
+      <section id="showcase" className="py-24 bg-fortuna-dark border-t border-white/5 scroll-mt-[5.5rem]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-16">
-            <span className="text-xs font-bold uppercase tracking-[0.3em] text-fortuna-pink mb-4 block">Technical Capabilities</span>
-            <h2 className="text-4xl font-black tracking-tight uppercase">Platform Modules</h2>
+            <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-fortuna-pink mb-3 block">Platform in Action</span>
+            <h2 className="text-3xl md:text-4xl font-black tracking-tight uppercase mb-3">Fortuna Capabilities</h2>
+            <p className="text-white/60 text-sm max-w-xl">
+              Core modules for Kubernetes security and workload management.
+            </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {[
+            { num: "01", tag: "Unified Dashboard", title: "Security & Operations at a Glance", desc: "Monitor clusters, risks, workloads, agents. Track threat velocity and infrastructure health.", bullets: ["Clusters · risks · workloads · agents", "Threat velocity trends", "Infra health by env"], img: "dashboard-overview.png", alt: "Fortuna Dashboard", order: "text" },
+            { num: "02", tag: "Network & Policy", title: "Zero Trust Policy Visualization", desc: "Visualize pods, traffic flows, and NetworkPolicies. AI-driven suggestions.", bullets: ["Workload topology", "Allowed / blocked flow", "Policy suggestions · FIX NOW"], img: "network-designer.png", alt: "Network Designer", order: "img" },
+            { num: "03", tag: "Threat Modeling", title: "Attack Path Visualization", desc: "Interactive graph of vulnerability chains from Internet to DB.", bullets: ["Internet → LB → Services → Pods → DB", "Highlighted risk nodes", "Color-coded components"], img: "attack-path-viz.png", alt: "Attack Path", order: "text" },
+            { num: "04", tag: "Workload Deep Dive", title: "Granular Security & Risk Assessment", desc: "Per-service risk score and security context. One-click Investigate & Remediate.", bullets: ["Risk score 0–100", "Security, SBOM, RBAC, Runtime", "Security context details"], img: "service-security.png", alt: "Service Security", order: "img" },
+            { num: "05", tag: "Operations Center", title: "Health, Performance & Infrastructure", desc: "Workers, queue, agents, API latency. Certificate management.", bullets: ["Queue processing", "Agent status", "Certificate validity"], img: "system-monitoring.png", alt: "System Monitoring", order: "text" },
+            { num: "06", tag: "Configuration", title: "Settings & Administration", desc: "Theme, scan frequency, deep scan. Users, integrations, audit logs, API keys.", bullets: ["Dark / Light theme", "Scan frequency", "Users · Integrations · API Keys"], img: "settings-admin.png", alt: "Settings", order: "img" },
+          ].map((item, idx) => (
+            <motion.div
+              key={item.num}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.5 }}
+              className={`grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center mb-16 last:mb-0 ${item.order === "img" ? "" : ""}`}
+            >
+              <div className={item.order === "img" ? "lg:order-2" : "lg:order-1"}>
+                <span className="text-white/30 text-xs font-mono mb-2 block">{item.num}</span>
+                <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-fortuna-pink mb-2 block">{item.tag}</span>
+                <h3 className="text-xl md:text-2xl font-black uppercase tracking-tight mb-4">{item.title}</h3>
+                <p className="text-white/60 text-sm mb-4 leading-relaxed">{item.desc}</p>
+                <ul className="space-y-2">
+                  {item.bullets.map((b, i) => (
+                    <li key={i} className="flex items-center gap-2 text-xs text-white/50">
+                      <span className="w-1 h-1 bg-fortuna-pink rounded-full flex-shrink-0" />
+                      {b}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className={item.order === "img" ? "lg:order-1" : "lg:order-2"}>
+                <div className="rounded-lg overflow-hidden border border-white/10 shadow-lg">
+                  <img src={`/images/${item.img}`} alt={item.alt} className="w-full max-w-full h-auto object-contain" />
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
+      {/* Features Grid - Platform Modules */}
+      <section id="solutions" className="py-24 bg-fortuna-dark border-t border-white/5 scroll-mt-[5.5rem]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="mb-12">
+            <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-fortuna-pink mb-3 block">Technical Capabilities</span>
+            <h2 className="text-3xl md:text-4xl font-black tracking-tight uppercase mb-3">Platform Modules</h2>
+            <p className="text-white/60 text-sm max-w-xl">
+              Core security and visibility capabilities for Kubernetes workloads.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             {features.map((feature, idx) => (
               <motion.div
                 key={idx}
-                whileHover={{ y: -5, borderColor: 'rgba(209, 26, 94, 0.3)' }}
-                className="glass-card p-8 group border border-white/5 transition-colors relative overflow-hidden"
+                whileHover={{ y: -4, borderColor: 'rgba(209, 26, 94, 0.25)' }}
+                className="glass-card p-6 group border border-white/5 transition-all relative overflow-hidden"
               >
-                {/* Subtle Glow on Hover */}
-                <div className="absolute -top-24 -right-24 w-48 h-48 bg-fortuna-pink/5 blur-[60px] rounded-full group-hover:bg-fortuna-pink/10 transition-colors" />
-                
+                <div className="absolute -top-16 -right-16 w-32 h-32 bg-fortuna-pink/5 blur-[40px] rounded-full group-hover:bg-fortuna-pink/10 transition-colors" />
                 <Tooltip content={feature.tooltip} position="right">
-                  <div className="mb-6 relative">
-                    <div className="absolute inset-0 bg-fortuna-pink/20 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
-                    <div className="relative z-10">{feature.icon}</div>
-                  </div>
+                  <div className="mb-4 relative z-10">{feature.icon}</div>
                 </Tooltip>
-                <h3 className="text-xl font-bold uppercase tracking-tight mb-4 group-hover:text-fortuna-pink transition-colors relative z-10">
+                <h3 className="text-base font-bold uppercase tracking-tight mb-2 group-hover:text-fortuna-pink transition-colors relative z-10">
                   {feature.title}
                 </h3>
-                <p className="text-white/60 text-sm mb-6 relative z-10">{feature.description}</p>
-                <ul className="space-y-2 relative z-10">
-                  {feature.details.map((detail, i) => (
-                    <li key={i} className="text-xs text-white/40 flex items-center gap-2">
-                      <div className="w-1 h-1 bg-fortuna-pink rounded-full" />
+                <p className="text-white/60 text-xs mb-4 relative z-10 leading-relaxed">{feature.description}</p>
+                <ul className="space-y-1.5 relative z-10">
+                  {feature.details.slice(0, 3).map((detail, i) => (
+                    <li key={i} className="text-[11px] text-white/40 flex items-center gap-2">
+                      <span className="w-1 h-1 bg-fortuna-pink rounded-full flex-shrink-0" />
                       {detail}
                     </li>
                   ))}
@@ -171,39 +220,26 @@ export default function LandingPage() {
               </motion.div>
             ))}
 
-            {/* Special Large Card */}
+            {/* Lightweight Agent Card */}
             <motion.div
-              whileHover={{ y: -5, borderColor: 'rgba(209, 26, 94, 0.3)' }}
-              className="glass-card p-8 col-span-1 md:col-span-2 relative overflow-hidden group border border-white/5 transition-colors"
+              whileHover={{ y: -4, borderColor: 'rgba(209, 26, 94, 0.25)' }}
+              className="glass-card p-6 col-span-1 md:col-span-2 relative overflow-hidden group border border-white/5 transition-all"
             >
-              <div className="absolute -bottom-24 -left-24 w-64 h-64 bg-fortuna-pink/5 blur-[80px] rounded-full group-hover:bg-fortuna-pink/10 transition-colors" />
-              
-              <div className="relative z-10">
-                <Tooltip content="High Performance Agent" position="right">
-                  <div className="mb-6 relative">
-                    <div className="absolute inset-0 bg-fortuna-pink/20 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
-                    <Cpu className="w-6 h-6 text-fortuna-pink relative z-10" />
-                  </div>
-                </Tooltip>
-                <h3 className="text-xl font-bold uppercase tracking-tight mb-4">Lightweight Agent</h3>
-                <p className="text-white/60 text-sm mb-6 max-w-md">
-                  Designed for performance-critical production environments. Our Rust-based agent runs with minimal footprint, ensuring security doesn't eat your CPU credits.
-                </p>
-                <div className="flex gap-4">
-                  <Tooltip content="Minimal overhead" position="bottom">
-                    <div className="px-3 py-1 bg-white/5 border border-white/10 rounded text-[10px] font-mono uppercase tracking-widest text-white/40 group-hover:border-fortuna-pink/30 transition-colors">
-                      &lt; 1% CPU Usage
-                    </div>
+              <div className="absolute -bottom-16 -left-16 w-40 h-40 bg-fortuna-pink/5 blur-[50px] rounded-full group-hover:bg-fortuna-pink/10 transition-colors" />
+              <div className="relative z-10 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+                <div>
+                  <Tooltip content="High Performance Agent" position="right">
+                    <div className="mb-4"><Cpu className="w-6 h-6 text-fortuna-pink" /></div>
                   </Tooltip>
-                  <Tooltip content="Safe for production" position="bottom">
-                    <div className="px-3 py-1 bg-white/5 border border-white/10 rounded text-[10px] font-mono uppercase tracking-widest text-white/40 group-hover:border-fortuna-pink/30 transition-colors">
-                      No Kernel Modules
-                    </div>
-                  </Tooltip>
+                  <h3 className="text-base font-bold uppercase tracking-tight mb-2 group-hover:text-fortuna-pink transition-colors">Lightweight Agent</h3>
+                  <p className="text-white/60 text-xs mb-4 max-w-md leading-relaxed">
+                    Rust-based agent with minimal footprint. &lt; 1% CPU · No kernel modules.
+                  </p>
                 </div>
-              </div>
-              <div className="absolute top-1/2 right-8 -translate-y-1/2 opacity-[0.03] group-hover:opacity-[0.07] transition-opacity">
-                <Cpu className="w-48 h-48" />
+                <div className="flex flex-wrap gap-2">
+                  <span className="px-2.5 py-1 bg-white/5 border border-white/10 rounded text-[10px] font-mono uppercase tracking-wider text-white/40">&lt; 1% CPU</span>
+                  <span className="px-2.5 py-1 bg-white/5 border border-white/10 rounded text-[10px] font-mono uppercase tracking-wider text-white/40">No Kernel Modules</span>
+                </div>
               </div>
             </motion.div>
           </div>
@@ -211,7 +247,7 @@ export default function LandingPage() {
       </section>
 
       {/* About Section */}
-      <section id="about" className="py-32 bg-fortuna-dark border-t border-white/5">
+      <section id="about" className="py-32 bg-fortuna-dark border-t border-white/5 scroll-mt-[5.5rem]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="mb-12 flex justify-center">
             <Tooltip content="FortunaHub Mission" position="top">

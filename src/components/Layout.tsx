@@ -13,6 +13,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   const navLinks = [
     { name: 'Platform', href: '#platform', tooltip: 'Core Infrastructure' },
+    { name: 'Showcase', href: '#showcase', tooltip: 'Platform in Action' },
     { name: 'Solutions', href: '#solutions', tooltip: 'Security Modules' },
     { name: 'About', href: '#about', tooltip: 'Our Mission' },
   ];
@@ -45,7 +46,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
     const observer = new IntersectionObserver(observerCallback, observerOptions);
 
-    const sections = ['platform', 'solutions', 'about'];
+    const sections = ['platform', 'showcase', 'solutions', 'about'];
     sections.forEach((id) => {
       const element = document.getElementById(id);
       if (element) observer.observe(element);
@@ -60,7 +61,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       const id = href.replace('#', '');
       const element = document.getElementById(id);
       if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
         setIsMenuOpen(false);
       }
     }
@@ -71,23 +72,23 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col overflow-x-hidden">
       <header className="fixed top-0 left-0 right-0 z-50 bg-fortuna-dark/80 backdrop-blur-md border-b border-white/5">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-4">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+          <div className="flex justify-between items-center py-4 gap-4">
             <Tooltip content="Go to Homepage" position="bottom">
-              <div className="flex items-center gap-2 group">
+              <div className="flex items-center gap-2 group flex-shrink-0">
                 <div className="w-8 h-8 pink-gradient rounded-lg flex items-center justify-center shadow-[0_0_15px_rgba(209,26,94,0.3)]">
                   <Logo size={20} className="text-white" />
                 </div>
-                <Link to="/" className="text-xl font-extrabold tracking-tighter">
+                <Link to="/" className="text-xl font-extrabold tracking-tighter whitespace-nowrap">
                   K8S<span className="text-fortuna-pink">FORTUNA</span>
                 </Link>
               </div>
             </Tooltip>
 
             {/* Desktop Nav */}
-            <nav className="hidden md:flex items-center gap-8">
+            <nav className="hidden md:flex items-center gap-6 lg:gap-8">
               {navLinks.map((link) => {
                 const isActive = activeSection === link.href.replace('#', '') && location.pathname === '/';
                 return (
@@ -95,7 +96,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                     <a
                       href={link.href}
                       onClick={(e) => handleNavClick(e, link.href)}
-                      className={`text-xs font-semibold uppercase tracking-widest transition-colors ${
+                      className={`min-w-[5rem] text-center text-[11px] font-semibold uppercase tracking-[0.18em] transition-colors whitespace-nowrap ${
                         isActive ? 'text-fortuna-pink' : 'text-white/60 hover:text-fortuna-pink'
                       }`}
                     >
@@ -135,8 +136,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                       key={link.name}
                       href={link.href}
                       onClick={(e) => handleNavClick(e, link.href)}
-                      className={`text-sm font-semibold uppercase tracking-widest transition-colors ${
-                        isActive ? 'text-fortuna-pink' : 'text-white/60'
+                      className={`py-2 text-sm font-semibold uppercase tracking-[0.15em] transition-colors border-b border-white/5 last:border-0 ${
+                        isActive ? 'text-fortuna-pink' : 'text-white/60 hover:text-fortuna-pink'
                       }`}
                     >
                       {link.name}
@@ -170,14 +171,15 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               </p>
             </div>
             <div>
-              <h4 className="text-xs font-bold uppercase tracking-widest text-white mb-6">Product</h4>
+              <h4 className="text-xs font-bold uppercase tracking-[0.2em] text-white mb-6">Product</h4>
               <ul className="space-y-4">
                 <li><a href="#platform" className="text-sm text-white/40 hover:text-fortuna-pink transition-colors">Platform</a></li>
-                <li><a href="#solutions" className="text-sm text-white/40 hover:text-fortuna-pink transition-colors">Security</a></li>
+                <li><a href="#showcase" className="text-sm text-white/40 hover:text-fortuna-pink transition-colors">Showcase</a></li>
+                <li><a href="#solutions" className="text-sm text-white/40 hover:text-fortuna-pink transition-colors">Solutions</a></li>
               </ul>
             </div>
             <div>
-              <h4 className="text-xs font-bold uppercase tracking-widest text-white mb-6">Company</h4>
+              <h4 className="text-xs font-bold uppercase tracking-[0.2em] text-white mb-6">Company</h4>
               <ul className="space-y-4">
                 <li><a href="#about" className="text-sm text-white/40 hover:text-fortuna-pink transition-colors">About Us</a></li>
                 <li><a href="mailto:contact@fortunahub.com" className="text-sm text-white/40 hover:text-fortuna-pink transition-colors">Contact</a></li>

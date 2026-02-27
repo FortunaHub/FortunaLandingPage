@@ -13,8 +13,21 @@
 }
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5.5rem;
+  }
+
   body {
     @apply bg-fortuna-dark text-white font-sans antialiased;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+@layer utilities {
+  .scroll-mt-header {
+    scroll-margin-top: 5.5rem;
   }
 }
 

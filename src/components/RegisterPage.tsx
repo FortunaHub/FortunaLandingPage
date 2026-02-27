@@ -1,23 +1,46 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Shield, Mail, Lock, User, ArrowRight, CheckCircle2, Loader2, Briefcase, Building2 } from 'lucide-react';
+import { Mail, User, ArrowRight, CheckCircle2, Loader2, Briefcase, Building2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Tooltip from './Tooltip';
 import Logo from './Logo';
 
+const FORMSPREE_ENDPOINT = import.meta.env.VITE_FORMSPREE_ENDPOINT || 'https://formspree.io/f/mwvnzkll';
+
 export default function RegisterPage() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
-    
-    // Simulate API call
-    setTimeout(() => {
-      setIsLoading(false);
-      setIsSubmitted(true);
-    }, 2000);
+    setError(null);
+
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData.entries());
+
+    if (FORMSPREE_ENDPOINT) {
+      try {
+        const res = await fetch(FORMSPREE_ENDPOINT, {
+          method: 'POST',
+          body: JSON.stringify(data),
+          headers: { 'Content-Type': 'application/json' },
+        });
+        if (!res.ok) throw new Error('Submit failed');
+        setIsSubmitted(true);
+      } catch {
+        setError('Unable to submit. Please try again or contact us directly.');
+      } finally {
+        setIsLoading(false);
+      }
+    } else {
+      setTimeout(() => {
+        setIsLoading(false);
+        setIsSubmitted(true);
+      }, 1500);
+    }
   };
 
   if (isSubmitted) {
@@ -154,6 +177,7 @@ export default function RegisterPage() {
                 </Tooltip>
                 <input
                   required
+                  name="name"
                   type="text"
                   placeholder="John Doe"
                   className="w-full bg-white/5 border border-white/10 rounded-lg py-4 pl-12 pr-4 text-white placeholder:text-white/20 focus:outline-none focus:border-fortuna-pink/50 transition-colors"
@@ -169,6 +193,7 @@ export default function RegisterPage() {
                 </Tooltip>
                 <input
                   required
+                  name="email"
                   type="email"
                   placeholder="name@company.com"
                   className="w-full bg-white/5 border border-white/10 rounded-lg py-4 pl-12 pr-4 text-white placeholder:text-white/20 focus:outline-none focus:border-fortuna-pink/50 transition-colors"
@@ -185,6 +210,7 @@ export default function RegisterPage() {
                   </Tooltip>
                   <input
                     required
+                    name="job_title"
                     type="text"
                     placeholder="SRE / DevOps Engineer"
                     className="w-full bg-white/5 border border-white/10 rounded-lg py-4 pl-12 pr-4 text-white placeholder:text-white/20 focus:outline-none focus:border-fortuna-pink/50 transition-colors"
@@ -200,6 +226,7 @@ export default function RegisterPage() {
                   </Tooltip>
                   <input
                     required
+                    name="company"
                     type="text"
                     placeholder="Acme Corp"
                     className="w-full bg-white/5 border border-white/10 rounded-lg py-4 pl-12 pr-4 text-white placeholder:text-white/20 focus:outline-none focus:border-fortuna-pink/50 transition-colors"
@@ -207,6 +234,10 @@ export default function RegisterPage() {
                 </div>
               </div>
             </div>
+
+            {error && (
+              <p className="text-red-400 text-sm py-2">{error}</p>
+            )}
 
             <Tooltip content="Submit Demo Request" position="bottom">
               <button
