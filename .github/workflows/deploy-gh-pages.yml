@@ -34,6 +34,11 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Prepare deployment
+        run: |
+          cp CNAME dist/ 2>/dev/null || true
+          touch dist/.nojekyll
+
       - name: Setup Pages
         uses: actions/configure-pages@v4
 
