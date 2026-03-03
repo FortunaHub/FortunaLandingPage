@@ -56,7 +56,7 @@ export default function RegisterPage() {
           </div>
           <h2 className="text-3xl font-black uppercase tracking-tight mb-4">Demo Request Sent</h2>
           <p className="text-white/60 mb-8">
-            Thank you for your interest in K8S Fortuna. Our team will review your request and contact you via email with demo access details shortly.
+            Thank you for your interest in Fortuna. Our team will review your request and contact you shortly with demo access details.
           </p>
           <Tooltip content="Back to Home" position="bottom">
             <Link
@@ -88,17 +88,17 @@ export default function RegisterPage() {
           animate={{ opacity: 1, x: 0 }}
           className="hidden lg:block"
         >
-          <span className="text-xs font-bold uppercase tracking-[0.3em] text-fortuna-pink mb-4 block">Join the Platform</span>
+          <span className="text-xs font-bold uppercase tracking-[0.3em] text-fortuna-pink mb-4 block">Request Fortuna Demo</span>
           <h1 className="text-6xl font-black tracking-tighter uppercase leading-none mb-8">
             Secure your <br />
-            <span className="text-white/40">Infrastructure.</span>
+            <span className="text-white/40">Kubernetes fleet.</span>
           </h1>
           <ul className="space-y-6">
             {[
-              "Enterprise-grade Kubernetes security",
-              "Real-time threat detection & response",
-              "Automated compliance reporting",
-              "Lightweight eBPF-based monitoring"
+              "SBOM extraction & CVE matching",
+              "Pod Capability Engine (PCE)",
+              "Attack path analysis",
+              "Runtime signals & Risk Center"
             ].map((item, i) => (
               <li key={i} className="flex items-center gap-4 text-white/60">
                 <Tooltip content="Verified Feature" position="left">
@@ -157,14 +157,14 @@ export default function RegisterPage() {
           </AnimatePresence>
 
           <div className="flex items-center gap-3 mb-8">
-            <Tooltip content="K8S Fortuna Security" position="right">
+            <Tooltip content="Fortuna" position="right">
               <div className="w-10 h-10 pink-gradient rounded-lg flex items-center justify-center">
                 <Logo size={24} className="text-white" />
               </div>
             </Tooltip>
             <div>
               <h2 className="text-xl font-bold uppercase tracking-tight">Request Demo</h2>
-              <p className="text-xs text-white/40 uppercase tracking-widest">K8S Fortuna Trial</p>
+              <p className="text-xs text-white/40 uppercase tracking-widest">Fortuna Demo</p>
             </div>
           </div>
 

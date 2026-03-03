@@ -1,0 +1,65 @@
+export const STRENGTHS = [
+  'SBOM Extraction',
+  'CVE Matching',
+  'Pod Capability Engine',
+  'mTLS Secure',
+] as const;
+
+export const FEATURES = [
+  {
+    title: 'SBOM (Software Bill of Materials)',
+    desc: 'Automatic extraction from container images via Agent. Multi-parser support: dpkg, apk, rpm, npm, pip, gomod. OS-aware parser selection. PURL-based component storage. Export by pod, namespace. Dashboard browser and API.',
+    tags: ['Containerd', 'PURL'],
+    img: 'dashboard-overview.png',
+    alt: 'SBOM extraction',
+    order: 'text' as const,
+  },
+  {
+    title: 'Real-time CVE Matching',
+    desc: 'Match CVEs against SBOM packages. Ecosystem-specific version comparison (Debian, RPM, Alpine, npm, pypi). NVD data source. Critical/High/Medium severity insights. Fixed version and CVSS. Event-driven via NATS.',
+    tags: ['NVD', 'CVSS'],
+    img: 'service-security.png',
+    alt: 'CVE matching',
+    order: 'img' as const,
+  },
+  {
+    title: 'Network Designer',
+    desc: 'Zero Trust policy visualization and automated generation. Visualize workload pods, traffic flows (allowed/blocked), active NetworkPolicies. Policy suggestions, best practices, network drift detection. Design and export NetworkPolicy manifests.',
+    tags: ['Zero Trust', 'Policy'],
+    img: 'Network-design.png',
+    alt: 'Network Designer - Zero Trust policy visualization',
+    order: 'img' as const,
+  },
+  {
+    title: 'Attack Path Analysis',
+    desc: 'Visualize potential lateral movement and privilege escalation paths. Interactive graph with color-coded risk levels (Critical/High/Medium/Low). Node details, security analysis, blast radius. Critical paths: External RCE to DB, privilege escalation. Integrates with PCE and CVE data.',
+    tags: ['Threat modeling', 'Real-time'],
+    img: 'attack-path-analysis.png',
+    alt: 'Attack Path Analysis - lateral movement and escalation paths',
+    order: 'text' as const,
+  },
+  {
+    title: 'Risk Center & Security Insights',
+    desc: 'Centralized risk dashboard. Filter by cluster, severity, resource. Active/resolved status. Actionable recommendations. Aggregate totals (critical, high, medium). Per-resource drill-down and remediation guidance.',
+    tags: ['Insights', 'Risks'],
+    img: 'attack-path-viz.png',
+    alt: 'Risk Center',
+    order: 'text' as const,
+  },
+  {
+    title: 'Pod Capability Engine (PCE)',
+    desc: 'Detect static capabilities (privileged, hostPath, token, RBAC) and runtime signals. Promotion rules for capability state (detected → confirmed → exploited). Attack step inference, MITRE ATT&CK mapping. Capability metadata and trends API.',
+    tags: ['PCE', 'Attack Steps'],
+    img: 'service-security.png',
+    alt: 'Pod Capability Engine',
+    order: 'img' as const,
+  },
+  {
+    title: 'Runtime Signals & Threat Velocity',
+    desc: 'Real-time security signal detection (proc escape, network sniffing, RBAC abuse). Correlate with PCE capabilities for state promotion. Threat velocity metrics and dashboard charts. Prometheus /metrics endpoint.',
+    tags: ['Real-time', 'Prometheus'],
+    img: 'settings-admin.png',
+    alt: 'Runtime Signals',
+    order: 'img' as const,
+  },
+] as const;

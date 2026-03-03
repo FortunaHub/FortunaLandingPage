@@ -1,21 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Shield, Menu, X, ChevronRight, ArrowUp } from 'lucide-react';
+import { Menu, X, ArrowUp } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import Tooltip from './Tooltip';
 import Logo from './Logo';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState('platform');
   const [showScrollTop, setShowScrollTop] = useState(false);
   const location = useLocation();
 
   const navLinks = [
-    { name: 'Platform', href: '#platform', tooltip: 'Core Infrastructure' },
-    { name: 'Showcase', href: '#showcase', tooltip: 'Platform in Action' },
-    { name: 'Solutions', href: '#solutions', tooltip: 'Security Modules' },
-    { name: 'About', href: '#about', tooltip: 'Our Mission' },
+    { name: 'Platform', to: '/', tooltip: 'Home' },
+    { name: 'Features', to: '/features', tooltip: 'Capabilities' },
+    { name: 'Docs', to: '/docs', tooltip: 'Documentation' },
+    { name: 'About', to: '/about', tooltip: 'About Fortuna' },
   ];
 
   useEffect(() => {
@@ -27,45 +26,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  useEffect(() => {
-    if (location.pathname !== '/') return;
-
-    const observerOptions = {
-      root: null,
-      rootMargin: '-20% 0px -70% 0px',
-      threshold: 0,
-    };
-
-    const observerCallback = (entries: IntersectionObserverEntry[]) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          setActiveSection(entry.target.id);
-        }
-      });
-    };
-
-    const observer = new IntersectionObserver(observerCallback, observerOptions);
-
-    const sections = ['platform', 'showcase', 'solutions', 'about'];
-    sections.forEach((id) => {
-      const element = document.getElementById(id);
-      if (element) observer.observe(element);
-    });
-
-    return () => observer.disconnect();
-  }, [location.pathname]);
-
-  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    if (location.pathname === '/' && href.startsWith('#')) {
-      e.preventDefault();
-      const id = href.replace('#', '');
-      const element = document.getElementById(id);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        setIsMenuOpen(false);
-      }
-    }
-  };
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -90,18 +50,20 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             {/* Desktop Nav */}
             <nav className="hidden md:flex items-center gap-6 lg:gap-8">
               {navLinks.map((link) => {
-                const isActive = activeSection === link.href.replace('#', '') && location.pathname === '/';
+                const isActive =
+                  location.pathname === link.to ||
+                  (link.to === '/docs' && location.pathname.startsWith('/docs'));
                 return (
                   <Tooltip key={link.name} content={link.tooltip} position="bottom">
-                    <a
-                      href={link.href}
-                      onClick={(e) => handleNavClick(e, link.href)}
+                    <Link
+                      to={link.to}
+                      onClick={() => setIsMenuOpen(false)}
                       className={`min-w-[5rem] text-center text-[11px] font-semibold uppercase tracking-[0.18em] transition-colors whitespace-nowrap ${
                         isActive ? 'text-fortuna-pink' : 'text-white/60 hover:text-fortuna-pink'
                       }`}
                     >
                       {link.name}
-                    </a>
+                    </Link>
                   </Tooltip>
                 );
               })}
@@ -130,18 +92,20 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             >
               <div className="px-4 py-6 flex flex-col gap-4">
                 {navLinks.map((link) => {
-                  const isActive = activeSection === link.href.replace('#', '') && location.pathname === '/';
+                  const isActive =
+                    location.pathname === link.to ||
+                    (link.to === '/docs' && location.pathname.startsWith('/docs'));
                   return (
-                    <a
+                    <Link
                       key={link.name}
-                      href={link.href}
-                      onClick={(e) => handleNavClick(e, link.href)}
+                      to={link.to}
+                      onClick={() => setIsMenuOpen(false)}
                       className={`py-2 text-sm font-semibold uppercase tracking-[0.15em] transition-colors border-b border-white/5 last:border-0 ${
                         isActive ? 'text-fortuna-pink' : 'text-white/60 hover:text-fortuna-pink'
                       }`}
                     >
                       {link.name}
-                    </a>
+                    </Link>
                   );
                 })}
               </div>
@@ -166,22 +130,20 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                   K8S<span className="text-fortuna-pink">FORTUNA</span>
                 </Link>
               </div>
-              <p className="text-white/40 text-sm max-w-sm leading-relaxed">
-                Empowering SRE and Security teams with simple, effective, and professional infrastructure solutions.
-              </p>
             </div>
             <div>
               <h4 className="text-xs font-bold uppercase tracking-[0.2em] text-white mb-6">Product</h4>
               <ul className="space-y-4">
-                <li><a href="#platform" className="text-sm text-white/40 hover:text-fortuna-pink transition-colors">Platform</a></li>
-                <li><a href="#showcase" className="text-sm text-white/40 hover:text-fortuna-pink transition-colors">Showcase</a></li>
-                <li><a href="#solutions" className="text-sm text-white/40 hover:text-fortuna-pink transition-colors">Solutions</a></li>
+                <li><Link to="/" className="text-sm text-white/40 hover:text-fortuna-pink transition-colors">Platform</Link></li>
+                <li><Link to="/features" className="text-sm text-white/40 hover:text-fortuna-pink transition-colors">Features</Link></li>
+                <li><Link to="/docs" className="text-sm text-white/40 hover:text-fortuna-pink transition-colors">Documentation</Link></li>
+                <li><Link to="/about" className="text-sm text-white/40 hover:text-fortuna-pink transition-colors">About</Link></li>
               </ul>
             </div>
             <div>
               <h4 className="text-xs font-bold uppercase tracking-[0.2em] text-white mb-6">Company</h4>
               <ul className="space-y-4">
-                <li><a href="#about" className="text-sm text-white/40 hover:text-fortuna-pink transition-colors">About Us</a></li>
+                <li><Link to="/about" className="text-sm text-white/40 hover:text-fortuna-pink transition-colors">About Fortuna</Link></li>
                 <li><a href="mailto:contact@fortunahub.com" className="text-sm text-white/40 hover:text-fortuna-pink transition-colors">Contact</a></li>
               </ul>
             </div>
