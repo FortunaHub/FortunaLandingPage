@@ -1,13 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, ArrowUp } from 'lucide-react';
+import { Menu, X, ArrowUp, ChevronDown } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import Tooltip from './Tooltip';
 import Logo from './Logo';
+import { SOLUTIONS } from '../config/solutions';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
+  const [showSolutionsDropdown, setShowSolutionsDropdown] = useState(false);
+  const [comingSoonToast, setComingSoonToast] = useState(false);
+  const solutionsRef = useRef<HTMLDivElement>(null);
   const location = useLocation();
 
   const navLinks = [
@@ -18,6 +22,16 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   ];
 
   useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (solutionsRef.current && !solutionsRef.current.contains(e.target as Node)) {
+        setShowSolutionsDropdown(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  useEffect(() => {
     const handleScroll = () => {
       setShowScrollTop(window.scrollY > 400);
     };
@@ -25,6 +39,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  useEffect(() => {
+    if (!comingSoonToast) return;
+    const t = setTimeout(() => setComingSoonToast(false), 2500);
+    return () => clearTimeout(t);
+  }, [comingSoonToast]);
 
 
   const scrollToTop = () => {
@@ -49,6 +69,79 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
             {/* Desktop Nav */}
             <nav className="hidden md:flex items-center gap-6 lg:gap-8">
+              {/* Solutions Dropdown */}
+              <div ref={solutionsRef} className="relative">
+                <button
+                  onClick={() => setShowSolutionsDropdown((v) => !v)}
+                  className={`flex items-center gap-1 text-[11px] font-semibold uppercase tracking-[0.18em] transition-colors whitespace-nowrap ${
+                    showSolutionsDropdown ? 'text-fortuna-pink' : 'text-white/60 hover:text-fortuna-pink'
+                  }`}
+                >
+                  Solutions
+                  <ChevronDown className={`w-4 h-4 transition-transform ${showSolutionsDropdown ? 'rotate-180' : ''}`} />
+                </button>
+                <AnimatePresence>
+                  {showSolutionsDropdown && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -8 }}
+                      transition={{ duration: 0.15 }}
+                      className="absolute top-full left-0 mt-2 w-80 rounded-xl bg-fortuna-card border border-white/10 shadow-xl overflow-hidden z-50"
+                    >
+                      <div className="p-2">
+                        {SOLUTIONS.map((sol) => {
+                          const Icon = sol.icon;
+                          const isComingSoon = sol.comingSoon;
+                          const content = (
+                            <div className="flex items-center gap-4 p-3 rounded-lg hover:bg-white/5 transition-colors group">
+                              <div className="w-10 h-10 rounded-lg bg-fortuna-pink/20 flex items-center justify-center flex-shrink-0 group-hover:bg-fortuna-pink/30 transition-colors">
+                                <Icon className="w-5 h-5 text-fortuna-pink" />
+                              </div>
+                              <div className="flex-1 min-w-0">
+                                <div className="font-bold text-white text-sm flex items-center gap-2">
+                                  {sol.name}
+                                  {isComingSoon && (
+                                    <span className="text-[10px] font-normal uppercase tracking-wider text-fortuna-pink/80 bg-fortuna-pink/10 px-1.5 py-0.5 rounded">
+                                      Coming soon
+                                    </span>
+                                  )}
+                                </div>
+                                <div className="text-white/50 text-xs truncate">{sol.tagline}</div>
+                              </div>
+                            </div>
+                          );
+                          return isComingSoon ? (
+                            <button
+                              key={sol.id}
+                              type="button"
+                              onClick={() => {
+                                setComingSoonToast(true);
+                                setShowSolutionsDropdown(false);
+                              }}
+                              className="w-full text-left"
+                            >
+                              {content}
+                            </button>
+                          ) : (
+                            <Link
+                              key={sol.id}
+                              to={sol.to}
+                              onClick={() => {
+                                setShowSolutionsDropdown(false);
+                                setIsMenuOpen(false);
+                              }}
+                              className="block"
+                            >
+                              {content}
+                            </Link>
+                          );
+                        })}
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
               {navLinks.map((link) => {
                 const isActive =
                   location.pathname === link.to ||
@@ -91,6 +184,55 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               className="md:hidden bg-fortuna-card border-t border-white/5"
             >
               <div className="px-4 py-6 flex flex-col gap-4">
+                <div className="pb-4 border-b border-white/5">
+                  <div className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/40 mb-3">Solutions</div>
+                  <div className="flex flex-col gap-2">
+                    {SOLUTIONS.map((sol) => {
+                      const Icon = sol.icon;
+                      const isComingSoon = sol.comingSoon;
+                      const content = (
+                        <div className="flex items-center gap-3 py-2 px-3 rounded-lg hover:bg-white/5 transition-colors">
+                          <div className="w-8 h-8 rounded-lg bg-fortuna-pink/20 flex items-center justify-center flex-shrink-0">
+                            <Icon className="w-4 h-4 text-fortuna-pink" />
+                          </div>
+                          <div className="flex-1">
+                            <div className="font-semibold text-white text-sm flex items-center gap-2 flex-wrap">
+                              {sol.name}
+                              {isComingSoon && (
+                                <span className="text-[10px] font-normal uppercase tracking-wider text-fortuna-pink/80 bg-fortuna-pink/10 px-1.5 py-0.5 rounded">
+                                  Coming soon
+                                </span>
+                              )}
+                            </div>
+                            <div className="text-white/50 text-xs">{sol.tagline}</div>
+                          </div>
+                        </div>
+                      );
+                      return isComingSoon ? (
+                        <button
+                          key={sol.id}
+                          type="button"
+                          onClick={() => {
+                            setComingSoonToast(true);
+                            setIsMenuOpen(false);
+                          }}
+                          className="w-full text-left"
+                        >
+                          {content}
+                        </button>
+                      ) : (
+                        <Link
+                          key={sol.id}
+                          to={sol.to}
+                          onClick={() => setIsMenuOpen(false)}
+                          className="block"
+                        >
+                          {content}
+                        </Link>
+                      );
+                    })}
+                  </div>
+                </div>
                 {navLinks.map((link) => {
                   const isActive =
                     location.pathname === link.to ||
@@ -159,6 +301,21 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           </div>
         </div>
       </footer>
+
+      {/* Coming Soon Toast */}
+      <AnimatePresence>
+        {comingSoonToast && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 20 }}
+            className="fixed bottom-24 left-1/2 -translate-x-1/2 z-[70] px-6 py-3 rounded-xl bg-fortuna-card border border-white/10 shadow-xl"
+          >
+            <p className="text-sm font-semibold text-white">Coming soon</p>
+            <p className="text-xs text-white/50 mt-0.5">Sản phẩm sẽ có mặt sớm</p>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Scroll to Top Button */}
       <AnimatePresence>
