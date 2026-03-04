@@ -58,9 +58,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           <div className="flex justify-between items-center py-4 gap-4">
             <Tooltip content="Go to Homepage" position="bottom">
               <div className="flex items-center gap-2 group flex-shrink-0">
-                <div className="w-8 h-8 pink-gradient rounded-lg flex items-center justify-center shadow-[0_0_15px_rgba(209,26,94,0.3)]">
-                  <Logo size={20} className="text-white" />
-                </div>
+                <Logo size={32} className="flex-shrink-0" />
                 <Link to="/" className="text-xl font-extrabold tracking-tighter whitespace-nowrap">
                   K8S<span className="text-fortuna-pink">FORTUNA</span>
                 </Link>
@@ -265,9 +263,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
             <div className="col-span-1 md:col-span-2">
               <div className="flex items-center gap-2 mb-6">
-                <div className="w-6 h-6 pink-gradient rounded flex items-center justify-center">
-                  <Logo size={14} className="text-white" />
-                </div>
+                <Logo size={24} className="flex-shrink-0" />
                 <Link to="/" className="text-lg font-extrabold tracking-tighter">
                   K8S<span className="text-fortuna-pink">FORTUNA</span>
                 </Link>
