@@ -49,7 +49,7 @@ export default function HeroSection() {
             <Tooltip content="Start Free Trial" position="bottom">
               <Link
                 to="/register"
-                className="inline-flex px-8 py-4 pink-gradient text-white font-bold uppercase tracking-widest rounded items-center gap-2 hover:scale-105 transition-transform"
+                className="inline-flex px-10 py-4 pink-gradient text-white font-bold uppercase tracking-widest rounded items-center gap-2 hover:scale-105 transition-transform"
               >
                 Request Demo <ChevronRight className="w-4 h-4" />
               </Link>

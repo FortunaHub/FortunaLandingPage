@@ -61,7 +61,7 @@ export default function RegisterPage() {
           <Tooltip content="Back to Home" position="bottom">
             <Link
               to="/"
-              className="inline-block w-full py-4 border border-white/10 text-white font-bold uppercase tracking-widest rounded hover:bg-white/5 transition-colors"
+              className="inline-block w-full py-4 px-6 border border-white/10 text-white font-bold uppercase tracking-widest rounded hover:bg-white/5 transition-colors text-center"
             >
               Back to Home
             </Link>
@@ -158,13 +158,13 @@ export default function RegisterPage() {
 
           <div className="flex items-center gap-3 mb-8">
             <Tooltip content="Fortuna" position="right">
-              <div className="w-10 h-10 pink-gradient rounded-lg flex items-center justify-center">
-                <Logo size={24} className="text-white" />
+              <div className="w-9 h-9 shrink-0 rounded-lg bg-fortuna-card border border-white/10 flex items-center justify-center overflow-hidden p-0.5">
+                <Logo size={24} className="object-contain" />
               </div>
             </Tooltip>
-            <div>
-              <h2 className="text-xl font-bold uppercase tracking-tight">Request Demo</h2>
-              <p className="text-xs text-white/40 uppercase tracking-widest">Fortuna Demo</p>
+            <div className="pl-2">
+              <h2 className="text-xl font-bold uppercase tracking-tight py-1">Request Demo</h2>
+              <p className="text-xs text-white/40 uppercase tracking-widest py-0.5">Fortuna Demo</p>
             </div>
           </div>
 
@@ -243,7 +243,7 @@ export default function RegisterPage() {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full py-4 pink-gradient text-white font-bold uppercase tracking-widest rounded-lg flex items-center justify-center gap-2 hover:scale-[1.02] transition-transform shadow-[0_10px_20px_rgba(209,26,94,0.2)] disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full py-4 px-6 pink-gradient text-white font-bold uppercase tracking-widest rounded-lg flex items-center justify-center gap-2 hover:scale-[1.02] transition-transform shadow-[0_10px_20px_rgba(209,26,94,0.2)] disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isLoading ? (
                   <>Processing...</>

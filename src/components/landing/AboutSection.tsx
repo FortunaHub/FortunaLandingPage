@@ -11,8 +11,8 @@ export default function AboutSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <div className="mb-8 flex justify-center">
           <Tooltip content="FortunaHub" position="top">
-            <div className="w-20 h-20 pink-gradient rounded-full flex items-center justify-center shadow-[0_0_50px_rgba(209,26,94,0.3)]">
-              <Logo size={40} className="text-white" />
+            <div className="w-20 h-20 shrink-0 rounded-full bg-fortuna-card border border-white/10 flex items-center justify-center overflow-hidden p-1 shadow-[0_0_50px_rgba(209,26,94,0.2)]">
+              <Logo size={64} className="object-contain" />
             </div>
           </Tooltip>
         </div>
