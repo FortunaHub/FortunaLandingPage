@@ -7,12 +7,26 @@ import AboutPage from './pages/AboutPage';
 import DocsLayout from './pages/DocsLayout';
 import DocPage from './pages/DocPage';
 
-const configuredBase = import.meta.env.BASE_URL.replace(/\/$/, '') || '/';
-const routerBase =
-  configuredBase !== '/' &&
-  (window.location.pathname === configuredBase || window.location.pathname.startsWith(`${configuredBase}/`))
-    ? configuredBase
-    : '/';
+const normalizeBase = (value?: string) => {
+  if (!value || value === '/' || value === './' || value === '.') return '/';
+  const withLeadingSlash = value.startsWith('/') ? value : `/${value}`;
+  return withLeadingSlash.replace(/\/$/, '') || '/';
+};
+
+const pathUsesBase = (base: string) =>
+  base !== '/' && (window.location.pathname === base || window.location.pathname.startsWith(`${base}/`));
+
+const envRouterBase = normalizeBase(import.meta.env.VITE_ROUTER_BASENAME);
+const viteBase = normalizeBase(import.meta.env.BASE_URL);
+const repoBase = normalizeBase(import.meta.env.VITE_REPOSITORY_NAME);
+
+const routerBase = pathUsesBase(envRouterBase)
+  ? envRouterBase
+  : pathUsesBase(viteBase)
+    ? viteBase
+    : pathUsesBase(repoBase)
+      ? repoBase
+      : '/';
 
 export default function App() {
   return (

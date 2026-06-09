@@ -33,9 +33,17 @@ jobs:
 
       - name: Build
         env:
-          VITE_BASE_PATH: /${{ github.event.repository.name }}/
+          VITE_BASE_PATH: ${{ vars.VITE_BASE_PATH || '/' }}
+          VITE_REPOSITORY_NAME: ${{ github.event.repository.name }}
+          VITE_ROUTER_BASENAME: ${{ vars.VITE_ROUTER_BASENAME || '' }}
           VITE_FORMSPREE_ENDPOINT: ${{ secrets.VITE_FORMSPREE_ENDPOINT }}
         run: npm run build
+
+      - name: Verify built asset paths
+        run: |
+          echo "VITE_BASE_PATH=${VITE_BASE_PATH}"
+          echo "VITE_ROUTER_BASENAME=${VITE_ROUTER_BASENAME}"
+          grep -Eo 'src="[^"]+|href="[^"]+' dist/index.html | grep -E 'assets|favicon|logo' || true
 
       - name: Prepare deployment
         run: |
