@@ -1,16 +1,23 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
-import { Mail, User, ArrowRight, CheckCircle2, Loader2, Briefcase, Building2 } from 'lucide-react';
+import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
+import { Mail, User, ArrowRight, CheckCircle2, Loader2, Briefcase, Building2, Network, ShieldAlert } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Tooltip from './Tooltip';
 import Logo from './Logo';
 
 const FORMSPREE_ENDPOINT = import.meta.env.VITE_FORMSPREE_ENDPOINT || 'https://formspree.io/f/mwvnzkll';
 
+const demoTopics = [
+  'Network policy posture with live traffic',
+  'Attack-path analysis and blast radius review',
+  'SBOM, CVE, and runtime risk prioritization',
+] as const;
+
 export default function RegisterPage() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const reduceMotion = useReducedMotion();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -45,25 +52,25 @@ export default function RegisterPage() {
 
   if (isSubmitted) {
     return (
-      <div className="min-h-[80vh] flex items-center justify-center px-4">
+      <div className="min-h-[80vh] flex items-center justify-center px-4 py-20 bg-fortuna-dark">
         <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
+          initial={reduceMotion ? false : { opacity: 0, y: 16 }}
           animate={{ opacity: 1, scale: 1 }}
-          className="max-w-md w-full glass-card p-12 text-center"
+          className="max-w-md w-full rounded-lg border border-white/10 bg-fortuna-card p-8 sm:p-10 text-center"
         >
-          <div className="w-20 h-20 bg-emerald-500/20 rounded-full flex items-center justify-center mx-auto mb-8">
-            <CheckCircle2 className="w-10 h-10 text-emerald-500" />
+          <div className="w-16 h-16 bg-emerald-500/15 rounded-full flex items-center justify-center mx-auto mb-7">
+            <CheckCircle2 className="w-8 h-8 text-emerald-400" />
           </div>
-          <h2 className="text-3xl font-black uppercase tracking-tight mb-4">Demo Request Sent</h2>
-          <p className="text-white/60 mb-8">
-            Thank you for your interest in Fortuna. Our team will review your request and contact you shortly with demo access details.
+          <h2 className="text-3xl font-black uppercase leading-tight mb-4">Demo request sent</h2>
+          <p className="text-white/68 leading-7 mb-8">
+            We received your request. The Fortuna team will follow up with a focused walkthrough for your Kubernetes risk workflow.
           </p>
           <Tooltip content="Back to Home" position="bottom">
             <Link
               to="/"
-              className="inline-block w-full py-4 px-6 border border-white/10 text-white font-bold uppercase tracking-widest rounded hover:bg-white/5 transition-colors text-center"
+              className="inline-flex min-h-12 w-full items-center justify-center rounded-md border border-white/15 px-6 py-3 text-sm font-bold text-white transition-colors hover:bg-white/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white/70"
             >
-              Back to Home
+              Back to homepage
             </Link>
           </Tooltip>
         </motion.div>
@@ -73,51 +80,58 @@ export default function RegisterPage() {
 
   return (
     <div className="min-h-[90vh] flex items-center justify-center py-20 px-4 relative bg-[#050505] overflow-hidden">
-      {/* Tech Background Elements */}
       <div className="absolute inset-0 z-0">
-        {/* Grid Dots */}
-        <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(circle, #D11A5E 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
-        
-        {/* Glows */}
+        <div
+          className="absolute inset-0 opacity-[0.08]"
+          style={{ backgroundImage: 'radial-gradient(circle, #D11A5E 1px, transparent 1px)', backgroundSize: '44px 44px' }}
+        />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-fortuna-pink/5 blur-[120px] rounded-full" />
       </div>
       
       <div className="max-w-5xl w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative z-10">
         <motion.div
-          initial={{ opacity: 0, x: -30 }}
-          animate={{ opacity: 1, x: 0 }}
+          initial={reduceMotion ? false : { opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
           className="hidden lg:block"
         >
-          <span className="text-xs font-bold uppercase tracking-[0.3em] text-fortuna-pink mb-4 block">Request Fortuna Demo</span>
-          <h1 className="text-6xl font-black tracking-tighter uppercase leading-none mb-8">
-            Secure your <br />
-            <span className="text-white/40">Kubernetes fleet.</span>
+          <p className="mb-5 inline-flex items-center gap-2 rounded-full border border-fortuna-pink/25 bg-fortuna-pink/10 px-4 py-2 text-xs font-semibold text-fortuna-pink">
+            Fortuna demo
+          </p>
+          <h1 className="text-5xl xl:text-6xl font-black uppercase leading-[0.95] mb-7 text-balance">
+            Walk through your Kubernetes risk workflow
           </h1>
-          <ul className="space-y-6">
-            {[
-              "SBOM extraction & CVE matching",
-              "Pod Capability Engine (PCE)",
-              "Attack path analysis",
-              "Runtime signals & Risk Center"
-            ].map((item, i) => (
-              <li key={i} className="flex items-center gap-4 text-white/60">
-                <Tooltip content="Verified Feature" position="left">
-                  <div className="w-6 h-6 rounded-full bg-fortuna-pink/20 flex items-center justify-center flex-shrink-0">
-                    <CheckCircle2 className="w-4 h-4 text-fortuna-pink" />
-                  </div>
-                </Tooltip>
-                <span className="font-medium">{item}</span>
+          <p className="max-w-xl text-base leading-8 text-white/68 mb-8">
+            Bring the posture question your team is trying to answer. We will focus the demo on product evidence, not a generic slide deck.
+          </p>
+          <ul className="space-y-4">
+            {demoTopics.map((item) => (
+              <li key={item} className="flex items-start gap-4 text-white/70">
+                <div className="mt-0.5 w-6 h-6 rounded-full bg-fortuna-pink/18 flex items-center justify-center flex-shrink-0">
+                  <CheckCircle2 className="w-4 h-4 text-fortuna-pink" />
+                </div>
+                <span className="font-medium leading-6">{item}</span>
               </li>
             ))}
           </ul>
+          <div className="mt-8 grid grid-cols-2 gap-3">
+            <div className="rounded-md border border-white/10 bg-white/[0.045] p-4">
+              <Network className="mb-3 h-5 w-5 text-fortuna-pink" />
+              <p className="text-sm font-bold text-white">Network Designer</p>
+              <p className="mt-1 text-xs leading-5 text-white/58">Policy intent compared with observed traffic.</p>
+            </div>
+            <div className="rounded-md border border-white/10 bg-white/[0.045] p-4">
+              <ShieldAlert className="mb-3 h-5 w-5 text-fortuna-pink" />
+              <p className="text-sm font-bold text-white">Attack paths</p>
+              <p className="mt-1 text-xs leading-5 text-white/58">Risk chains tied to remediation priority.</p>
+            </div>
+          </div>
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={reduceMotion ? false : { opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="glass-card p-8 md:p-12 shadow-2xl relative overflow-hidden"
+          className="rounded-lg border border-white/10 bg-fortuna-card p-6 sm:p-8 md:p-10 shadow-2xl relative overflow-hidden"
         >
-          {/* Loading Overlay */}
           <AnimatePresence>
             {isLoading && (
               <motion.div
@@ -127,31 +141,13 @@ export default function RegisterPage() {
                 className="absolute inset-0 z-50 bg-fortuna-dark/80 backdrop-blur-sm flex flex-col items-center justify-center gap-4"
               >
                 <motion.div
-                  animate={{ rotate: 360 }}
+                  animate={reduceMotion ? undefined : { rotate: 360 }}
                   transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
                   className="relative"
                 >
                   <Loader2 className="w-12 h-12 text-fortuna-pink" />
-                  <motion.div 
-                    className="absolute inset-0 bg-fortuna-pink/20 blur-xl rounded-full"
-                    animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.6, 0.3] }}
-                    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                  />
                 </motion.div>
-                <motion.p 
-                  className="text-[10px] font-bold uppercase tracking-[0.3em] text-white/60"
-                  animate={{ 
-                    opacity: [0.4, 1, 0.4],
-                    scale: [0.98, 1, 0.98]
-                  }}
-                  transition={{ 
-                    duration: 2, 
-                    repeat: Infinity, 
-                    ease: "easeInOut" 
-                  }}
-                >
-                  Initializing System...
-                </motion.p>
+                <p className="text-sm font-semibold text-white/70">Sending your demo request...</p>
               </motion.div>
             )}
           </AnimatePresence>
@@ -163,98 +159,98 @@ export default function RegisterPage() {
               </div>
             </Tooltip>
             <div className="pl-2">
-              <h2 className="text-xl font-bold uppercase tracking-tight py-1">Request Demo</h2>
-              <p className="text-xs text-white/40 uppercase tracking-widest py-0.5">Fortuna Demo</p>
+              <h2 className="text-xl font-bold py-1">Request a demo</h2>
+              <p className="text-xs text-white/55 py-0.5">We will tailor the walkthrough to your cluster risk priorities.</p>
             </div>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="space-y-2">
-              <label className="text-[10px] font-bold uppercase tracking-widest text-white/40 ml-1">Full Name</label>
+              <label htmlFor="name" className="text-xs font-semibold text-white/72 ml-1">Full name</label>
               <div className="relative">
-                <Tooltip content="Enter your full name" position="left">
-                  <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/20" />
-                </Tooltip>
+                <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/35" />
                 <input
+                  id="name"
                   required
                   name="name"
                   type="text"
                   placeholder="John Doe"
-                  className="w-full bg-white/5 border border-white/10 rounded-lg py-4 pl-12 pr-4 text-white placeholder:text-white/20 focus:outline-none focus:border-fortuna-pink/50 transition-colors"
+                  autoComplete="name"
+                  className="w-full bg-white/5 border border-white/10 rounded-md py-4 pl-12 pr-4 text-white placeholder:text-white/45 focus:outline-none focus:border-fortuna-pink/60 focus:ring-2 focus:ring-fortuna-pink/20 transition-colors"
                 />
               </div>
             </div>
 
             <div className="space-y-2">
-              <label className="text-[10px] font-bold uppercase tracking-widest text-white/40 ml-1">Work Email</label>
+              <label htmlFor="email" className="text-xs font-semibold text-white/72 ml-1">Work email</label>
               <div className="relative">
-                <Tooltip content="Corporate email only" position="left">
-                  <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/20" />
-                </Tooltip>
+                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/35" />
                 <input
+                  id="email"
                   required
                   name="email"
                   type="email"
                   placeholder="name@company.com"
-                  className="w-full bg-white/5 border border-white/10 rounded-lg py-4 pl-12 pr-4 text-white placeholder:text-white/20 focus:outline-none focus:border-fortuna-pink/50 transition-colors"
+                  autoComplete="email"
+                  className="w-full bg-white/5 border border-white/10 rounded-md py-4 pl-12 pr-4 text-white placeholder:text-white/45 focus:outline-none focus:border-fortuna-pink/60 focus:ring-2 focus:ring-fortuna-pink/20 transition-colors"
                 />
               </div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-2">
-                <label className="text-[10px] font-bold uppercase tracking-widest text-white/40 ml-1">Job Title / Position</label>
+                <label htmlFor="job_title" className="text-xs font-semibold text-white/72 ml-1">Role</label>
                 <div className="relative">
-                  <Tooltip content="Your role in the company" position="left">
-                    <Briefcase className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/20" />
-                  </Tooltip>
+                  <Briefcase className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/35" />
                   <input
+                    id="job_title"
                     required
                     name="job_title"
                     type="text"
-                    placeholder="SRE / DevOps Engineer"
-                    className="w-full bg-white/5 border border-white/10 rounded-lg py-4 pl-12 pr-4 text-white placeholder:text-white/20 focus:outline-none focus:border-fortuna-pink/50 transition-colors"
+                    placeholder="Security architect"
+                    autoComplete="organization-title"
+                    className="w-full bg-white/5 border border-white/10 rounded-md py-4 pl-12 pr-4 text-white placeholder:text-white/45 focus:outline-none focus:border-fortuna-pink/60 focus:ring-2 focus:ring-fortuna-pink/20 transition-colors"
                   />
                 </div>
               </div>
 
               <div className="space-y-2">
-                <label className="text-[10px] font-bold uppercase tracking-widest text-white/40 ml-1">Company / Organization</label>
+                <label htmlFor="company" className="text-xs font-semibold text-white/72 ml-1">Company</label>
                 <div className="relative">
-                  <Tooltip content="Your organization name" position="left">
-                    <Building2 className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/20" />
-                  </Tooltip>
+                  <Building2 className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/35" />
                   <input
+                    id="company"
                     required
                     name="company"
                     type="text"
                     placeholder="Acme Corp"
-                    className="w-full bg-white/5 border border-white/10 rounded-lg py-4 pl-12 pr-4 text-white placeholder:text-white/20 focus:outline-none focus:border-fortuna-pink/50 transition-colors"
+                    autoComplete="organization"
+                    className="w-full bg-white/5 border border-white/10 rounded-md py-4 pl-12 pr-4 text-white placeholder:text-white/45 focus:outline-none focus:border-fortuna-pink/60 focus:ring-2 focus:ring-fortuna-pink/20 transition-colors"
                   />
                 </div>
               </div>
             </div>
 
             {error && (
-              <p className="text-red-400 text-sm py-2">{error}</p>
+              <p className="rounded-md border border-red-400/25 bg-red-500/10 px-4 py-3 text-sm text-red-200">{error}</p>
             )}
 
             <Tooltip content="Submit Demo Request" position="bottom">
               <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full py-4 px-6 pink-gradient text-white font-bold uppercase tracking-widest rounded-lg flex items-center justify-center gap-2 hover:scale-[1.02] transition-transform shadow-[0_10px_20px_rgba(209,26,94,0.2)] disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full min-h-12 rounded-md bg-fortuna-pink px-6 py-4 text-sm font-bold text-white flex items-center justify-center gap-2 transition-colors hover:bg-[#EA2A70] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-fortuna-pink disabled:opacity-55 disabled:cursor-not-allowed"
               >
                 {isLoading ? (
-                  <>Processing...</>
+                  <>Sending request...</>
                 ) : (
-                  <>Request Demo Access <ArrowRight className="w-4 h-4" /></>
+                  <>Request a demo <ArrowRight className="w-4 h-4" /></>
                 )}
               </button>
             </Tooltip>
 
-            <p className="text-center text-[10px] text-white/20 uppercase tracking-widest">
-              By submitting, you agree to our <a href="#" className="text-white/40 hover:text-fortuna-pink underline">Terms of Service</a> and <a href="#" className="text-white/40 hover:text-fortuna-pink underline">Privacy Policy</a>.
+            <p className="text-center text-xs leading-5 text-white/45">
+              By submitting, you agree to our <a href="#" className="text-white/70 hover:text-fortuna-pink underline">Terms of Service</a> and <a href="#" className="text-white/70 hover:text-fortuna-pink underline">Privacy Policy</a>.
             </p>
           </form>
         </motion.div>
