@@ -33,6 +33,7 @@ jobs:
 
       - name: Build
         env:
+          VITE_BASE_PATH: /${{ github.event.repository.name }}/
           VITE_FORMSPREE_ENDPOINT: ${{ secrets.VITE_FORMSPREE_ENDPOINT }}
         run: npm run build
 
