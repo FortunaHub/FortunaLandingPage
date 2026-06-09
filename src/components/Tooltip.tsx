@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
 
 interface TooltipProps {
   content: string;
@@ -10,6 +10,7 @@ interface TooltipProps {
 
 export default function Tooltip({ content, children, position = 'top' }: TooltipProps) {
   const [isVisible, setIsVisible] = useState(false);
+  const reduceMotion = useReducedMotion();
 
   const positionClasses = {
     top: 'bottom-full left-1/2 -translate-x-1/2 mb-2',
@@ -30,18 +31,14 @@ export default function Tooltip({ content, children, position = 'top' }: Tooltip
       <AnimatePresence>
         {isVisible && (
           <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
+            initial={reduceMotion ? false : { opacity: 0, scale: 0.96, y: position === 'top' ? 2 : position === 'bottom' ? -2 : 0 }}
             animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.8 }}
-            transition={{ 
-              type: "spring",
-              stiffness: 400,
-              damping: 15
-            }}
-            className={`absolute z-[100] px-2 py-1 text-[10px] font-bold uppercase tracking-widest text-white bg-fortuna-pink rounded shadow-lg whitespace-nowrap pointer-events-none ${positionClasses[position]}`}
+            exit={reduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.96 }}
+            transition={{ duration: 0.14, ease: [0.22, 1, 0.36, 1] }}
+            role="tooltip"
+            className={`absolute z-[100] px-2.5 py-1.5 text-[11px] font-semibold text-white bg-fortuna-pink rounded-md shadow-lg whitespace-nowrap pointer-events-none ${positionClasses[position]}`}
           >
             {content}
-            {/* Arrow */}
             <div 
               className={`absolute w-2 h-2 bg-fortuna-pink rotate-45 ${
                 position === 'top' ? 'bottom-[-4px] left-1/2 -translate-x-1/2' :

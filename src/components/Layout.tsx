@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, ArrowUp, ChevronDown } from 'lucide-react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
 import Tooltip from './Tooltip';
 import Logo from './Logo';
 import { SOLUTIONS } from '../config/solutions';
@@ -13,6 +13,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const [comingSoonToast, setComingSoonToast] = useState(false);
   const solutionsRef = useRef<HTMLDivElement>(null);
   const location = useLocation();
+  const reduceMotion = useReducedMotion();
 
   const navLinks = [
     { name: 'Platform', to: '/', tooltip: 'Home' },
@@ -46,6 +47,16 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     return () => clearTimeout(t);
   }, [comingSoonToast]);
 
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key !== 'Escape') return;
+      setShowSolutionsDropdown(false);
+      setIsMenuOpen(false);
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -70,8 +81,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               {/* Solutions Dropdown */}
               <div ref={solutionsRef} className="relative">
                 <button
+                  type="button"
+                  aria-expanded={showSolutionsDropdown}
+                  aria-controls="solutions-menu"
                   onClick={() => setShowSolutionsDropdown((v) => !v)}
-                  className={`flex items-center gap-1 text-[11px] font-semibold uppercase tracking-[0.18em] transition-colors whitespace-nowrap ${
+                  className={`flex min-h-11 items-center gap-1 text-[11px] font-semibold uppercase tracking-[0.18em] transition-colors whitespace-nowrap focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-fortuna-pink ${
                     showSolutionsDropdown ? 'text-fortuna-pink' : 'text-white/60 hover:text-fortuna-pink'
                   }`}
                 >
@@ -81,10 +95,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 <AnimatePresence>
                   {showSolutionsDropdown && (
                     <motion.div
-                      initial={{ opacity: 0, y: -8 }}
+                      id="solutions-menu"
+                      initial={reduceMotion ? false : { opacity: 0, y: -8 }}
                       animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -8 }}
-                      transition={{ duration: 0.15 }}
+                      exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -8 }}
+                      transition={{ duration: 0.16, ease: [0.22, 1, 0.36, 1] }}
                       className="absolute top-full left-0 mt-2 w-80 rounded-xl bg-fortuna-card border border-white/10 shadow-xl overflow-hidden z-50"
                     >
                       <div className="p-2">
@@ -117,7 +132,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                                 setComingSoonToast(true);
                                 setShowSolutionsDropdown(false);
                               }}
-                              className="w-full text-left"
+                              className="w-full text-left rounded-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fortuna-pink"
                             >
                               {content}
                             </button>
@@ -129,7 +144,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                                 setShowSolutionsDropdown(false);
                                 setIsMenuOpen(false);
                               }}
-                              className="block"
+                              className="block rounded-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fortuna-pink"
                             >
                               {content}
                             </Link>
@@ -149,7 +164,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                     <Link
                       to={link.to}
                       onClick={() => setIsMenuOpen(false)}
-                      className={`min-w-[5rem] text-center text-[11px] font-semibold uppercase tracking-[0.18em] transition-colors whitespace-nowrap ${
+                      className={`min-w-[5rem] min-h-11 inline-flex items-center justify-center text-center text-[11px] font-semibold uppercase tracking-[0.18em] transition-colors whitespace-nowrap focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-fortuna-pink ${
                         isActive ? 'text-fortuna-pink' : 'text-white/60 hover:text-fortuna-pink'
                       }`}
                     >
@@ -163,7 +178,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             {/* Mobile Menu Button */}
             <Tooltip content={isMenuOpen ? "Close Menu" : "Open Menu"} position="bottom">
               <button
-                className="md:hidden text-white"
+                type="button"
+                aria-label={isMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+                aria-expanded={isMenuOpen}
+                aria-controls="mobile-navigation"
+                className="md:hidden min-h-11 min-w-11 inline-flex items-center justify-center text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-fortuna-pink"
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
               >
                 {isMenuOpen ? <X /> : <Menu />}
@@ -176,9 +195,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <AnimatePresence>
           {isMenuOpen && (
             <motion.div
-              initial={{ opacity: 0, height: 0 }}
+              id="mobile-navigation"
+              initial={reduceMotion ? false : { opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
+              exit={reduceMotion ? { opacity: 0 } : { opacity: 0, height: 0 }}
               className="md:hidden bg-fortuna-card border-t border-white/5"
             >
               <div className="px-4 py-6 flex flex-col gap-4">
@@ -214,7 +234,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                             setComingSoonToast(true);
                             setIsMenuOpen(false);
                           }}
-                          className="w-full text-left"
+                          className="w-full text-left rounded-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fortuna-pink"
                         >
                           {content}
                         </button>
@@ -223,7 +243,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                           key={sol.id}
                           to={sol.to}
                           onClick={() => setIsMenuOpen(false)}
-                          className="block"
+                          className="block rounded-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fortuna-pink"
                         >
                           {content}
                         </Link>
@@ -240,7 +260,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                       key={link.name}
                       to={link.to}
                       onClick={() => setIsMenuOpen(false)}
-                      className={`py-2 text-sm font-semibold uppercase tracking-[0.15em] transition-colors border-b border-white/5 last:border-0 ${
+                      className={`min-h-11 inline-flex items-center py-2 text-sm font-semibold uppercase tracking-[0.15em] transition-colors border-b border-white/5 last:border-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-fortuna-pink ${
                         isActive ? 'text-fortuna-pink' : 'text-white/60 hover:text-fortuna-pink'
                       }`}
                     >
@@ -272,27 +292,27 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <div>
               <h4 className="text-xs font-bold uppercase tracking-[0.2em] text-white mb-6">Product</h4>
               <ul className="space-y-4">
-                <li><Link to="/" className="text-sm text-white/40 hover:text-fortuna-pink transition-colors">Platform</Link></li>
-                <li><Link to="/features" className="text-sm text-white/40 hover:text-fortuna-pink transition-colors">Features</Link></li>
-                <li><Link to="/docs" className="text-sm text-white/40 hover:text-fortuna-pink transition-colors">Documentation</Link></li>
-                <li><Link to="/about" className="text-sm text-white/40 hover:text-fortuna-pink transition-colors">About</Link></li>
+                <li><Link to="/" className="text-sm text-white/55 hover:text-fortuna-pink transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-fortuna-pink">Platform</Link></li>
+                <li><Link to="/features" className="text-sm text-white/55 hover:text-fortuna-pink transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-fortuna-pink">Features</Link></li>
+                <li><Link to="/docs" className="text-sm text-white/55 hover:text-fortuna-pink transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-fortuna-pink">Documentation</Link></li>
+                <li><Link to="/about" className="text-sm text-white/55 hover:text-fortuna-pink transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-fortuna-pink">About</Link></li>
               </ul>
             </div>
             <div>
               <h4 className="text-xs font-bold uppercase tracking-[0.2em] text-white mb-6">Company</h4>
               <ul className="space-y-4">
-                <li><Link to="/about" className="text-sm text-white/40 hover:text-fortuna-pink transition-colors">About Fortuna</Link></li>
-                <li><a href="mailto:contact@fortunahub.com" className="text-sm text-white/40 hover:text-fortuna-pink transition-colors">Contact</a></li>
+                <li><Link to="/about" className="text-sm text-white/55 hover:text-fortuna-pink transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-fortuna-pink">About Fortuna</Link></li>
+                <li><a href="mailto:contact@fortunahub.com" className="text-sm text-white/55 hover:text-fortuna-pink transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-fortuna-pink">Contact</a></li>
               </ul>
             </div>
           </div>
           <div className="mt-12 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-xs text-white/20 uppercase tracking-widest">
+            <p className="text-xs text-white/35 uppercase tracking-widest">
               © 2026 FortunaHub. All rights reserved.
             </p>
             <div className="flex gap-6">
-              <a href="#" className="text-xs text-white/20 hover:text-white transition-colors uppercase tracking-widest">Privacy Policy</a>
-              <a href="#" className="text-xs text-white/20 hover:text-white transition-colors uppercase tracking-widest">Terms of Service</a>
+              <a href="mailto:contact@fortunahub.com?subject=Privacy%20policy%20request" className="text-xs text-white/45 hover:text-white transition-colors uppercase tracking-widest focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-fortuna-pink">Privacy Policy</a>
+              <a href="mailto:contact@fortunahub.com?subject=Terms%20of%20service%20request" className="text-xs text-white/45 hover:text-white transition-colors uppercase tracking-widest focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-fortuna-pink">Terms of Service</a>
             </div>
           </div>
         </div>
@@ -305,10 +325,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
+            role="status"
+            aria-live="polite"
             className="fixed bottom-24 left-1/2 -translate-x-1/2 z-[70] px-6 py-3 rounded-xl bg-fortuna-card border border-white/10 shadow-xl"
           >
             <p className="text-sm font-semibold text-white">Coming soon</p>
-            <p className="text-xs text-white/50 mt-0.5">Sản phẩm sẽ có mặt sớm</p>
+            <p className="text-xs text-white/60 mt-0.5">This product line is not available yet.</p>
           </motion.div>
         )}
       </AnimatePresence>
@@ -324,8 +346,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           >
             <Tooltip content="Scroll to Top" position="left">
               <button
+                type="button"
+                aria-label="Scroll to top"
                 onClick={scrollToTop}
-                className="w-12 h-12 pink-gradient rounded-full flex items-center justify-center text-white shadow-[0_0_20px_rgba(209,26,94,0.4)] hover:scale-110 transition-transform"
+                className="w-12 h-12 bg-fortuna-pink rounded-full flex items-center justify-center text-white shadow-[0_0_20px_rgba(209,26,94,0.4)] hover:bg-[#EA2A70] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-fortuna-pink"
               >
                 <ArrowUp className="w-6 h-6" />
               </button>

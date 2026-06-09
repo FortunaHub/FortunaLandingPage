@@ -16,14 +16,14 @@ export default function DocsLayout() {
           <div className="p-6 lg:py-10 lg:pl-8 lg:pr-6">
             <Link
               to="/"
-              className="inline-flex items-center gap-2 text-white/60 hover:text-fortuna-pink text-sm mb-8 transition-colors"
+              className="inline-flex min-h-11 items-center gap-2 text-white/65 hover:text-fortuna-pink text-sm mb-8 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-fortuna-pink"
             >
               <ChevronRight className="w-4 h-4 rotate-180" />
-              Back to Home
+              Back to homepage
             </Link>
 
-            <h1 className="text-2xl font-black uppercase tracking-tight">Documentation</h1>
-            <p className="text-white/50 text-xs mt-3 leading-relaxed">
+            <h1 className="text-2xl font-black uppercase leading-tight">Documentation</h1>
+            <p className="text-white/60 text-xs mt-3 leading-relaxed">
               Fortuna is a Kubernetes security and risk management platform that ties together software supply-chain visibility,
               live vulnerability intelligence, network policy design, attack-path modeling, centralized risk insights, and runtime
               telemetry.
@@ -38,9 +38,9 @@ export default function DocsLayout() {
                     to={doc.slug}
                     className={({ isActive }) =>
                       [
-                        'flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors border border-transparent',
+                        'flex min-h-14 items-center gap-3 rounded-md px-3 py-2.5 text-sm transition-colors border focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fortuna-pink',
                         isActive
-                          ? 'bg-fortuna-pink/15 border-fortuna-pink/35 text-white shadow-[inset_3px_0_0_0_#D11A5E]'
+                          ? 'bg-fortuna-pink/15 border-fortuna-pink/40 text-white'
                           : 'text-white/65 hover:bg-white/5 hover:text-white border-white/5',
                       ].join(' ')
                     }
@@ -50,7 +50,7 @@ export default function DocsLayout() {
                     </span>
                     <span className="flex flex-col min-w-0">
                       <span className="font-bold uppercase tracking-tight text-xs leading-tight">{doc.title}</span>
-                      <span className="text-[10px] font-mono text-white/35 truncate mt-0.5">/docs/{doc.slug}</span>
+                      <span className="text-[10px] font-mono text-white/45 truncate mt-0.5">/docs/{doc.slug}</span>
                     </span>
                   </NavLink>
                 );
