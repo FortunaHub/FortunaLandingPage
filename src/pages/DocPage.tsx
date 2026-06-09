@@ -7,11 +7,11 @@ const ICONS = { Terminal, Layers, Rocket, FileCode, BookOpen, Cpu };
 
 const DOC_CONTENT: Record<DocSlug, React.ReactNode> = {
   overview: (
-    <div className="text-white/60 text-sm space-y-6">
+    <div className="text-white/68 text-sm space-y-6">
       <p>
         <strong className="text-white/80">Fortuna</strong> is a Kubernetes security and risk management platform that ties together
         software supply-chain visibility, live vulnerability intelligence, network policy design, attack-path modeling, centralized risk
-        insights, and runtime telemetry: the same scope described in the project README.
+        insights, and runtime telemetry in the same scope described in the project README.
       </p>
       <div>
         <h3 className="text-white/80 font-bold mb-2">Product overview</h3>
@@ -61,7 +61,7 @@ const DOC_CONTENT: Record<DocSlug, React.ReactNode> = {
           <li>Network design &amp; policy: <code className="text-fortuna-pink">Network-design.png</code></li>
           <li>Real-time network activity: <code className="text-fortuna-pink">realtime-network-activity.png</code></li>
           <li>
-            Attack path (multi-screen) :{' '}
+            Attack path screens:{' '}
             <code className="text-fortuna-pink">attack-path-analysis.png</code>,{' '}
             <code className="text-fortuna-pink">attack-path-graph-view.png</code>,{' '}
             <code className="text-fortuna-pink">attack-path-scenario.png</code>
@@ -83,7 +83,7 @@ const DOC_CONTENT: Record<DocSlug, React.ReactNode> = {
     </div>
   ),
   components: (
-    <div className="text-white/60 text-sm space-y-6">
+    <div className="text-white/68 text-sm space-y-6">
       <p>
         Fortuna is made of <strong className="text-white/80">Agent</strong> (DaemonSet), <strong className="text-white/80">Core</strong>{' '}
         (control-plane service), <strong className="text-white/80">Dashboard</strong> (React SPA), and data-plane infrastructure (PostgreSQL,
@@ -94,16 +94,16 @@ const DOC_CONTENT: Record<DocSlug, React.ReactNode> = {
         <h3 className="text-white/80 font-bold mb-2">Agent</h3>
         <p className="mb-2">
           Runs on <strong className="text-white/70">each node</strong>. Watches pods on that node only (Kubernetes informers), enqueues work, and
-          extracts SBOMs from container images via the containerd socket. Supports many ecosystems: among them dpkg, apk, rpm, npm, pip, Go modules,
-          Go buildinfo, Maven, Cargo, Ruby, NuGet, and distroless-oriented paths: with <strong className="text-white/70">OS-aware</strong> parser
+          extracts SBOMs from container images via the containerd socket. Supports many ecosystems, including dpkg, apk, rpm, npm, pip, Go modules,
+          Go buildinfo, Maven, Cargo, Ruby, NuGet, and distroless-oriented paths with <strong className="text-white/70">OS-aware</strong> parser
           selection, <strong className="text-white/70">PURL</strong> identifiers, and async workers so pod detection is not blocked by slow extracts.
         </p>
         <p className="mb-2">
           Sends SBOMs and sync metadata to Core over <strong className="text-white/70">gRPC with mTLS</strong> (reconnect, heartbeat, retries). Can
           also contribute <strong className="text-white/70">runtime context</strong> (e.g. process/host signals, optional Falco JSONL ingestion,
-          eBPF-related hooks where enabled) so Core can promote capability state: details depend on your deployment profile.
+          eBPF-related hooks where enabled) so Core can promote capability state. Details depend on your deployment profile.
         </p>
-        <p className="text-white/50 text-xs">
+        <p className="text-white/60 text-xs">
           Typical sizing: on the order of hundreds of millicores CPU and from a few hundred MiB RAM upward per node; tune worker count and limits
           for your cluster (heavy SBOM or runtime features may need higher caps).
         </p>
@@ -121,7 +121,7 @@ const DOC_CONTENT: Record<DocSlug, React.ReactNode> = {
           Operational surfaces include <strong className="text-white/70">health and readiness</strong> endpoints and{' '}
           <strong className="text-white/70">Prometheus metrics</strong> (API, workers, webhook).
         </p>
-        <p className="text-white/50 text-xs">
+        <p className="text-white/60 text-xs">
           Production hardening: store DB and message-bus credentials in a secret manager; enable TLS/mTLS and JWT where required by your environment.
         </p>
       </div>
@@ -153,7 +153,7 @@ const DOC_CONTENT: Record<DocSlug, React.ReactNode> = {
     </div>
   ),
   'getting-started': (
-    <div className="text-white/60 text-sm space-y-6">
+    <div className="text-white/68 text-sm space-y-6">
       <div>
         <h3 className="text-white/80 font-bold mb-2">This documentation site (README)</h3>
         <p className="mb-2">To run the Fortuna landing page and browse these docs locally:</p>
@@ -162,7 +162,7 @@ const DOC_CONTENT: Record<DocSlug, React.ReactNode> = {
           <li><code className="text-fortuna-pink">npm install</code></li>
           <li><code className="text-fortuna-pink">npm run dev</code>: open http://localhost:3000</li>
         </ol>
-        <p className="mt-2 text-white/50 text-xs">Production preview: <code className="text-fortuna-pink">npm run build</code> then <code className="text-fortuna-pink">npm run preview</code>.</p>
+        <p className="mt-2 text-white/60 text-xs">Production preview: <code className="text-fortuna-pink">npm run build</code> then <code className="text-fortuna-pink">npm run preview</code>.</p>
       </div>
       <div>
         <h3 className="text-white/80 font-bold mb-2">Fortuna platform: prerequisites</h3>
@@ -181,7 +181,7 @@ const DOC_CONTENT: Record<DocSlug, React.ReactNode> = {
             <strong>Namespace &amp; secrets</strong>: Create an application namespace. Provision <strong className="text-white/70">mTLS trust</strong>{' '}
             and workload certificates using your PKI or the project&apos;s helper scripts. Store <strong className="text-white/70">database URL</strong>,{' '}
             <strong className="text-white/70">message bus URL</strong>, and <strong className="text-white/70">signing keys</strong> in Kubernetes Secrets
-            or an external vault: avoid committing real values to git.
+            or an external vault. Avoid committing real values to git.
           </li>
           <li>
             <strong>Infrastructure</strong>: Deploy PostgreSQL and NATS (and optional Redis) from your chosen charts or the repository&apos;s reference manifests; wait until stores are ready before Core starts.
@@ -197,17 +197,17 @@ const DOC_CONTENT: Record<DocSlug, React.ReactNode> = {
           </li>
         </ol>
       </div>
-      <p className="text-white/50 text-xs">
+      <p className="text-white/60 text-xs">
         Multi-node clusters often need correct cluster DNS and pod network paths between nodes so Agents can reach Core gRPC; treat CNI and DNS as
-        first-class deployment concerns. Full operator runbooks live in the main product repository: not duplicated here.
+        first-class deployment concerns. Full operator runbooks live in the main product repository and are not duplicated here.
       </p>
     </div>
   ),
   architecture: (
-    <div className="text-white/60 text-sm space-y-6">
+    <div className="text-white/68 text-sm space-y-6">
       <p>
         Fortuna provides real-time vulnerability visibility, SBOM extraction, CVE matching, insights, pod capability analysis (including MITRE
-        ATT&amp;CK-oriented modeling), runtime signals, and optional admission control: unified behind a single control plane.
+        ATT&amp;CK-oriented modeling), runtime signals, and optional admission control behind a single control plane.
       </p>
       <div>
         <h3 className="text-white/80 font-bold mb-2">Logical diagram</h3>
@@ -271,8 +271,8 @@ const DOC_CONTENT: Record<DocSlug, React.ReactNode> = {
       </div>
       <div>
         <h3 className="text-white/80 font-bold mb-2">Repository layout (product repo)</h3>
-        <p className="text-xs font-mono text-white/55">
-          agent/ · core/ · dashboard/ · deploy/ · docs/ · e2e/: each major component owns its build, manifests, and tests.
+        <p className="text-xs font-mono text-white/62">
+          agent/ · core/ · dashboard/ · deploy/ · docs/ · e2e/; each major component owns its build, manifests, and tests.
         </p>
       </div>
       <div>
@@ -287,7 +287,7 @@ const DOC_CONTENT: Record<DocSlug, React.ReactNode> = {
     </div>
   ),
   deployment: (
-    <div className="text-white/60 text-sm space-y-6">
+    <div className="text-white/68 text-sm space-y-6">
       <div>
         <h3 className="text-white/80 font-bold mb-2">Landing site: GitHub Pages (README)</h3>
         <p className="mb-2">
@@ -295,9 +295,9 @@ const DOC_CONTENT: Record<DocSlug, React.ReactNode> = {
           <strong className="text-white/70">Settings → Pages → GitHub Actions</strong> as the source, and let the workflow deploy on push. The site is served at{' '}
           <code className="text-fortuna-pink text-xs">https://&lt;username&gt;.github.io/&lt;repo-name&gt;/</code>.
         </p>
-        <p className="text-white/50 text-xs mb-2">
+        <p className="text-white/60 text-xs mb-2">
           Notes from README: workflow targets <code className="text-fortuna-pink">main</code> (adjust if you use <code className="text-fortuna-pink">master</code>). For a subpath build, use{' '}
-          <code className="text-fortuna-pink">BASE_PATH=/LandingPage/ npm run build</code> then <code className="text-fortuna-pink">npm run preview</code> to verify.
+          <code className="text-fortuna-pink">VITE_BASE_PATH=/FortunaLandingPage/ npm run build</code> then <code className="text-fortuna-pink">npm run preview</code> to verify a repository subpath build.
         </p>
       </div>
       <div>
@@ -338,7 +338,7 @@ const DOC_CONTENT: Record<DocSlug, React.ReactNode> = {
         <p className="mb-2 text-xs">
           Agents must resolve and reach Core gRPC (and HTTP where used). In multi-node clusters, verify cluster DNS, service routing, and CNI
           connectivity between node subnets. Symptoms such as DNS timeouts or connection timeouts after resolution usually point to platform DNS or
-          overlay network configuration: resolve those before tuning application timeouts.
+          overlay network configuration. Resolve those before tuning application timeouts.
         </p>
       </div>
       <div>
@@ -364,7 +364,7 @@ const DOC_CONTENT: Record<DocSlug, React.ReactNode> = {
     </div>
   ),
   api: (
-    <div className="text-white/60 text-sm space-y-6">
+    <div className="text-white/68 text-sm space-y-6">
       <p>
         Core exposes a <strong className="text-white/70">versioned REST API</strong> (Gin) alongside <strong className="text-white/70">gRPC</strong>{' '}
         for Agents. HTTP routes are organized by domain (auth, inventory, risk, runtime, policy, dashboard, agent, cluster, SBOM). When JWT auth is
@@ -380,7 +380,7 @@ const DOC_CONTENT: Record<DocSlug, React.ReactNode> = {
       </div>
       <div>
         <h3 className="text-white/80 font-bold mb-2">Representative HTTP resources</h3>
-        <p className="text-white/50 text-xs mb-2">
+        <p className="text-white/60 text-xs mb-2">
           Prefixes evolve across releases; confirm against your Core build. Examples often include:
         </p>
         <ul className="space-y-2 font-mono text-xs">
@@ -396,7 +396,7 @@ const DOC_CONTENT: Record<DocSlug, React.ReactNode> = {
           <li><code className="text-fortuna-pink">/metrics</code>: Prometheus scrape surface</li>
         </ul>
       </div>
-      <p className="text-white/50 text-xs">
+      <p className="text-white/60 text-xs">
         Large deployments rely on pagination (<code className="text-fortuna-pink">page</code>, <code className="text-fortuna-pink">pageSize</code>) and
         filters (resource, namespace, severity, status). For the canonical path list and schemas, use the product API reference bundled with your
         release.
@@ -419,16 +419,16 @@ export default function DocPage() {
   return (
     <div className="max-w-3xl">
       <div className="flex items-center gap-3 mb-6">
-        <div className="w-12 h-12 pink-gradient rounded-lg flex items-center justify-center shrink-0">
-          <Icon className="w-6 h-6 text-white" />
+        <div className="w-12 h-12 rounded-md bg-fortuna-pink/15 border border-fortuna-pink/30 flex items-center justify-center shrink-0">
+          <Icon className="w-6 h-6 text-fortuna-pink" />
         </div>
         <div className="min-w-0">
-          <h1 className="text-2xl sm:text-3xl font-black uppercase tracking-tight">{doc.title}</h1>
-          <p className="text-white/50 text-xs font-mono truncate">/docs/{doc.slug}</p>
+          <h1 className="text-2xl sm:text-3xl font-black uppercase leading-tight">{doc.title}</h1>
+          <p className="text-white/62 text-xs font-mono truncate">/docs/{doc.slug}</p>
         </div>
       </div>
 
-      <div className="glass-card p-6 lg:p-8 border border-white/5 rounded-xl">{content}</div>
+      <div className="rounded-lg border border-white/10 bg-white/[0.035] p-6 lg:p-8">{content}</div>
     </div>
   );
 }

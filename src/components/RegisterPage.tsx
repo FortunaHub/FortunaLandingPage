@@ -250,7 +250,7 @@ export default function RegisterPage() {
             </Tooltip>
 
             <p className="text-center text-xs leading-5 text-white/45">
-              By submitting, you agree to our <a href="#" className="text-white/70 hover:text-fortuna-pink underline">Terms of Service</a> and <a href="#" className="text-white/70 hover:text-fortuna-pink underline">Privacy Policy</a>.
+              By submitting, you agree to our <a href="mailto:contact@fortunahub.com?subject=Terms%20of%20service%20request" className="text-white/70 hover:text-fortuna-pink underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-fortuna-pink">Terms of Service</a> and <a href="mailto:contact@fortunahub.com?subject=Privacy%20policy%20request" className="text-white/70 hover:text-fortuna-pink underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-fortuna-pink">Privacy Policy</a>.
             </p>
           </form>
         </motion.div>
