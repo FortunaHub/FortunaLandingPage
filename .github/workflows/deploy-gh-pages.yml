@@ -33,16 +33,11 @@ jobs:
 
       - name: Build
         env:
-          VITE_BASE_PATH: /FortunaLandingPage/
           VITE_FORMSPREE_ENDPOINT: ${{ secrets.VITE_FORMSPREE_ENDPOINT }}
         run: npm run build
 
       - name: Prepare deployment
         run: |
-          mkdir -p dist/FortunaLandingPage
-          cp -R dist/assets dist/FortunaLandingPage/
-          cp -R dist/images dist/FortunaLandingPage/ 2>/dev/null || true
-          cp dist/favicon.png dist/logo.png dist/FortunaLandingPage/ 2>/dev/null || true
           cp CNAME dist/ 2>/dev/null || true
           touch dist/.nojekyll
 
