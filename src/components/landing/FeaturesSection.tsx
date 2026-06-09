@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'motion/react';
 import { Cpu } from 'lucide-react';
 import { FEATURES } from '../../config/landing';
+import FeatureSlideshow from './FeatureSlideshow';
 
 export default function FeaturesSection() {
   return (
@@ -19,7 +20,7 @@ export default function FeaturesSection() {
 
         {FEATURES.map((item) => (
           <motion.div
-            key={item.img}
+            key={item.id}
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}
@@ -43,13 +44,7 @@ export default function FeaturesSection() {
               </div>
             </div>
             <div className={item.order === 'img' ? 'lg:order-1' : 'lg:order-2'}>
-              <div className="rounded-lg overflow-hidden border border-white/10 shadow-lg">
-                <img
-                  src={`/images/${item.img}`}
-                  alt={item.alt}
-                  className="w-full max-w-full h-auto object-contain"
-                />
-              </div>
+              <FeatureSlideshow slides={item.slides} />
             </div>
           </motion.div>
         ))}

@@ -19,7 +19,7 @@ export default function FeaturesPage() {
             Fortuna <span className="text-fortuna-pink">Features</span>
           </h1>
           <p className="text-white/60 max-w-2xl mx-auto text-lg">
-            End-to-end Kubernetes security: SBOM, CVE matching, Risk Center, Attack Path Analysis, Network Designer, Pod Capability Engine, and runtime signals — all in one platform.
+            Supply-chain visibility, live CVE intelligence, Zero Trust network design with real traffic, attack-path modeling, centralized risk insights, Pod Capability Engine, and runtime/process monitoring — unified for Kubernetes security operations.
           </p>
         </div>
       </div>

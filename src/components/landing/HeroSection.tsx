@@ -44,7 +44,7 @@ export default function HeroSection() {
               </p>
             </div>
             <p className="text-white/50 text-sm max-w-lg mb-8">
-              End-to-end visibility: SBOM extraction, CVE matching, Risk Center, Pod Capability Engine, attack path analysis, Network Designer, and runtime signals. One platform for Kubernetes security and risk management.
+              SBOM and CVE intelligence, Risk Center, attack-path analysis, Network Designer with live traffic, Pod Capability Engine, and runtime/process telemetry — one control plane for Kubernetes security and risk.
             </p>
             <Tooltip content="Start Free Trial" position="bottom">
               <Link

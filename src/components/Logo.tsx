@@ -10,7 +10,7 @@ export default function Logo({ className = '', size = 32 }: LogoProps) {
   return (
     <Link to="/" className="inline-block">
       <img
-        src="/logo.png"
+        src={`${import.meta.env.BASE_URL}logo.png`}
         alt="Fortuna - Kubernetes Security & Risk Management"
         width={size}
         height={size}

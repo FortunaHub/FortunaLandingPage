@@ -20,7 +20,7 @@ export default function AboutSection() {
           About <span className="text-fortuna-pink">FortunaHub</span>
         </h2>
         <p className="text-white/60 max-w-2xl mx-auto text-lg leading-relaxed mb-6">
-          Fortuna is a Kubernetes security and risk management platform. It unifies SBOM extraction, CVE matching, Pod Capability Engine (PCE), attack path analysis, and runtime signals in a single solution.
+          Fortuna is a Kubernetes security and risk management platform. It brings together SBOM extraction, live CVE matching, Risk Center insights, attack-path analysis, Zero Trust Network Designer with real traffic, Pod Capability Engine (PCE), and runtime/process monitoring.
         </p>
         <p className="text-white/50 max-w-2xl mx-auto text-sm leading-relaxed">
           Production-ready with mTLS for inter-component communication, NATS JetStream for high availability, and Prometheus metrics for observability. Designed for SRE and security teams who need visibility without performance overhead.
