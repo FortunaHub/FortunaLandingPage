@@ -11,7 +11,7 @@ const DOC_CONTENT: Record<DocSlug, React.ReactNode> = {
       <p>
         <strong className="text-white/80">Fortuna</strong> is a Kubernetes security and risk management platform that ties together
         software supply-chain visibility, live vulnerability intelligence, network policy design, attack-path modeling, centralized risk
-        insights, and runtime telemetry — the same scope described in the project README.
+        insights, and runtime telemetry: the same scope described in the project README.
       </p>
       <div>
         <h3 className="text-white/80 font-bold mb-2">Product overview</h3>
@@ -20,31 +20,31 @@ const DOC_CONTENT: Record<DocSlug, React.ReactNode> = {
         </p>
         <ul className="list-disc list-inside space-y-2 ml-2">
           <li>
-            <strong className="text-white/70">SBOM &amp; supply chain</strong> — Continuous extraction from workloads via node agents and
+            <strong className="text-white/70">SBOM &amp; supply chain</strong>: Continuous extraction from workloads via node agents and
             containerd, multi-ecosystem parsers, and PURL-normalized components for audit-ready exports.
           </li>
           <li>
-            <strong className="text-white/70">CVE intelligence</strong> — SBOM components matched against a vulnerability datastore with
+            <strong className="text-white/70">CVE intelligence</strong>: SBOM components matched against a vulnerability datastore with
             ecosystem-aware version logic, severity context, and event-driven updates for current exposure views.
           </li>
           <li>
-            <strong className="text-white/70">Network Designer &amp; live traffic</strong> — Zero Trust–oriented topology and policy views,
+            <strong className="text-white/70">Network Designer &amp; live traffic</strong>: Zero Trust-oriented topology and policy views,
             including real-time network activity to validate intent against what is actually observed.
           </li>
           <li>
-            <strong className="text-white/70">Attack Path Analysis</strong> — Interactive graphs and scenarios for lateral movement and
+            <strong className="text-white/70">Attack Path Analysis</strong>: Interactive graphs and scenarios for lateral movement and
             privilege escalation, aligned with capability and vulnerability data.
           </li>
           <li>
-            <strong className="text-white/70">Risk Center</strong> — Consolidated triage with severity rollups, filters, and drill-downs
+            <strong className="text-white/70">Risk Center</strong>: Consolidated triage with severity rollups, filters, and drill-downs
             across resources and insight types.
           </li>
           <li>
-            <strong className="text-white/70">Pod Capability Engine (PCE)</strong> — Static and runtime-backed reasoning over dangerous pod
+            <strong className="text-white/70">Pod Capability Engine (PCE)</strong>: Static and runtime-backed reasoning over dangerous pod
             and RBAC combinations, with state progression and MITRE-aligned attack steps.
           </li>
           <li>
-            <strong className="text-white/70">Runtime &amp; process monitoring</strong> — Live process and system signals that feed capability
+            <strong className="text-white/70">Runtime &amp; process monitoring</strong>: Live process and system signals that feed capability
             state and operational dashboards, with Prometheus-friendly metrics.
           </li>
         </ul>
@@ -58,17 +58,17 @@ const DOC_CONTENT: Record<DocSlug, React.ReactNode> = {
         </p>
         <p className="mb-2">README groups feature captures as follows (files live in the repo <code className="text-fortuna-pink text-xs">image/</code> folder):</p>
         <ul className="list-disc list-inside space-y-1 ml-2 text-xs">
-          <li>Network design &amp; policy — <code className="text-fortuna-pink">Network-design.png</code></li>
-          <li>Real-time network activity — <code className="text-fortuna-pink">realtime-network-activity.png</code></li>
+          <li>Network design &amp; policy: <code className="text-fortuna-pink">Network-design.png</code></li>
+          <li>Real-time network activity: <code className="text-fortuna-pink">realtime-network-activity.png</code></li>
           <li>
-            Attack path (multi-screen) —{' '}
+            Attack path (multi-screen) :{' '}
             <code className="text-fortuna-pink">attack-path-analysis.png</code>,{' '}
             <code className="text-fortuna-pink">attack-path-graph-view.png</code>,{' '}
             <code className="text-fortuna-pink">attack-path-scenario.png</code>
           </li>
-          <li>Process / runtime monitoring — <code className="text-fortuna-pink">process-runtime-monitoring.png</code></li>
-          <li>Product / UI walkthrough — screenshot sequence <code className="text-fortuna-pink">Screenshot 2026-02-27 …</code></li>
-          <li>Brand — <code className="text-fortuna-pink">logo.png</code></li>
+          <li>Process / runtime monitoring: <code className="text-fortuna-pink">process-runtime-monitoring.png</code></li>
+          <li>Product / UI walkthrough: screenshot sequence <code className="text-fortuna-pink">Screenshot 2026-02-27 …</code></li>
+          <li>Brand: <code className="text-fortuna-pink">logo.png</code></li>
         </ul>
       </div>
       <div>
@@ -94,14 +94,14 @@ const DOC_CONTENT: Record<DocSlug, React.ReactNode> = {
         <h3 className="text-white/80 font-bold mb-2">Agent</h3>
         <p className="mb-2">
           Runs on <strong className="text-white/70">each node</strong>. Watches pods on that node only (Kubernetes informers), enqueues work, and
-          extracts SBOMs from container images via the containerd socket. Supports many ecosystems — among them dpkg, apk, rpm, npm, pip, Go modules,
-          Go buildinfo, Maven, Cargo, Ruby, NuGet, and distroless-oriented paths — with <strong className="text-white/70">OS-aware</strong> parser
+          extracts SBOMs from container images via the containerd socket. Supports many ecosystems: among them dpkg, apk, rpm, npm, pip, Go modules,
+          Go buildinfo, Maven, Cargo, Ruby, NuGet, and distroless-oriented paths: with <strong className="text-white/70">OS-aware</strong> parser
           selection, <strong className="text-white/70">PURL</strong> identifiers, and async workers so pod detection is not blocked by slow extracts.
         </p>
         <p className="mb-2">
           Sends SBOMs and sync metadata to Core over <strong className="text-white/70">gRPC with mTLS</strong> (reconnect, heartbeat, retries). Can
           also contribute <strong className="text-white/70">runtime context</strong> (e.g. process/host signals, optional Falco JSONL ingestion,
-          eBPF-related hooks where enabled) so Core can promote capability state — details depend on your deployment profile.
+          eBPF-related hooks where enabled) so Core can promote capability state: details depend on your deployment profile.
         </p>
         <p className="text-white/50 text-xs">
           Typical sizing: on the order of hundreds of millicores CPU and from a few hundred MiB RAM upward per node; tune worker count and limits
@@ -160,46 +160,46 @@ const DOC_CONTENT: Record<DocSlug, React.ReactNode> = {
         <ol className="list-decimal list-inside space-y-1 ml-2 text-xs font-mono">
           <li><code className="text-fortuna-pink">cd Untitled/FortunaLandingPage</code></li>
           <li><code className="text-fortuna-pink">npm install</code></li>
-          <li><code className="text-fortuna-pink">npm run dev</code> — open http://localhost:3000</li>
+          <li><code className="text-fortuna-pink">npm run dev</code>: open http://localhost:3000</li>
         </ol>
         <p className="mt-2 text-white/50 text-xs">Production preview: <code className="text-fortuna-pink">npm run build</code> then <code className="text-fortuna-pink">npm run preview</code>.</p>
       </div>
       <div>
-        <h3 className="text-white/80 font-bold mb-2">Fortuna platform — prerequisites</h3>
+        <h3 className="text-white/80 font-bold mb-2">Fortuna platform: prerequisites</h3>
         <ul className="list-disc list-inside space-y-1 ml-2">
           <li>Kubernetes <strong className="text-white/70">v1.25+</strong> (newer versions commonly used in testing)</li>
           <li>Container runtime such as <strong className="text-white/70">containerd 1.6+</strong> (or compatible environment for image access)</li>
           <li><strong className="text-white/70">PostgreSQL</strong> for Core persistence</li>
           <li><strong className="text-white/70">NATS with JetStream</strong> for asynchronous pipelines (multi-broker HA is typical in production)</li>
-          <li>Cluster admin–level ability to install namespaces, RBAC, and workloads; tools such as <code className="text-fortuna-pink text-xs">kubectl</code>, image build/load utilities, and TLS material for mTLS as required by your process</li>
+          <li>Cluster admin-level ability to install namespaces, RBAC, and workloads; tools such as <code className="text-fortuna-pink text-xs">kubectl</code>, image build/load utilities, and TLS material for mTLS as required by your process</li>
         </ul>
       </div>
       <div>
         <h3 className="text-white/80 font-bold mb-2">High-level rollout</h3>
         <ol className="list-decimal list-inside space-y-2 ml-2">
           <li>
-            <strong>Namespace &amp; secrets</strong> — Create an application namespace. Provision <strong className="text-white/70">mTLS trust</strong>{' '}
+            <strong>Namespace &amp; secrets</strong>: Create an application namespace. Provision <strong className="text-white/70">mTLS trust</strong>{' '}
             and workload certificates using your PKI or the project&apos;s helper scripts. Store <strong className="text-white/70">database URL</strong>,{' '}
             <strong className="text-white/70">message bus URL</strong>, and <strong className="text-white/70">signing keys</strong> in Kubernetes Secrets
-            or an external vault — avoid committing real values to git.
+            or an external vault: avoid committing real values to git.
           </li>
           <li>
-            <strong>Infrastructure</strong> — Deploy PostgreSQL and NATS (and optional Redis) from your chosen charts or the repository&apos;s reference manifests; wait until stores are ready before Core starts.
+            <strong>Infrastructure</strong>: Deploy PostgreSQL and NATS (and optional Redis) from your chosen charts or the repository&apos;s reference manifests; wait until stores are ready before Core starts.
           </li>
           <li>
-            <strong>Build &amp; publish images</strong> — Build Core and Agent (Go) container images; tag with versioned labels for production. Ensure every node that must run the Agent can resolve and pull the image (registry or pre-loaded tarballs).
+            <strong>Build &amp; publish images</strong>: Build Core and Agent (Go) container images; tag with versioned labels for production. Ensure every node that must run the Agent can resolve and pull the image (registry or pre-loaded tarballs).
           </li>
           <li>
-            <strong>Core &amp; Agent</strong> — Apply RBAC, Services, and Deployments/DaemonSets. Core runs DB migrations on startup. Then roll out Agents cluster-wide.
+            <strong>Core &amp; Agent</strong>: Apply RBAC, Services, and Deployments/DaemonSets. Core runs DB migrations on startup. Then roll out Agents cluster-wide.
           </li>
           <li>
-            <strong>Data &amp; verification</strong> — When applicable, load CVE/vulnerability reference data through your approved job flow. Confirm health endpoints, Agent heartbeats, and an end-to-end pod → SBOM path in a non-production cluster first.
+            <strong>Data &amp; verification</strong>: When applicable, load CVE/vulnerability reference data through your approved job flow. Confirm health endpoints, Agent heartbeats, and an end-to-end pod → SBOM path in a non-production cluster first.
           </li>
         </ol>
       </div>
       <p className="text-white/50 text-xs">
         Multi-node clusters often need correct cluster DNS and pod network paths between nodes so Agents can reach Core gRPC; treat CNI and DNS as
-        first-class deployment concerns. Full operator runbooks live in the main product repository — not duplicated here.
+        first-class deployment concerns. Full operator runbooks live in the main product repository: not duplicated here.
       </p>
     </div>
   ),
@@ -207,7 +207,7 @@ const DOC_CONTENT: Record<DocSlug, React.ReactNode> = {
     <div className="text-white/60 text-sm space-y-6">
       <p>
         Fortuna provides real-time vulnerability visibility, SBOM extraction, CVE matching, insights, pod capability analysis (including MITRE
-        ATT&amp;CK-oriented modeling), runtime signals, and optional admission control — unified behind a single control plane.
+        ATT&amp;CK-oriented modeling), runtime signals, and optional admission control: unified behind a single control plane.
       </p>
       <div>
         <h3 className="text-white/80 font-bold mb-2">Logical diagram</h3>
@@ -248,14 +248,14 @@ const DOC_CONTENT: Record<DocSlug, React.ReactNode> = {
         <h3 className="text-white/80 font-bold mb-2">API surface (domain-oriented)</h3>
         <p className="mb-2 text-xs">Public HTTP routes are grouped by concern (exact paths evolve with releases):</p>
         <ul className="list-disc list-inside space-y-1 ml-2 text-xs">
-          <li><strong className="text-white/70">Auth</strong> — login, tokens, session helpers</li>
-          <li><strong className="text-white/70">Inventory</strong> — workloads, capabilities, resources</li>
-          <li><strong className="text-white/70">Risk</strong> — insights, rules, scores</li>
-          <li><strong className="text-white/70">Runtime</strong> — signals, events, telemetry</li>
-          <li><strong className="text-white/70">Policy</strong> — rule artifacts and evaluation hooks</li>
-          <li><strong className="text-white/70">Dashboard</strong> — aggregates tuned for the UI</li>
-          <li><strong className="text-white/70">Agent</strong> — ingest and sync from node agents</li>
-          <li><strong className="text-white/70">Cluster / SBOM</strong> — cluster scope and supply-chain payloads</li>
+          <li><strong className="text-white/70">Auth</strong>: login, tokens, session helpers</li>
+          <li><strong className="text-white/70">Inventory</strong>: workloads, capabilities, resources</li>
+          <li><strong className="text-white/70">Risk</strong>: insights, rules, scores</li>
+          <li><strong className="text-white/70">Runtime</strong>: signals, events, telemetry</li>
+          <li><strong className="text-white/70">Policy</strong>: rule artifacts and evaluation hooks</li>
+          <li><strong className="text-white/70">Dashboard</strong>: aggregates tuned for the UI</li>
+          <li><strong className="text-white/70">Agent</strong>: ingest and sync from node agents</li>
+          <li><strong className="text-white/70">Cluster / SBOM</strong>: cluster scope and supply-chain payloads</li>
         </ul>
       </div>
       <div>
@@ -264,7 +264,7 @@ const DOC_CONTENT: Record<DocSlug, React.ReactNode> = {
           <li>CVE intelligence backed by a <strong className="text-white/70">queryable datastore</strong> (e.g. OSV-oriented) for operational control</li>
           <li><strong className="text-white/70">Custom SBOM extraction</strong> aligned to containerd and Fortuna parsers (lean node footprint)</li>
           <li><strong className="text-white/70">NATS JetStream</strong> for durable, Kubernetes-friendly asynchronous processing</li>
-          <li><strong className="text-white/70">Rule-based unified risk scoring</strong> — explainable and auditable</li>
+          <li><strong className="text-white/70">Rule-based unified risk scoring</strong>: explainable and auditable</li>
           <li><strong className="text-white/70">MITRE ATT&amp;CK alignment</strong> for capability and attack-path narratives</li>
           <li><strong className="text-white/70">JWT</strong> (and optional mTLS) for service and user auth patterns</li>
         </ul>
@@ -272,7 +272,7 @@ const DOC_CONTENT: Record<DocSlug, React.ReactNode> = {
       <div>
         <h3 className="text-white/80 font-bold mb-2">Repository layout (product repo)</h3>
         <p className="text-xs font-mono text-white/55">
-          agent/ · core/ · dashboard/ · deploy/ · docs/ · e2e/ — each major component owns its build, manifests, and tests.
+          agent/ · core/ · dashboard/ · deploy/ · docs/ · e2e/: each major component owns its build, manifests, and tests.
         </p>
       </div>
       <div>
@@ -289,7 +289,7 @@ const DOC_CONTENT: Record<DocSlug, React.ReactNode> = {
   deployment: (
     <div className="text-white/60 text-sm space-y-6">
       <div>
-        <h3 className="text-white/80 font-bold mb-2">Landing site — GitHub Pages (README)</h3>
+        <h3 className="text-white/80 font-bold mb-2">Landing site: GitHub Pages (README)</h3>
         <p className="mb-2">
           To publish <strong className="text-white/70">this</strong> documentation/landing repo: create a GitHub repository, push <code className="text-fortuna-pink text-xs">main</code>, enable{' '}
           <strong className="text-white/70">Settings → Pages → GitHub Actions</strong> as the source, and let the workflow deploy on push. The site is served at{' '}
@@ -301,7 +301,7 @@ const DOC_CONTENT: Record<DocSlug, React.ReactNode> = {
         </p>
       </div>
       <div>
-        <h3 className="text-white/80 font-bold mb-2">Kubernetes deployment — overview</h3>
+        <h3 className="text-white/80 font-bold mb-2">Kubernetes deployment: overview</h3>
         <p className="mb-2">
           Fortuna ships as ordinary Kubernetes workloads: StatefulSets/Deployments for data services, a Deployment for Core, a DaemonSet for Agents,
           Services, ConfigMaps, Secrets, and optional Jobs (e.g. loading vulnerability reference data). Core{' '}
@@ -338,7 +338,7 @@ const DOC_CONTENT: Record<DocSlug, React.ReactNode> = {
         <p className="mb-2 text-xs">
           Agents must resolve and reach Core gRPC (and HTTP where used). In multi-node clusters, verify cluster DNS, service routing, and CNI
           connectivity between node subnets. Symptoms such as DNS timeouts or connection timeouts after resolution usually point to platform DNS or
-          overlay network configuration — resolve those before tuning application timeouts.
+          overlay network configuration: resolve those before tuning application timeouts.
         </p>
       </div>
       <div>
@@ -358,7 +358,7 @@ const DOC_CONTENT: Record<DocSlug, React.ReactNode> = {
         <p className="mb-2 text-xs">
           Reference RBAC, Core, Agent, and infrastructure YAML (and companion scripts for certs, verification, and data load) ship in the product
           repository&apos;s <code className="text-fortuna-pink">deploy/</code> and automation folders. Adapt names, namespaces, and secret references
-          to your standards — do not paste production credentials into public docs or tickets.
+          to your standards: do not paste production credentials into public docs or tickets.
         </p>
       </div>
     </div>
@@ -384,16 +384,16 @@ const DOC_CONTENT: Record<DocSlug, React.ReactNode> = {
           Prefixes evolve across releases; confirm against your Core build. Examples often include:
         </p>
         <ul className="space-y-2 font-mono text-xs">
-          <li><code className="text-fortuna-pink">/health</code>, <code className="text-fortuna-pink">/ready</code>, <code className="text-fortuna-pink">/live</code> — probes</li>
-          <li><code className="text-fortuna-pink">/api/v1/risk/insights</code> (or legacy aliases) — findings with filters</li>
-          <li><code className="text-fortuna-pink">/api/v1/sboms</code> — SBOM payloads and components</li>
-          <li><code className="text-fortuna-pink">/api/v1/cves</code> — CVE metadata and matches</li>
-          <li><code className="text-fortuna-pink">/api/v1/inventory/…</code> — capabilities and workload inventory (naming may vary)</li>
-          <li><code className="text-fortuna-pink">/api/v1/runtime/…</code> — signals and events</li>
-          <li><code className="text-fortuna-pink">/api/v1/graph/…</code> — blast radius / attack-path helpers</li>
-          <li><code className="text-fortuna-pink">/api/v1/policy/…</code> — policy artifacts</li>
-          <li><code className="text-fortuna-pink">/api/v1/dashboard/…</code> — aggregates for the UI</li>
-          <li><code className="text-fortuna-pink">/metrics</code> — Prometheus scrape surface</li>
+          <li><code className="text-fortuna-pink">/health</code>, <code className="text-fortuna-pink">/ready</code>, <code className="text-fortuna-pink">/live</code>: probes</li>
+          <li><code className="text-fortuna-pink">/api/v1/risk/insights</code> (or legacy aliases): findings with filters</li>
+          <li><code className="text-fortuna-pink">/api/v1/sboms</code>: SBOM payloads and components</li>
+          <li><code className="text-fortuna-pink">/api/v1/cves</code>: CVE metadata and matches</li>
+          <li><code className="text-fortuna-pink">/api/v1/inventory/…</code>: capabilities and workload inventory (naming may vary)</li>
+          <li><code className="text-fortuna-pink">/api/v1/runtime/…</code>: signals and events</li>
+          <li><code className="text-fortuna-pink">/api/v1/graph/…</code>: blast radius / attack-path helpers</li>
+          <li><code className="text-fortuna-pink">/api/v1/policy/…</code>: policy artifacts</li>
+          <li><code className="text-fortuna-pink">/api/v1/dashboard/…</code>: aggregates for the UI</li>
+          <li><code className="text-fortuna-pink">/metrics</code>: Prometheus scrape surface</li>
         </ul>
       </div>
       <p className="text-white/50 text-xs">

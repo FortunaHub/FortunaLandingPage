@@ -29,7 +29,7 @@ export const FEATURES = [
   {
     id: 'network',
     title: 'Network Designer & Live Traffic',
-    desc: 'Design and reason about Zero Trust posture: workload topology, allowed vs. denied flows, and active NetworkPolicies. Correlate policy intent with observed traffic—including real-time network activity—to surface drift, gaps, and exportable policy hardening.',
+    desc: 'Design and reason about Zero Trust posture: workload topology, allowed vs. denied flows, and active NetworkPolicies. Correlate policy intent with observed traffic, including real-time network activity, to surface drift, gaps, and exportable policy hardening.',
     tags: ['Zero Trust', 'NetworkPolicy'],
     order: 'img' as const,
     slides: [
