@@ -12,6 +12,12 @@ const proofPoints = [
   { icon: Activity, label: 'Correlate live flows', value: 'Runtime Traffic' },
 ] as const;
 
+const screenshotNotes = [
+  { label: 'Policy intent', className: 'left-[7%] top-[22%]' },
+  { label: 'Observed traffic', className: 'right-[8%] top-[39%]' },
+  { label: 'Workload topology', className: 'left-[18%] bottom-[13%]' },
+] as const;
+
 export default function HeroSection() {
   const reduceMotion = useReducedMotion();
 
@@ -73,7 +79,7 @@ export default function HeroSection() {
             transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1], delay: 0.08 }}
             className="relative"
           >
-            <div className="rounded-lg border border-white/12 bg-[#08080A] p-2 shadow-[0_30px_120px_rgba(0,0,0,0.55)]">
+            <div className="relative rounded-lg border border-white/12 bg-[#08080A] p-2 shadow-[0_30px_120px_rgba(0,0,0,0.55)]">
               <div className="flex items-center gap-2 border-b border-white/10 px-3 py-2">
                 <span className="h-2.5 w-2.5 rounded-full bg-[#EF476F]" />
                 <span className="h-2.5 w-2.5 rounded-full bg-[#FFD166]" />
@@ -88,6 +94,16 @@ export default function HeroSection() {
                 loading="eager"
                 className="aspect-[1300/795] w-full rounded-md object-cover object-top"
               />
+              <div aria-hidden="true" className="pointer-events-none absolute inset-x-2 bottom-2 top-[2.9rem] hidden sm:block">
+                {screenshotNotes.map(({ label, className }) => (
+                  <div key={label} className={`absolute ${className}`}>
+                    <div className="flex items-center gap-2 rounded-md border border-white/14 bg-[#070709]/82 px-3 py-2 text-[0.7rem] font-bold text-white shadow-xl shadow-black/30 backdrop-blur-sm">
+                      <span className="h-2 w-2 rounded-full bg-fortuna-pink shadow-[0_0_18px_rgba(209,26,94,0.9)]" />
+                      {label}
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
             <div className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-3">
               {proofPoints.map(({ icon: Icon, label, value }) => (

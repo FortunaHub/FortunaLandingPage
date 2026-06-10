@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
-import { Mail, User, ArrowRight, CheckCircle2, Loader2, Briefcase, Building2, Network, ShieldAlert } from 'lucide-react';
+import { Mail, User, ArrowRight, CheckCircle2, Loader2, Briefcase, Building2, Network, ShieldAlert, Clock3 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Tooltip from './Tooltip';
 import Logo from './Logo';
@@ -165,6 +165,18 @@ export default function RegisterPage() {
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="rounded-md border border-white/10 bg-white/[0.035] p-4">
+              <div className="mb-3 flex items-center gap-3">
+                <Clock3 className="h-5 w-5 text-fortuna-pink" />
+                <p className="text-sm font-bold text-white">What happens next</p>
+              </div>
+              <ul className="space-y-2 text-sm leading-6 text-white/62">
+                <li>We follow up with a focused walkthrough for your posture, policy, or attack-path question.</li>
+                <li>No production credentials or cluster access are needed for the first call.</li>
+                <li>You can bring screenshots, sample policies, or a risk scenario your team is reviewing.</li>
+              </ul>
+            </div>
+
             <div className="space-y-2">
               <label htmlFor="name" className="text-xs font-semibold text-white/72 ml-1">Full name</label>
               <div className="relative">

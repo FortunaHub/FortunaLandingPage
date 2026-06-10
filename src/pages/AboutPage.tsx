@@ -48,7 +48,7 @@ export default function AboutPage() {
               </div>
             </div>
 
-            <figure className="rounded-lg border border-white/12 bg-[#08080A] p-2 shadow-[0_30px_120px_rgba(0,0,0,0.55)]">
+            <figure className="relative rounded-lg border border-white/12 bg-[#08080A] p-2 shadow-[0_30px_120px_rgba(0,0,0,0.55)]">
               <img
                 src={`${base}images/attack-path-analysis.png`}
                 alt="Fortuna attack path analysis screen with risk context and investigation workflow"
@@ -56,6 +56,14 @@ export default function AboutPage() {
                 height={803}
                 className="aspect-[1365/803] w-full rounded-md object-cover object-left-top"
               />
+              <div aria-hidden="true" className="absolute inset-x-2 top-2 hidden h-[calc(100%-3.4rem)] sm:block">
+                <div className="absolute left-[8%] top-[18%] rounded-md border border-white/14 bg-[#070709]/82 px-3 py-2 text-[0.7rem] font-bold text-white shadow-xl shadow-black/30 backdrop-blur-sm">
+                  Exposure chain
+                </div>
+                <div className="absolute right-[7%] top-[42%] rounded-md border border-white/14 bg-[#070709]/82 px-3 py-2 text-[0.7rem] font-bold text-white shadow-xl shadow-black/30 backdrop-blur-sm">
+                  Fix owner context
+                </div>
+              </div>
               <figcaption className="border-t border-white/10 px-4 py-3 text-xs leading-5 text-white/62">
                 Attack-path context, policy posture, and workload evidence are designed to stay in the same investigation path.
               </figcaption>

@@ -1,5 +1,6 @@
 import React from 'react';
-import { Activity, DatabaseZap, Network, ShieldCheck } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Activity, ArrowRight, CircleCheck, DatabaseZap, Network, Search, ShieldCheck, Wrench } from 'lucide-react';
 
 const principles = [
   {
@@ -21,6 +22,33 @@ const principles = [
     icon: DatabaseZap,
     title: 'Automation must explain itself',
     copy: 'Risk scoring, policy evaluation, and path analysis need clear inputs so platform and security teams can defend the decision.',
+  },
+] as const;
+
+const handoffSteps = [
+  {
+    icon: Search,
+    phase: 'Discover',
+    owner: 'Security reviewer',
+    copy: 'Start from workload, CVE, policy, or runtime evidence without opening separate queues.',
+  },
+  {
+    icon: Network,
+    phase: 'Triage',
+    owner: 'Platform team',
+    copy: 'Compare intended policy with observed traffic and the blast radius of reachable services.',
+  },
+  {
+    icon: Wrench,
+    phase: 'Remediate',
+    owner: 'Service owner',
+    copy: 'Hand off the exact workload, path, capability, or package evidence needed to make the fix.',
+  },
+  {
+    icon: CircleCheck,
+    phase: 'Verify',
+    owner: 'Shared review',
+    copy: 'Confirm that the path, exposure, or runtime signal changed after the remediation lands.',
   },
 ] as const;
 
@@ -63,24 +91,47 @@ export default function AboutSection() {
         </div>
 
         <div className="mt-14 rounded-lg border border-white/10 bg-[#08080A] p-6 sm:p-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-[0.75fr_1.25fr] gap-8 lg:gap-12">
             <div>
-              <p className="text-sm font-bold text-white">Built for review</p>
-              <p className="mt-2 text-sm leading-6 text-white/62">
-                Every capability is shaped around questions reviewers ask during posture, exposure, and incident work.
+              <p className="text-sm font-bold text-fortuna-pink">Evidence handoff model</p>
+              <h3 className="mt-4 text-2xl sm:text-3xl font-black uppercase leading-tight text-balance">
+                Keep the reason attached to the fix
+              </h3>
+              <p className="mt-5 text-sm leading-7 text-white/62">
+                Fortuna is organized around the moment a finding moves between teams. Each view
+                preserves the evidence, owner, and next action so a risk review does not become a
+                screenshot thread.
               </p>
+              <div className="mt-7 flex flex-col sm:flex-row lg:flex-col xl:flex-row gap-3">
+                <Link
+                  to="/features"
+                  className="inline-flex min-h-11 items-center justify-center gap-2 rounded-md border border-white/15 px-5 py-3 text-sm font-semibold text-white/85 transition-colors hover:border-white/35 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white/70"
+                >
+                  Inspect capabilities <ArrowRight className="h-4 w-4" />
+                </Link>
+                <Link
+                  to="/docs/overview"
+                  className="inline-flex min-h-11 items-center justify-center rounded-md border border-white/15 px-5 py-3 text-sm font-semibold text-white/85 transition-colors hover:border-white/35 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white/70"
+                >
+                  Read overview
+                </Link>
+              </div>
             </div>
-            <div>
-              <p className="text-sm font-bold text-white">Designed for operations</p>
-              <p className="mt-2 text-sm leading-6 text-white/62">
-                DaemonSet collection, event pipelines, and Prometheus-friendly metrics fit cluster operations instead of bypassing them.
-              </p>
-            </div>
-            <div>
-              <p className="text-sm font-bold text-white">Specific by default</p>
-              <p className="mt-2 text-sm leading-6 text-white/62">
-                The interface names workloads, policies, CVEs, paths, and runtime signals so teams can act on the exact evidence.
-              </p>
+            <div className="divide-y divide-white/10 border-y border-white/10">
+              {handoffSteps.map(({ icon: Icon, phase, owner, copy }) => (
+                <div key={phase} className="grid grid-cols-[2.75rem_1fr] gap-4 py-5">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-md border border-fortuna-pink/25 bg-fortuna-pink/10">
+                    <Icon className="h-5 w-5 text-fortuna-pink" />
+                  </div>
+                  <div>
+                    <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between">
+                      <p className="text-sm font-bold text-white">{phase}</p>
+                      <p className="text-xs font-semibold text-white/45">{owner}</p>
+                    </div>
+                    <p className="mt-2 text-sm leading-6 text-white/62">{copy}</p>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
