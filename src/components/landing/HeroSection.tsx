@@ -39,7 +39,7 @@ export default function HeroSection() {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-[0.88fr_1.12fr] gap-12 xl:gap-16 items-center">
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:gap-12 xl:gap-14 items-center">
           <motion.div
             initial={reduceMotion ? false : { opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
@@ -77,9 +77,9 @@ export default function HeroSection() {
             initial={reduceMotion ? false : { opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1], delay: 0.08 }}
-            className="relative"
+            className="relative min-w-0"
           >
-            <div className="relative rounded-lg border border-white/12 bg-[#08080A] p-2 shadow-[0_30px_120px_rgba(0,0,0,0.55)]">
+            <div className="relative overflow-hidden rounded-lg border border-white/12 bg-[#08080A] p-2 shadow-[0_30px_120px_rgba(0,0,0,0.55)]">
               <div className="flex items-center gap-2 border-b border-white/10 px-3 py-2">
                 <span className="h-2.5 w-2.5 rounded-full bg-[#EF476F]" />
                 <span className="h-2.5 w-2.5 rounded-full bg-[#FFD166]" />
@@ -114,7 +114,7 @@ export default function HeroSection() {
                 </div>
               ))}
             </div>
-            <div className="absolute -bottom-8 -left-8 hidden w-[44%] rounded-md border border-white/12 bg-fortuna-card p-2 shadow-2xl xl:block">
+            <div className="absolute -bottom-6 left-4 hidden w-[38%] rounded-md border border-white/12 bg-fortuna-card p-2 shadow-2xl xl:block">
               <img
                 src={`${base}images/attack-path-graph-view.png`}
                 alt="Attack path graph highlighting lateral movement paths across workloads"

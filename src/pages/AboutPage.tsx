@@ -19,8 +19,8 @@ export default function AboutPage() {
           Back to homepage
         </Link>
 
-          <div className="grid grid-cols-1 lg:grid-cols-[0.88fr_1.12fr] gap-12 lg:gap-16 items-center">
-            <div>
+          <div className="grid grid-cols-1 gap-10 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:gap-12 xl:gap-14 items-center">
+            <div className="min-w-0">
               <p className="mb-5 inline-flex items-center rounded-full border border-fortuna-pink/25 bg-fortuna-pink/10 px-4 py-2 text-xs font-semibold text-fortuna-pink">
                 About FortunaHub
               </p>
@@ -48,7 +48,7 @@ export default function AboutPage() {
               </div>
             </div>
 
-            <figure className="relative rounded-lg border border-white/12 bg-[#08080A] p-2 shadow-[0_30px_120px_rgba(0,0,0,0.55)]">
+            <figure className="relative min-w-0 overflow-hidden rounded-lg border border-white/12 bg-[#08080A] p-2 shadow-[0_30px_120px_rgba(0,0,0,0.55)]">
               <img
                 src={`${base}images/attack-path-analysis.png`}
                 alt="Fortuna attack path analysis screen with risk context and investigation workflow"
