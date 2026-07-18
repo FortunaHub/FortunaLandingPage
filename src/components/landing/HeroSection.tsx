@@ -105,24 +105,26 @@ export default function HeroSection() {
                 ))}
               </div>
             </div>
-            <div className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-3">
-              {proofPoints.map(({ icon: Icon, label, value }) => (
-                <div key={value} className="rounded-md border border-white/10 bg-white/[0.045] p-4">
-                  <Icon className="mb-3 h-5 w-5 text-fortuna-pink" />
-                  <p className="text-sm font-bold text-white">{value}</p>
-                  <p className="mt-1 text-xs leading-5 text-white/58">{label}</p>
-                </div>
-              ))}
-            </div>
-            <div className="absolute -bottom-6 left-4 hidden w-[38%] rounded-md border border-white/12 bg-fortuna-card p-2 shadow-2xl xl:block">
-              <img
-                src={`${base}images/attack-path-graph-view.png`}
-                alt="Attack path graph highlighting lateral movement paths across workloads"
-                width={1440}
-                height={1000}
-                loading="eager"
-                className="aspect-[1440/1000] w-full rounded object-cover object-left-top"
-              />
+            <div className="mt-4 grid grid-cols-1 gap-3 xl:grid-cols-[0.42fr_0.58fr]">
+              <div className="hidden overflow-hidden rounded-md border border-white/12 bg-fortuna-card p-2 shadow-xl xl:block">
+                <img
+                  src={`${base}images/attack-path-graph-view.png`}
+                  alt="Attack path graph highlighting lateral movement paths across workloads"
+                  width={1440}
+                  height={1000}
+                  loading="eager"
+                  className="aspect-[1440/1000] w-full rounded object-cover object-left-top"
+                />
+              </div>
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-3 xl:grid-cols-1">
+                {proofPoints.map(({ icon: Icon, label, value }) => (
+                  <div key={value} className="rounded-md border border-white/10 bg-white/[0.045] p-4">
+                    <Icon className="mb-3 h-5 w-5 text-fortuna-pink" />
+                    <p className="text-sm font-bold text-white">{value}</p>
+                    <p className="mt-1 text-xs leading-5 text-white/58">{label}</p>
+                  </div>
+                ))}
+              </div>
             </div>
           </motion.div>
         </div>
