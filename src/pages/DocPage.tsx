@@ -5,15 +5,6 @@ import { DOC_META, DOC_SLUGS, type DocSlug } from '../config/docs';
 
 const ICONS = { Terminal, Layers, Rocket, FileCode, BookOpen, Cpu, ShieldCheck, Wrench };
 
-function SourceNote({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="rounded-md border border-fortuna-pink/20 bg-fortuna-pink/8 px-4 py-3 text-xs text-white/62">
-      <span className="font-bold uppercase tracking-tight text-white/78">Source: </span>
-      {children}
-    </div>
-  );
-}
-
 function CodeBlock({ children }: { children: string }) {
   return (
     <pre className="overflow-x-auto rounded-md border border-white/10 bg-black/35 p-4 text-[11px] leading-relaxed text-white/76">
@@ -34,11 +25,6 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 const DOC_CONTENT: Record<DocSlug, React.ReactNode> = {
   overview: (
     <div className="space-y-6 text-sm text-white/68">
-      <SourceNote>
-        Mirrored from <code className="text-fortuna-pink">/KSAM/README.md</code> and{' '}
-        <code className="text-fortuna-pink">/KSAM/docs/README.md</code>. This landing page is only a public presentation layer.
-      </SourceNote>
-
       <p>
         <strong className="text-white/82">Fortuna</strong> is an enterprise Kubernetes security platform for real-time threat
         detection, vulnerability management, attack-path analysis, and risk prioritization across multi-node and multi-cluster
@@ -70,9 +56,8 @@ const DOC_CONTENT: Record<DocSlug, React.ReactNode> = {
 
       <Section title="Screenshots on this site">
         <p className="text-xs text-white/62">
-          Product images in <code className="text-fortuna-pink">public/images/</code> are refreshed from{' '}
-          <code className="text-fortuna-pink">/KSAM/docs/assets/screenshots</code>. They should represent the current dashboard,
-          not a separate mockup.
+          Product images are representative dashboard captures. They should reflect the current Fortuna application state, not a
+          separate marketing mockup.
         </p>
       </Section>
     </div>
@@ -80,10 +65,6 @@ const DOC_CONTENT: Record<DocSlug, React.ReactNode> = {
 
   components: (
     <div className="space-y-6 text-sm text-white/68">
-      <SourceNote>
-        Mirrored from <code className="text-fortuna-pink">/KSAM/docs/03-components/README.md</code> and component docs.
-      </SourceNote>
-
       <Section title="Runtime components">
         <ul className="ml-2 list-inside list-disc space-y-2">
           <li><strong className="text-white/72">Core</strong>: REST API, gRPC ingest, DB migrations, CVE matching, rule matching, unified scoring, attack-path generation, and dashboard aggregates.</li>
@@ -122,11 +103,6 @@ const DOC_CONTENT: Record<DocSlug, React.ReactNode> = {
 
   'getting-started': (
     <div className="space-y-6 text-sm text-white/68">
-      <SourceNote>
-        Mirrored from <code className="text-fortuna-pink">/KSAM/docs/01-getting-started/QUICKSTART.md</code>. Landing-page local
-        development is documented only in the landing repository README.
-      </SourceNote>
-
       <Section title="Deploy from published images">
         <p className="mb-3">
           Recommended first path for users is to deploy Fortuna from built images. Use a release tag instead of{' '}
@@ -228,10 +204,6 @@ REMOTE_KUBECONFIGS="cluster101=\${REMOTE_KUBECONFIG}" \\
 
   'user-guide': (
     <div className="space-y-6 text-sm text-white/68">
-      <SourceNote>
-        Mirrored from <code className="text-fortuna-pink">/KSAM/docs/04-user-guide/README.md</code>.
-      </SourceNote>
-
       <Section title="Access">
         <CodeBlock>{`kubectl port-forward --address 0.0.0.0 -n fortuna svc/fortuna-dashboard 8081:80`}</CodeBlock>
         <p className="mt-3 text-xs text-white/62">
@@ -286,10 +258,6 @@ REMOTE_KUBECONFIGS="cluster101=\${REMOTE_KUBECONFIG}" \\
 
   'use-cases': (
     <div className="space-y-6 text-sm text-white/68">
-      <SourceNote>
-        Mirrored from <code className="text-fortuna-pink">/KSAM/docs/04-user-guide/USE_CASES.md</code>.
-      </SourceNote>
-
       <Section title="1. Confirm platform health">
         <p className="text-xs text-white/62">
           Open <code className="text-fortuna-pink">/#/</code> and <code className="text-fortuna-pink">/#/monitoring</code>. Confirm
@@ -337,11 +305,6 @@ REMOTE_KUBECONFIGS="cluster101=\${REMOTE_KUBECONFIG}" \\
 
   architecture: (
     <div className="space-y-6 text-sm text-white/68">
-      <SourceNote>
-        Mirrored from <code className="text-fortuna-pink">/KSAM/docs/02-architecture/ARCHITECTURE.md</code> and{' '}
-        <code className="text-fortuna-pink">API_STANDARD.md</code>.
-      </SourceNote>
-
       <Section title="Logical architecture">
         <CodeBlock>{`Browser
   -> Dashboard Nginx
@@ -408,11 +371,6 @@ Remote clusters
 
   deployment: (
     <div className="space-y-6 text-sm text-white/68">
-      <SourceNote>
-        Mirrored from <code className="text-fortuna-pink">/KSAM/docs/05-operations/DEPLOYMENT.md</code>, deployment checklist, and
-        product README. GitHub Pages deployment for this landing site remains in the landing README only.
-      </SourceNote>
-
       <Section title="Deployment model">
         <p className="mb-2">
           Reference deploys use Kubernetes manifests in <code className="text-fortuna-pink">deploy/</code>: PostgreSQL,
@@ -496,11 +454,6 @@ kubectl -n "$NAMESPACE" rollout status daemonset/fortuna-agent --timeout=180s`}<
 
   api: (
     <div className="space-y-6 text-sm text-white/68">
-      <SourceNote>
-        Mirrored from <code className="text-fortuna-pink">/KSAM/docs/02-architecture/API_STANDARD.md</code> and current dashboard
-        route contracts.
-      </SourceNote>
-
       <p>
         Core exposes REST under <code className="text-fortuna-pink">/api/v1/</code> and agent-facing gRPC ingest. Browser users
         authenticate with JWT; Agents and runtime ingest use separate token/mTLS paths.
@@ -540,10 +493,6 @@ kubectl -n "$NAMESPACE" rollout status daemonset/fortuna-agent --timeout=180s`}<
 
   security: (
     <div className="space-y-6 text-sm text-white/68">
-      <SourceNote>
-        Mirrored from <code className="text-fortuna-pink">/KSAM/docs/06-reference/SECURITY.md</code>.
-      </SourceNote>
-
       <Section title="Authentication">
         <ul className="ml-2 list-inside list-disc space-y-1 text-xs">
           <li>Core uses JWT authentication for dashboard and API users.</li>
@@ -582,10 +531,6 @@ NAMESPACE=fortuna ./scripts/utils/create_mtls_secret.sh`}</CodeBlock>
 
   troubleshooting: (
     <div className="space-y-6 text-sm text-white/68">
-      <SourceNote>
-        Mirrored from <code className="text-fortuna-pink">/KSAM/docs/TROUBLESHOOTING.md</code>.
-      </SourceNote>
-
       <Section title="Long builds">
         <CodeBlock>{`RUN_ASYNC=1 PIPELINE_LOG_FILE=/tmp/pipeline.log \\
 ./scripts/pipeline/full-clean-database-rebuild-deploy.sh --full

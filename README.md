@@ -66,11 +66,8 @@ Optional secret:
 
 ## Refresh Product Screenshots
 
-Screenshots should reflect the current Fortuna dashboard state. The current source set is maintained in the product repo under:
-
-```text
-/home/k8s/KSAM/docs/assets/screenshots/
-```
+Screenshots should reflect the current Fortuna dashboard state. Refresh them from the product repository's reviewed dashboard
+captures before publishing.
 
 Recommended capture size is `1440x1000`.
 

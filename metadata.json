@@ -1,5 +1,5 @@
 {
-  "name": "K8S Fortuna",
+  "name": "FortunaHub",
   "description": "A Kubernetes security and risk management platform by FortunaHub with SBOM, CVE matching, Attack Paths, Runtime Network, unified risk scoring, and multi-cluster telemetry.",
   "requestFramePermissions": []
 }

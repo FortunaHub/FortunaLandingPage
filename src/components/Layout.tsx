@@ -71,7 +71,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               <div className="flex items-center gap-2 group flex-shrink-0">
                 <Logo size={32} className="flex-shrink-0" />
                 <Link to="/" className="text-xl font-extrabold tracking-tighter whitespace-nowrap">
-                  K8S<span className="text-fortuna-pink">FORTUNA</span>
+                  Fortuna<span className="text-fortuna-pink">Hub</span>
                 </Link>
               </div>
             </Tooltip>
@@ -285,7 +285,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               <div className="flex items-center gap-2 mb-6">
                 <Logo size={24} className="flex-shrink-0" />
                 <Link to="/" className="text-lg font-extrabold tracking-tighter">
-                  K8S<span className="text-fortuna-pink">FORTUNA</span>
+                  Fortuna<span className="text-fortuna-pink">Hub</span>
                 </Link>
               </div>
             </div>
