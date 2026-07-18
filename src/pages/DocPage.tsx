@@ -122,10 +122,10 @@ const DOC_CONTENT: Record<DocSlug, React.ReactNode> = {
           Recommended first path for users is to deploy Fortuna from built images. Use a release tag instead of{' '}
           <code className="text-fortuna-pink">latest</code> when validating a fixed version.
         </p>
-        <CodeBlock>{`git clone https://github.com/shino-337/KSAM.git
-cd KSAM
+        <CodeBlock>{`git clone #FortunaHub/fortuna
+cd fortuna
 
-export FORTUNA_REGISTRY="ghcr.io/shino-337/ksam"
+export FORTUNA_REGISTRY="ghcr.io/fortunahub/fortuna"
 export FORTUNA_VERSION="latest"
 export FORTUNA_ADMIN_PASSWORD="<strong-admin-password>"
 
