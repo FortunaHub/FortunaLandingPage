@@ -486,7 +486,7 @@ Remote clusters
       </Section>
 
       <Section title="Published image deploy">
-        <CodeBlock>{`export FORTUNA_REGISTRY="ghcr.io/shino-337/ksam"
+        <CodeBlock>{`export FORTUNA_REGISTRY="ghcr.io/fortunahub/fortuna"
 export FORTUNA_VERSION="<release-tag>"
 export FORTUNA_ADMIN_PASSWORD="<strong-admin-password>"
 
@@ -506,7 +506,7 @@ kubectl apply -f deploy/dashboard-deployment.yaml`}</CodeBlock>
           on local containerd images for multi-node production clusters.
         </p>
         <CodeBlock>{`export NAMESPACE="fortuna"
-export FORTUNA_REGISTRY="ghcr.io/shino-337/ksam"
+export FORTUNA_REGISTRY="ghcr.io/fortunahub/fortuna"
 export FORTUNA_VERSION="<release-tag-or-sha>"
 export FORTUNA_JWT_SECRET="$(openssl rand -base64 32)"
 export FORTUNA_ADMIN_PASSWORD="<strong-admin-password>"
