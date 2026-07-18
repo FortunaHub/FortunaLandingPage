@@ -52,8 +52,8 @@ export default function HeroSection() {
               See which workload risks deserve action first
             </h1>
             <p className="text-white/70 text-base md:text-lg leading-8 max-w-2xl mb-9">
-              Fortuna connects SBOM exposure, OSV-backed CVE matching, attack paths,
-              runtime network activity, Falco signals, and one unified risk score in a centralized dashboard.
+              FortunaHub gives Kubernetes teams one risk operations workspace for SBOM/CVE evidence,
+              attack paths, identity and RBAC context, runtime network activity, Falco signals, and unified scoring.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Tooltip content="Discuss your cluster risk workflow" position="bottom">

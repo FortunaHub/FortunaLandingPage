@@ -22,13 +22,27 @@ function Section({ title, children }: { title: string; children: React.ReactNode
   );
 }
 
+function DocImage({ src, alt, caption }: { src: string; alt: string; caption: string }) {
+  return (
+    <figure className="mt-4 overflow-hidden rounded-lg border border-white/10 bg-white/[0.03]">
+      <img
+        src={`${import.meta.env.BASE_URL}images/${src}`}
+        alt={alt}
+        loading="lazy"
+        className="w-full border-b border-white/10 object-cover"
+      />
+      <figcaption className="px-4 py-3 text-[11px] leading-relaxed text-white/56">{caption}</figcaption>
+    </figure>
+  );
+}
+
 const DOC_CONTENT: Record<DocSlug, React.ReactNode> = {
   overview: (
     <div className="space-y-6 text-sm text-white/68">
       <p>
-        <strong className="text-white/82">Fortuna</strong> is an enterprise Kubernetes security platform for real-time threat
-        detection, vulnerability management, attack-path analysis, and risk prioritization across multi-node and multi-cluster
-        environments.
+        <strong className="text-white/82">Fortuna</strong> is a Kubernetes risk operations platform for connecting SBOM/CVE
+        evidence, attack paths, identity and RBAC context, runtime network visibility, Falco signals, and one user-facing risk
+        score across multi-node and multi-cluster environments.
       </p>
 
       <Section title="Current product surfaces">
@@ -299,6 +313,87 @@ REMOTE_KUBECONFIGS="cluster101=\${REMOTE_KUBECONFIG}" \\
           Use <code className="text-fortuna-pink">/#/rules</code> for UID-based rule detail and catalog matching, then use{' '}
           <code className="text-fortuna-pink">/#/reports</code> with 1, 3, 7, or 30 day windows for operational handoff.
         </p>
+      </Section>
+
+      <Section title="Sample flow: vulnerable image becomes a finding">
+        <ol className="ml-2 list-inside list-decimal space-y-2 text-xs text-white/62">
+          <li>
+            A new pod is created from an application image in Kubernetes. The node-local Fortuna Agent observes the pod through
+            Kubernetes inventory sync and records cluster, namespace, pod, workload, image, and owner metadata.
+          </li>
+          <li>
+            The Agent inspects the image through the container runtime and extracts package evidence into an SBOM. Core receives the
+            SBOM, persists components, and links them back to the pod and image digest.
+          </li>
+          <li>
+            Core matches SBOM packages against the loaded OSV-backed CVE catalog. If the catalog is unavailable or stale, the UI should
+            show an unavailable or partial state instead of presenting the pod as clean.
+          </li>
+          <li>
+            A CVE match creates or updates a finding with affected package, vulnerable version, fixed version when available, severity,
+            evidence, resource name, namespace, cluster, and unified risk score.
+          </li>
+          <li>
+            The operator opens <code className="text-fortuna-pink">/#/risks/findings</code> or pod detail in{' '}
+            <code className="text-fortuna-pink">/#/resources</code>, confirms the affected image and package evidence, then assigns the
+            finding to the owning team.
+          </li>
+          <li>
+            Remediation is usually to rebuild the image with a fixed package or base image, redeploy the workload, wait for Agent/Core
+            rescan, verify the CVE is gone from pod detail, and mark the finding resolved or export it in Reports.
+          </li>
+        </ol>
+        <DocImage
+          src="sample-sbom-pod-detail.png"
+          alt="Fortuna pod detail Risk and SBOM tab showing package evidence for rbac-pod"
+          caption="Pod Detail -> Risk & SBOM is where operators verify image package evidence, CVE count, malware status, exportable SBOM formats, and post-remediation scan results. This live lab capture has no active CVE for the selected package, so it demonstrates the verification surface rather than a vulnerable result."
+        />
+      </Section>
+
+      <Section title="Sample flow: RBAC exposure becomes an attack path">
+        <ol className="ml-2 list-inside list-decimal space-y-2 text-xs text-white/62">
+          <li>
+            A pod starts with a service account that is bound to a Role or ClusterRole with sensitive verbs such as pod exec, secret read,
+            workload patch, or broader cluster permissions.
+          </li>
+          <li>
+            Fortuna syncs pods, service accounts, roles, role bindings, and cluster roles. Core maps those relationships into identity
+            and capability context, then evaluates rule catalog matches and exposure signals.
+          </li>
+          <li>
+            If the same pod also has supporting evidence such as risky capabilities, vulnerable packages, runtime events, or observed
+            network reachability, Core can raise confidence and generate an attack-path scenario.
+          </li>
+          <li>
+            The operator opens <code className="text-fortuna-pink">/#/attack-paths</code>, selects the priority path, focuses the graph,
+            and reads the path from source pod to service account, RBAC edge, reachable workload, or sensitive target.
+          </li>
+          <li>
+            From the path, the operator opens pod detail and Open Identity to confirm exact service account, Role, RoleBinding, and
+            ClusterRole evidence before making changes.
+          </li>
+          <li>
+            Remediation is usually to remove unused service-account bindings, narrow verbs/resources, split workload identities, rotate
+            exposed tokens, restrict network reachability, and redeploy. After Agent sync, the path should disappear or drop in risk.
+          </li>
+        </ol>
+        <div className="mt-4 grid gap-4">
+          <DocImage
+            src="sample-rbac-attack-paths-overview.png"
+            alt="Fortuna Attack Paths page showing the rbac-pod scenario in the attack path graph"
+            caption="Attack Paths groups real scenario paths and graph relationships. In this sample, rbac-pod is a path start connected to service-account and ClusterRoleBinding evidence."
+          />
+          <DocImage
+            src="sample-rbac-resource-list.png"
+            alt="Fortuna Kubernetes Inventory filtered to rbac-pod"
+            caption="Kubernetes Inventory lets the operator filter to the affected pod, compare pod risk with attack-path context, and open Pod Detail from the same row."
+          />
+          <DocImage
+            src="sample-rbac-open-identity.png"
+            alt="Fortuna identity detail for service account sa-rbac showing ClusterRoleBinding and effective RBAC rules"
+            caption="Open Identity resolves the service account to the exact binding source and effective RBAC rules, which are the fields needed to remove or narrow excessive permissions."
+          />
+        </div>
       </Section>
     </div>
   ),

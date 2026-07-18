@@ -1,5 +1,5 @@
 {
   "name": "FortunaHub",
-  "description": "A Kubernetes security and risk management platform by FortunaHub with SBOM, CVE matching, Attack Paths, Runtime Network, unified risk scoring, and multi-cluster telemetry.",
+  "description": "FortunaHub helps teams operate Kubernetes risk with SBOM/CVE evidence, attack-path analysis, identity and RBAC context, runtime network visibility, Falco signals, unified scoring, and multi-cluster telemetry.",
   "requestFramePermissions": []
 }

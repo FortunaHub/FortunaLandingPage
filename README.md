@@ -1,10 +1,10 @@
 # Fortuna Landing Page
 
-Public landing page and lightweight documentation site for the Fortuna Kubernetes security platform.
+Public landing page and lightweight documentation site for the FortunaHub Kubernetes risk operations platform.
 
 ## What This Site Describes
 
-Fortuna is a Kubernetes security and risk management platform with:
+FortunaHub presents Fortuna as a Kubernetes risk operations platform with:
 
 - SBOM extraction from workload images through node-local Agents and containerd.
 - OSV-backed CVE matching and package intelligence stored in PostgreSQL.
