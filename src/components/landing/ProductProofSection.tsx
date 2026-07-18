@@ -8,18 +8,18 @@ const base = import.meta.env.BASE_URL;
 const workflow = [
   {
     icon: Radar,
-    title: 'Compare intent with traffic',
-    copy: 'Review allowed, denied, and observed flows against active NetworkPolicies before drift turns into exposure.',
+    title: 'Inspect runtime traffic',
+    copy: 'Review observed pod, service, and external flows in the selected cluster before network assumptions turn into exposure.',
   },
   {
     icon: GitBranch,
     title: 'Trace the blast radius',
-    copy: 'Move from vulnerable workloads into attack-path context so teams can break the chains that matter first.',
+    copy: 'Move from vulnerable or over-permissioned workloads into path context so teams can break the chains that matter first.',
   },
   {
     icon: ShieldAlert,
     title: 'Prioritize runtime risk',
-    copy: 'Promote risky pod capabilities with process and traffic evidence instead of treating every finding equally.',
+    copy: 'Use runtime and attack-path evidence with the unified risk score instead of treating every finding equally.',
   },
 ] as const;
 
@@ -45,8 +45,8 @@ export default function ProductProofSection() {
               Start with the evidence your cluster already produces
             </h2>
             <p className="mt-6 max-w-xl text-base leading-8 text-white/70">
-              Fortuna is built around inspection, not decoration. Network posture, attack paths,
-              vulnerability context, and runtime signals stay connected in one Kubernetes risk workflow.
+              Fortuna is built around inspection, not decoration. Findings, attack paths,
+              runtime network activity, SBOM/CVE context, identities, and telemetry health stay connected in one Kubernetes risk workflow.
             </p>
             <div className="mt-8 flex flex-col sm:flex-row gap-4">
               <Link
@@ -74,14 +74,14 @@ export default function ProductProofSection() {
             >
               <img
                 src={`${base}images/realtime-network-activity.png`}
-                alt="Fortuna real-time network activity showing observed workload traffic"
-                width={1863}
-                height={824}
+                alt="Fortuna Runtime Network showing observed workload traffic"
+                width={1440}
+                height={1000}
                 loading="lazy"
-                className="aspect-[1863/824] w-full object-cover object-left-top"
+                className="aspect-[1440/1000] w-full object-cover object-left-top"
               />
               <figcaption className="border-t border-white/10 px-4 py-3 text-xs leading-5 text-white/60">
-                Live traffic gives policy review a current signal, not just static intent.
+                Runtime Network shows current observed flows and keeps low-volume traffic visually distinct from high-volume links.
               </figcaption>
             </motion.figure>
 
@@ -95,14 +95,14 @@ export default function ProductProofSection() {
               >
                 <img
                   src={`${base}images/attack-path-analysis.png`}
-                  alt="Fortuna attack path analysis with risk context"
-                  width={1365}
-                  height={803}
+                  alt="Fortuna Attack Paths graph with RBAC and workload context"
+                  width={1440}
+                  height={1000}
                   loading="lazy"
-                  className="aspect-[1365/803] w-full object-cover object-left-top"
+                  className="aspect-[1440/1000] w-full object-cover object-left-top"
                 />
                 <figcaption className="border-t border-white/10 px-4 py-3 text-xs leading-5 text-white/60">
-                  Attack paths connect exposure to remediation priority.
+                  Attack Paths connect privilege escalation, token access, and workload reachability to remediation priority.
                 </figcaption>
               </motion.figure>
 

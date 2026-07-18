@@ -18,8 +18,8 @@ export default function FeaturesSection() {
             Evidence across the Kubernetes risk workflow
           </h2>
           <p className="mt-5 text-base leading-8 text-white/68">
-            Each capability keeps product evidence close to the decision it supports: exposure,
-            policy drift, attack paths, workload capability, or runtime behavior.
+            Each capability below is paired with the dashboard screenshot that represents that workflow:
+            integrity, finding triage, inventory, supply-chain evidence, attack paths, runtime traffic, rules, or telemetry health.
           </p>
         </div>
 
@@ -67,11 +67,11 @@ export default function FeaturesSection() {
             </div>
             <div>
               <h3 className="text-xl font-black uppercase leading-tight mb-3">
-                Agent & Policy Engine
+                Agent, Rules, and Runtime Visibility
               </h3>
               <p className="text-white/68 text-sm leading-7 max-w-md">
-                DaemonSet per node. SBOM extraction via containerd. CEL-based policy evaluation.
-                Optional Admission Webhook for enforcement.
+                Agent DaemonSet per node, SBOM extraction through containerd, rule catalog matching,
+                runtime event ingestion, and cluster-scoped telemetry for the dashboard.
               </p>
             </div>
           </div>
@@ -80,10 +80,10 @@ export default function FeaturesSection() {
               DaemonSet
             </span>
             <span className="px-3 py-1.5 bg-white/5 border border-white/10 rounded text-[10px] font-mono uppercase tracking-wider text-white/60">
-              CEL Policy
+              Rule Catalog
             </span>
             <span className="px-3 py-1.5 bg-white/5 border border-white/10 rounded text-[10px] font-mono uppercase tracking-wider text-white/60">
-              Admission Webhook
+              Runtime Health
             </span>
           </div>
         </motion.div>

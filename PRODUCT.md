@@ -6,11 +6,11 @@ brand
 
 ## Users
 
-Platform engineering, Kubernetes security, SecOps, and DevSecOps leaders evaluating a control plane for cluster risk, workload exposure, network policy posture, attack paths, and runtime signals. They arrive with a high technical baseline and need to understand whether Fortuna can replace fragmented security views with one credible workflow.
+Platform engineering, Kubernetes security, SecOps, and DevSecOps leaders evaluating a control plane for cluster risk, workload exposure, Runtime Network visibility, attack paths, SBOM/CVE analysis, and runtime signals. They arrive with a high technical baseline and need to understand whether Fortuna can replace fragmented security views with one credible workflow.
 
 ## Product Purpose
 
-Fortuna presents Kubernetes security and risk management capabilities: SBOM and CVE intelligence, attack-path analysis, network design with live traffic, Pod Capability Engine context, runtime telemetry, and operational risk views. The landing page should make the product feel concrete, inspectable, and trustworthy enough to request a demo.
+Fortuna presents Kubernetes security and risk management capabilities: SBOM and OSV-backed CVE intelligence, Findings Queue triage with one unified risk score, Attack Paths, Runtime Network, Kubernetes Inventory and identity context, Policy Rules, Pipeline & Runtime Health, Reports, and multi-cluster telemetry. The landing page should make the product feel concrete, inspectable, and trustworthy enough to request a demo.
 
 ## Brand Personality
 

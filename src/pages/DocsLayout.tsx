@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link, NavLink, Outlet } from 'react-router-dom';
-import { ChevronRight, Terminal, Layers, Rocket, FileCode, BookOpen, Cpu } from 'lucide-react';
+import { ChevronRight, Terminal, Layers, Rocket, FileCode, BookOpen, Cpu, ShieldCheck, Wrench } from 'lucide-react';
 import { DOC_META } from '../config/docs';
 
-const ICONS = { Terminal, Layers, Rocket, FileCode, BookOpen, Cpu };
+const ICONS = { Terminal, Layers, Rocket, FileCode, BookOpen, Cpu, ShieldCheck, Wrench };
 
 export default function DocsLayout() {
   return (
@@ -24,9 +24,8 @@ export default function DocsLayout() {
 
             <h1 className="text-2xl font-black uppercase leading-tight">Documentation</h1>
             <p className="text-white/60 text-xs mt-3 leading-relaxed">
-              Fortuna is a Kubernetes security and risk management platform that ties together software supply-chain visibility,
-              live vulnerability intelligence, network policy design, attack-path modeling, centralized risk insights, and runtime
-              telemetry.
+              Curated product docs mirrored from the Fortuna repository: quickstart, deployment, architecture, components, API
+              contracts, multi-cluster telemetry, SBOM/CVE analysis, attack paths, and unified risk operations.
             </p>
 
             <nav className="mt-8 flex flex-col gap-1" aria-label="Documentation sections">

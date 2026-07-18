@@ -8,7 +8,7 @@ import Logo from './Logo';
 const FORMSPREE_ENDPOINT = import.meta.env.VITE_FORMSPREE_ENDPOINT || 'https://formspree.io/f/mwvnzkll';
 
 const demoTopics = [
-  'Network policy posture with live traffic',
+  'Runtime Network and cluster traffic evidence',
   'Attack-path analysis and blast radius review',
   'SBOM, CVE, and runtime risk prioritization',
 ] as const;
@@ -116,8 +116,8 @@ export default function RegisterPage() {
           <div className="mt-8 grid grid-cols-2 gap-3">
             <div className="rounded-md border border-white/10 bg-white/[0.045] p-4">
               <Network className="mb-3 h-5 w-5 text-fortuna-pink" />
-              <p className="text-sm font-bold text-white">Network Designer</p>
-              <p className="mt-1 text-xs leading-5 text-white/58">Policy intent compared with observed traffic.</p>
+              <p className="text-sm font-bold text-white">Runtime Network</p>
+              <p className="mt-1 text-xs leading-5 text-white/58">Observed flows, external destinations, and traffic weight.</p>
             </div>
             <div className="rounded-md border border-white/10 bg-white/[0.045] p-4">
               <ShieldAlert className="mb-3 h-5 w-5 text-fortuna-pink" />

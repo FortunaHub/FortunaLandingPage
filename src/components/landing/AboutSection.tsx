@@ -5,23 +5,23 @@ import { Activity, ArrowRight, CircleCheck, DatabaseZap, Network, Search, Shield
 const principles = [
   {
     icon: Network,
-    title: 'Topology before opinion',
-    copy: 'Fortuna starts with workloads, namespaces, policies, and observed traffic. Security review begins from the cluster shape teams already operate.',
+    title: 'Scope before opinion',
+    copy: 'Fortuna starts from cluster identity, workloads, namespaces, service accounts, and observed traffic. Security review begins from the scope teams actually operate.',
   },
   {
     icon: ShieldCheck,
     title: 'Risk tied to evidence',
-    copy: 'SBOM, CVE, capability, and runtime signals stay connected to the fix decision instead of becoming disconnected queues.',
+    copy: 'SBOM, CVE, capability, attack-path, and runtime signals stay connected to one risk decision instead of becoming disconnected queues.',
   },
   {
     icon: Activity,
     title: 'Runtime changes matter',
-    copy: 'Live traffic and process signals keep posture reviews aligned with changing workloads, not only with yesterday’s manifests.',
+    copy: 'Runtime network, Falco, and process signals keep posture reviews aligned with changing workloads, not only with yesterday’s manifests.',
   },
   {
     icon: DatabaseZap,
     title: 'Automation must explain itself',
-    copy: 'Risk scoring, policy evaluation, and path analysis need clear inputs so platform and security teams can defend the decision.',
+    copy: 'Unified risk scoring, rule matching, and path analysis need clear inputs so platform and security teams can defend the decision.',
   },
 ] as const;
 
@@ -30,25 +30,25 @@ const handoffSteps = [
     icon: Search,
     phase: 'Discover',
     owner: 'Security reviewer',
-    copy: 'Start from workload, CVE, policy, or runtime evidence without opening separate queues.',
+    copy: 'Start from a finding, workload, CVE, identity, attack path, or runtime signal without losing context.',
   },
   {
     icon: Network,
     phase: 'Triage',
     owner: 'Platform team',
-    copy: 'Compare intended policy with observed traffic and the blast radius of reachable services.',
+    copy: 'Use the unified risk score, path evidence, and runtime signal quality to decide what deserves action.',
   },
   {
     icon: Wrench,
     phase: 'Remediate',
     owner: 'Service owner',
-    copy: 'Hand off the exact workload, path, capability, or package evidence needed to make the fix.',
+    copy: 'Hand off the exact pod, service account, role, package, path, or runtime event needed to make the fix.',
   },
   {
     icon: CircleCheck,
     phase: 'Verify',
     owner: 'Shared review',
-    copy: 'Confirm that the path, exposure, or runtime signal changed after the remediation lands.',
+    copy: 'Confirm that exposure, attack-path reachability, runtime signals, or findings changed after the remediation lands.',
   },
 ] as const;
 
@@ -73,9 +73,9 @@ export default function AboutSection() {
               place so a finding can move from discovery to remediation without losing context.
             </p>
             <p className="text-white/62 text-sm leading-7">
-              The product combines SBOM extraction, live CVE matching, Risk Center insights,
-              attack-path analysis, Zero Trust Network Designer, Pod Capability Engine, and runtime
-              monitoring for teams that need current cluster evidence without adding another queue.
+              The product combines SBOM extraction, OSV-backed CVE matching, Findings Queue triage,
+              Attack Paths, Runtime Network, Kubernetes Inventory, Policy Rules, and Pipeline & Runtime
+              Health for teams that need current cluster evidence without adding another queue.
             </p>
           </div>
         </div>

@@ -36,7 +36,7 @@ export default function LandingPage() {
               </div>
               <h3 className="text-lg font-bold text-white">Inspect platform capabilities</h3>
               <p className="mt-3 text-sm leading-6 text-white/58">
-                SBOM, CVE matching, network design, attack paths, PCE, and runtime signals.
+                SBOM, CVE matching, Findings Queue, Attack Paths, Runtime Network, inventory, and runtime health.
               </p>
             </Link>
             <Link

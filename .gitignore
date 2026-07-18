@@ -7,7 +7,6 @@ coverage/
 *.log
 .env*
 !.env.example
-README.md
 .github/skills/
 .impeccable/
 .agents/

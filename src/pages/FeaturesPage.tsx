@@ -16,10 +16,12 @@ export default function FeaturesPage() {
         </Link>
         <div className="mb-16 text-center">
           <h1 className="text-4xl md:text-5xl font-black uppercase leading-tight mb-4 text-balance">
-            Inspect the Fortuna control plane
+            Fortuna product capabilities
           </h1>
           <p className="text-white/68 max-w-3xl mx-auto text-lg leading-8">
-            Supply-chain visibility, live CVE intelligence, Zero Trust network design with real traffic, attack-path modeling, centralized risk insights, Pod Capability Engine, and runtime/process monitoring for Kubernetes security operations.
+            A concise view of the current dashboard surfaces: Platform Integrity, Findings Queue,
+            Kubernetes Inventory, OSV-backed CVE matching, Attack Paths, Runtime Network, Policy Rules,
+            Reports, and Pipeline & Runtime Health.
           </p>
         </div>
       </div>

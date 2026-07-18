@@ -7,15 +7,15 @@ import Tooltip from '../Tooltip';
 const base = import.meta.env.BASE_URL;
 
 const proofPoints = [
-  { icon: Workflow, label: 'Map policy drift', value: 'Network Designer' },
-  { icon: ShieldCheck, label: 'Break risky paths', value: 'Attack Path Analysis' },
-  { icon: Activity, label: 'Correlate live flows', value: 'Runtime Traffic' },
+  { icon: Workflow, label: 'Triage with one score', value: 'Findings Queue' },
+  { icon: ShieldCheck, label: 'Break risky paths', value: 'Attack Paths' },
+  { icon: Activity, label: 'Correlate live flows', value: 'Runtime Network' },
 ] as const;
 
 const screenshotNotes = [
-  { label: 'Policy intent', className: 'left-[7%] top-[22%]' },
-  { label: 'Observed traffic', className: 'right-[8%] top-[39%]' },
-  { label: 'Workload topology', className: 'left-[18%] bottom-[13%]' },
+  { label: 'Cluster scope', className: 'left-[7%] top-[17%]' },
+  { label: 'Observed flows', className: 'right-[8%] top-[39%]' },
+  { label: 'Traffic weight', className: 'left-[18%] bottom-[13%]' },
 ] as const;
 
 export default function HeroSection() {
@@ -46,14 +46,14 @@ export default function HeroSection() {
             transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
           >
             <p className="mb-5 inline-flex items-center gap-2 rounded-full border border-fortuna-pink/25 bg-fortuna-pink/10 px-4 py-2 text-xs font-semibold text-fortuna-pink">
-              Kubernetes risk, mapped to live workload behavior
+              Multi-cluster Kubernetes risk, tied to live evidence
             </p>
             <h1 className="max-w-3xl text-[3.3rem] sm:text-[4.6rem] lg:text-[5.6rem] font-black leading-[0.92] mb-7 uppercase text-balance">
-              See the path from policy drift to workload risk
+              See which workload risks deserve action first
             </h1>
             <p className="text-white/70 text-base md:text-lg leading-8 max-w-2xl mb-9">
-              Fortuna connects network policy posture, live traffic, SBOM exposure, attack paths,
-              and runtime signals so security teams can decide which Kubernetes risks to fix first.
+              Fortuna connects SBOM exposure, OSV-backed CVE matching, attack paths,
+              runtime network activity, Falco signals, and one unified risk score in a centralized dashboard.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Tooltip content="Discuss your cluster risk workflow" position="bottom">
@@ -84,15 +84,15 @@ export default function HeroSection() {
                 <span className="h-2.5 w-2.5 rounded-full bg-[#EF476F]" />
                 <span className="h-2.5 w-2.5 rounded-full bg-[#FFD166]" />
                 <span className="h-2.5 w-2.5 rounded-full bg-[#06D6A0]" />
-                <span className="ml-3 text-xs font-medium text-white/45">network posture / live traffic</span>
+                <span className="ml-3 text-xs font-medium text-white/45">runtime network / cluster scope</span>
               </div>
               <img
                 src={`${base}images/Network-design.png`}
-                alt="Fortuna Network Designer showing Kubernetes workload topology and policy posture"
-                width={1300}
-                height={795}
+                alt="Fortuna Runtime Network showing observed Kubernetes workload traffic"
+                width={1440}
+                height={1000}
                 loading="eager"
-                className="aspect-[1300/795] w-full rounded-md object-cover object-top"
+                className="aspect-[1440/1000] w-full rounded-md object-cover object-top"
               />
               <div aria-hidden="true" className="pointer-events-none absolute inset-x-2 bottom-2 top-[2.9rem] hidden sm:block">
                 {screenshotNotes.map(({ label, className }) => (
@@ -118,10 +118,10 @@ export default function HeroSection() {
               <img
                 src={`${base}images/attack-path-graph-view.png`}
                 alt="Attack path graph highlighting lateral movement paths across workloads"
-                width={1593}
-                height={839}
+                width={1440}
+                height={1000}
                 loading="eager"
-                className="aspect-[1593/839] w-full rounded object-cover object-left-top"
+                className="aspect-[1440/1000] w-full rounded object-cover object-left-top"
               />
             </div>
           </motion.div>
