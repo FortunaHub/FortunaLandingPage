@@ -42,6 +42,7 @@ export default function FeatureSlideshow({ slides }: Props) {
           src={`${base}images/${current.src}`}
           alt={current.alt}
           loading="lazy"
+          decoding="async"
           className="w-full max-w-full h-auto object-contain"
         />
       </div>
@@ -64,6 +65,8 @@ export default function FeatureSlideshow({ slides }: Props) {
             key={current.src}
             src={`${base}images/${current.src}`}
             alt={current.alt}
+            loading="lazy"
+            decoding="async"
             initial={reduceMotion ? false : { opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={reduceMotion ? { opacity: 0 } : { opacity: 0 }}

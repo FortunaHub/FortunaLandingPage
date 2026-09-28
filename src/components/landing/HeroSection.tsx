@@ -46,14 +46,14 @@ export default function HeroSection() {
             transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
           >
             <p className="mb-5 inline-flex items-center gap-2 rounded-full border border-fortuna-pink/25 bg-fortuna-pink/10 px-4 py-2 text-xs font-semibold text-fortuna-pink">
-              Multi-cluster Kubernetes risk, tied to live evidence
+              Kubernetes risk backed by SBOM, CVE, and identity evidence
             </p>
             <h1 className="max-w-3xl text-[3.3rem] sm:text-[4.6rem] lg:text-[5.6rem] font-black leading-[0.92] mb-7 uppercase text-balance">
-              See which workload risks deserve action first
+              Prioritize security findings with one unified risk score
             </h1>
             <p className="text-white/70 text-base md:text-lg leading-8 max-w-2xl mb-9">
-              FortunaHub gives Kubernetes teams one risk operations workspace for SBOM/CVE evidence,
-              attack paths, identity and RBAC context, runtime network activity, Falco signals, and unified scoring.
+              FortunaHub provides one security findings dashboard for SBOM/CVE evidence, attack paths,
+              identity and RBAC context, observed network traffic, optional runtime signals, and unified risk scoring across clusters.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Tooltip content="Discuss your cluster risk workflow" position="bottom">
@@ -92,6 +92,8 @@ export default function HeroSection() {
                 width={1440}
                 height={1000}
                 loading="eager"
+                fetchpriority="high"
+                decoding="async"
                 className="aspect-[1440/1000] w-full rounded-md object-cover object-top"
               />
               <div aria-hidden="true" className="pointer-events-none absolute inset-x-2 bottom-2 top-[2.9rem] hidden sm:block">
@@ -112,7 +114,8 @@ export default function HeroSection() {
                   alt="Attack path graph highlighting lateral movement paths across workloads"
                   width={1440}
                   height={1000}
-                  loading="eager"
+                  loading="lazy"
+                  decoding="async"
                   className="aspect-[1440/1000] w-full rounded object-cover object-left-top"
                 />
               </div>

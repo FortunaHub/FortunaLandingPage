@@ -14,8 +14,14 @@
 
 @layer base {
   html {
-    scroll-behavior: smooth;
     scroll-padding-top: 5.5rem;
+  }
+
+  /* Respect prefers-reduced-motion for smooth scrolling */
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
   }
 
   body {
@@ -23,11 +29,86 @@
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
   }
+
+  /* Enhanced focus styles for all interactive elements */
+  button:focus-visible,
+  a:focus-visible,
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible {
+    outline: 2px solid #D11A5E;
+    outline-offset: 4px;
+  }
+
+  /* Reduced motion - disable smooth scroll for prefers-reduced-motion */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
 }
 
 @layer utilities {
   .scroll-mt-header {
     scroll-margin-top: 5.5rem;
+  }
+
+  /* Screen reader only - for skip links and a11y announcements */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+
+  .focus\:not-sr-only:focus {
+    position: static;
+    width: auto;
+    height: auto;
+    padding: inherit;
+    margin: inherit;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+  }
+
+  /* Enhanced contrast for small text - improves from 3:1 to 5:1+ ratio */
+  .text-small-contrast {
+    @apply text-white/75;
+  }
+
+  /* For footer text that was previously too light (white/35) */
+  .text-footer-contrast {
+    @apply text-white/55;
+  }
+
+  /* For tags and badges - improves readability */
+  .text-tag-contrast {
+    @apply text-white/70;
+  }
+
+  /* Ensure button text has sufficient contrast */
+  .btn-text-contrast {
+    @apply text-white font-semibold;
+  }
+
+  /* High contrast focus states for keyboard navigation */
+  .focus-ring {
+    @apply focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-fortuna-pink;
+  }
+
+  .focus-ring-offset-2 {
+    @apply focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fortuna-pink;
   }
 }
 
@@ -37,4 +118,11 @@
 
 .pink-gradient {
   @apply bg-gradient-to-r from-fortuna-pink to-[#8E1141];
+}
+
+/* Improved image loading with reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  img {
+    animation: none !important;
+  }
 }

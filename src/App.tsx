@@ -1,11 +1,15 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { useEffect } from 'react';
 import Layout from './components/Layout';
 import LandingPage from './components/LandingPage';
 import RegisterPage from './components/RegisterPage';
 import FeaturesPage from './pages/FeaturesPage';
 import AboutPage from './pages/AboutPage';
+import PrivacyPage from './pages/PrivacyPage';
+import TermsPage from './pages/TermsPage';
 import DocsLayout from './pages/DocsLayout';
 import DocPage from './pages/DocPage';
+import { initializeStructuredData } from './components/SeoHead';
 
 const normalizeBase = (value?: string) => {
   if (!value || value === '/' || value === './' || value === '.') return '/';
@@ -29,6 +33,11 @@ const routerBase = pathUsesBase(envRouterBase)
       : '/';
 
 export default function App() {
+  useEffect(() => {
+    // Initialize structured data on mount
+    initializeStructuredData();
+  }, []);
+
   return (
     <Router basename={routerBase}>
       <Layout>
@@ -36,6 +45,8 @@ export default function App() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/features" element={<FeaturesPage />} />
           <Route path="/about" element={<AboutPage />} />
+          <Route path="/privacy" element={<PrivacyPage />} />
+          <Route path="/terms" element={<TermsPage />} />
           <Route path="/docs" element={<DocsLayout />}>
             <Route index element={<Navigate to="overview" replace />} />
             <Route path=":slug" element={<DocPage />} />

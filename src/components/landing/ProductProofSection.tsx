@@ -78,6 +78,7 @@ export default function ProductProofSection() {
                 width={1440}
                 height={1000}
                 loading="lazy"
+                decoding="async"
                 className="aspect-[1440/1000] w-full object-cover object-left-top"
               />
               <figcaption className="border-t border-white/10 px-4 py-3 text-xs leading-5 text-white/60">
@@ -99,6 +100,7 @@ export default function ProductProofSection() {
                   width={1440}
                   height={1000}
                   loading="lazy"
+                  decoding="async"
                   className="aspect-[1440/1000] w-full object-cover object-left-top"
                 />
                 <figcaption className="border-t border-white/10 px-4 py-3 text-xs leading-5 text-white/60">

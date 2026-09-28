@@ -31,6 +31,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Typecheck
+        run: npm run typecheck
+
       - name: Build
         env:
           VITE_BASE_PATH: ${{ vars.VITE_BASE_PATH || '/' }}
@@ -38,6 +41,17 @@ jobs:
           VITE_ROUTER_BASENAME: ${{ vars.VITE_ROUTER_BASENAME || '' }}
           VITE_FORMSPREE_ENDPOINT: ${{ secrets.VITE_FORMSPREE_ENDPOINT }}
         run: npm run build
+
+      - name: Check Links
+        env:
+          VITE_BASE_PATH: ${{ vars.VITE_BASE_PATH || '/' }}
+        run: npm run check-links
+
+      - name: Test SEO Metadata
+        run: npm run test-seo
+
+      - name: Test Accessibility
+        run: npm run test-a11y
 
       - name: Verify built asset paths
         run: |

@@ -2,12 +2,14 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, ChevronRight } from 'lucide-react';
 import AboutSection from '../components/landing/AboutSection';
+import { SeoHead } from '../components/SeoHead';
 
 const base = import.meta.env.BASE_URL;
 
 export default function AboutPage() {
   return (
     <div className="overflow-x-hidden bg-fortuna-dark">
+      <SeoHead route="about" />
       <section className="relative overflow-hidden border-b border-white/5">
         <div className="absolute inset-0 opacity-[0.08]" style={{ backgroundImage: 'radial-gradient(circle, #D11A5E 1px, transparent 1px)', backgroundSize: '44px 44px' }} />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-20 relative z-10">
@@ -39,12 +41,14 @@ export default function AboutPage() {
                 >
                   Request a demo <ArrowRight className="h-4 w-4" />
                 </Link>
-                <Link
-                  to="/features"
+                <a
+                  href="https://github.com/FortunaHub/fortuna"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="inline-flex min-h-12 items-center justify-center rounded-md border border-white/15 px-7 py-3 text-sm font-semibold text-white/85 transition-colors hover:border-white/35 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white/70"
                 >
-                  Inspect capabilities
-                </Link>
+                  View on GitHub
+                </a>
               </div>
             </div>
 
@@ -72,6 +76,84 @@ export default function AboutPage() {
         </div>
       </section>
       <AboutSection />
+
+      <section className="py-20 bg-fortuna-dark border-t border-white/5">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div>
+              <h3 className="text-sm font-bold text-fortuna-pink uppercase tracking-wider mb-3">
+                License
+              </h3>
+              <p className="text-white/68 leading-7">
+                Fortuna is released under the{' '}
+                <a
+                  href="https://opensource.org/licenses/MIT"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-fortuna-pink hover:text-fortuna-pink/80 transition-colors"
+                >
+                  MIT License
+                </a>
+                . You are free to use, modify, and distribute the software in accordance with the license terms.
+              </p>
+            </div>
+
+            <div>
+              <h3 className="text-sm font-bold text-fortuna-pink uppercase tracking-wider mb-3">
+                Repository
+              </h3>
+              <p className="text-white/68 leading-7">
+                Source code is available on{' '}
+                <a
+                  href="https://github.com/FortunaHub/fortuna"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-fortuna-pink hover:text-fortuna-pink/80 transition-colors"
+                >
+                  GitHub at FortunaHub/fortuna
+                </a>
+                . Contributions, issues, and discussions are welcome. Please review our contributing guidelines.
+              </p>
+            </div>
+
+            <div>
+              <h3 className="text-sm font-bold text-fortuna-pink uppercase tracking-wider mb-3">
+                Security
+              </h3>
+              <p className="text-white/68 leading-7">
+                If you discover a security vulnerability, please report it responsibly to{' '}
+                <a
+                  href="mailto:security@fortunahub.io"
+                  className="text-fortuna-pink hover:text-fortuna-pink/80 transition-colors"
+                >
+                  security@fortunahub.io
+                </a>
+                . Please do not open public issues for security vulnerabilities.
+              </p>
+            </div>
+
+            <div>
+              <h3 className="text-sm font-bold text-fortuna-pink uppercase tracking-wider mb-3">
+                Support
+              </h3>
+              <p className="text-white/68 leading-7">
+                For questions, feedback, or to request a demo, please reach out via{' '}
+                <Link to="/register" className="text-fortuna-pink hover:text-fortuna-pink/80 transition-colors">
+                  demo request
+                </Link>
+                {' '}or contact us at{' '}
+                <a
+                  href="mailto:hello@fortunahub.io"
+                  className="text-fortuna-pink hover:text-fortuna-pink/80 transition-colors"
+                >
+                  hello@fortunahub.io
+                </a>
+                .
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }

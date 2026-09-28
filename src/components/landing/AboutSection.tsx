@@ -72,7 +72,7 @@ export default function AboutSection() {
               owners, security reviewers, and incident responders. Fortuna keeps the evidence in one
               place so a finding can move from discovery to remediation without losing context.
             </p>
-            <p className="text-white/62 text-sm leading-7">
+            <p className="text-white/70 text-sm leading-7">
               The product combines SBOM extraction, OSV-backed CVE matching, Findings Queue triage,
               Attack Paths, Runtime Network, Kubernetes Inventory, Policy Rules, and Pipeline & Runtime
               Health for teams that need current cluster evidence without adding another queue.
@@ -85,7 +85,7 @@ export default function AboutSection() {
             <div key={title} className="rounded-lg border border-white/10 bg-white/[0.035] p-5">
               <Icon className="mb-5 h-6 w-6 text-fortuna-pink" />
               <h3 className="text-base font-bold text-white">{title}</h3>
-              <p className="mt-3 text-sm leading-6 text-white/62">{copy}</p>
+              <p className="mt-3 text-sm leading-6 text-white/70">{copy}</p>
             </div>
           ))}
         </div>
@@ -97,7 +97,7 @@ export default function AboutSection() {
               <h3 className="mt-4 text-2xl sm:text-3xl font-black uppercase leading-tight text-balance">
                 Keep the reason attached to the fix
               </h3>
-              <p className="mt-5 text-sm leading-7 text-white/62">
+              <p className="mt-5 text-sm leading-7 text-white/70">
                 Fortuna is organized around the moment a finding moves between teams. Each view
                 preserves the evidence, owner, and next action so a risk review does not become a
                 screenshot thread.
@@ -126,9 +126,9 @@ export default function AboutSection() {
                   <div>
                     <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between">
                       <p className="text-sm font-bold text-white">{phase}</p>
-                      <p className="text-xs font-semibold text-white/45">{owner}</p>
+                      <p className="text-xs font-semibold text-white/60">{owner}</p>
                     </div>
-                    <p className="mt-2 text-sm leading-6 text-white/62">{copy}</p>
+                    <p className="mt-2 text-sm leading-6 text-white/70">{copy}</p>
                   </div>
                 </div>
               ))}

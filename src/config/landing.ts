@@ -11,8 +11,8 @@ export const FEATURES = [
   {
     id: 'platform-integrity',
     title: 'Platform Integrity',
-    desc: 'Start with telemetry reliability before interpreting security results. Platform Integrity shows governance status, runtime coverage, data freshness, and operational impact so teams can tell whether missing findings mean no signal or a broken pipeline.',
-    tags: ['Telemetry', 'Governance', 'Freshness'],
+    desc: 'Verify telemetry health before trusting a quiet Findings Queue. Shows agent sync status, CVE catalog freshness, runtime visibility, and data timestamps so you know whether the dashboard is complete or blocked.',
+    tags: ['Agent Status', 'CVE Processing', 'Data Freshness'],
     order: 'text' as const,
     slides: [
       slide('platform-integrity.png', 'Platform Integrity workspace with telemetry reliability and governance status'),
@@ -22,8 +22,8 @@ export const FEATURES = [
   {
     id: 'findings',
     title: 'Findings Queue and Unified Risk',
-    desc: 'Findings Queue is the main triage surface. Core computes one user-facing risk value and keeps evidence, affected resource names, linked rules, workflow state, and context links together so operators do not reconcile conflicting risk numbers across pages.',
-    tags: ['Unified risk', 'Workflow', 'Evidence'],
+    desc: 'One risk score per finding. Evidence, affected resources, linked rules, workflow state, and context links together in one triage interface.',
+    tags: ['Risk Scoring', 'Triage', 'Evidence Review'],
     order: 'img' as const,
     slides: [
       slide('risk-operations.png', 'Findings Queue with unified risk, evidence, and workflow controls'),
@@ -33,8 +33,8 @@ export const FEATURES = [
   {
     id: 'inventory-sbom',
     title: 'Kubernetes Inventory and SBOM Detail',
-    desc: 'Inventory connects pods, workloads, service accounts, roles, bindings, SBOM packages, CVE matches, runtime events, and capability exposure. Inspect Detail and Open Identity flows help trace why a workload has a specific risk posture.',
-    tags: ['Inventory', 'SBOM', 'Identity'],
+    desc: 'All pods and workloads: roles, service accounts, SBOM packages, CVE matches, and runtime events linked from one inventory view.',
+    tags: ['Pods & Workloads', 'SBOM Detail', 'Service Accounts'],
     order: 'text' as const,
     slides: [
       slide('resources.png', 'Kubernetes Inventory with workload, identity, risk, and SBOM context'),
@@ -43,9 +43,9 @@ export const FEATURES = [
   },
   {
     id: 'cve',
-    title: 'OSV-backed CVE Matching',
-    desc: 'Agent SBOM extraction feeds Core matching against OSV-backed vulnerability data loaded into PostgreSQL. CVE state is treated as catalog-backed data, including unavailable or partial states after DB reset, instead of silently showing clean results when the catalog is missing.',
-    tags: ['OSV', 'CVE catalog', 'PostgreSQL'],
+    title: 'SBOM and OSV-backed CVE Matching',
+    desc: 'SBOM packages matched against OSV vulnerability data. Shows unavailable or partial states when the CVE catalog is incomplete instead of falsely clean results.',
+    tags: ['Package Analysis', 'CVE Matching', 'Vulnerability'],
     order: 'img' as const,
     slides: [
       slide('resources.png', 'Pod detail and inventory context for SBOM and CVE review'),
@@ -55,8 +55,8 @@ export const FEATURES = [
   {
     id: 'attack-path',
     title: 'Attack Paths',
-    desc: 'Attack Paths explain how an exposed workload can move through RBAC, service-account identity, runtime evidence, network relationships, or vulnerable images toward a sensitive target. Path focus keeps one selected route readable while dimming unrelated nodes.',
-    tags: ['RBAC', 'Graph focus', 'Blast radius'],
+    desc: 'RBAC escalation paths, service account exposure, and vulnerable images. When runtime sensors are enabled, adds process and network context.',
+    tags: ['RBAC Escalation', 'Identity Paths', 'Risk Chaining'],
     order: 'text' as const,
     slides: [
       slide('attack-analysis.png', 'Attack Paths workspace with scenario list, graph, and remediation context'),
@@ -64,9 +64,9 @@ export const FEATURES = [
   },
   {
     id: 'network',
-    title: 'Runtime Network Activity',
-    desc: 'Runtime Network shows observed traffic, not inferred intent. It separates workload, service, namespace, node, and external destination types, and uses edge weight/opacity to show higher-volume links more clearly while low-volume links stay quieter.',
-    tags: ['Observed traffic', 'Cluster scope', 'Topology'],
+    title: 'Observed Network Activity',
+    desc: 'Observed traffic: pods, services, and external destinations. Line thickness shows traffic volume. Topology, not inferred policy or drift.',
+    tags: ['Pod Traffic', 'Service Flows', 'External Connections'],
     order: 'img' as const,
     slides: [
       slide('network-activity.png', 'Runtime Network Activity topology with observed pod, service, and external flows'),
@@ -75,8 +75,8 @@ export const FEATURES = [
   {
     id: 'policy-rules',
     title: 'Policy Rules and Rule Catalog',
-    desc: 'Policy Rules expose catalog metadata, rule UID routes, legacy code mapping, linked findings, and matching behavior. Operators can inspect why a finding matched and whether the rule is catalog-backed before acting on remediation guidance.',
-    tags: ['Rule UID', 'Catalog', 'Matching'],
+    desc: 'Rule catalog, matched findings, and legacy ID mapping. Search by rule UID or name to verify matching behavior.',
+    tags: ['Rule Catalog', 'Matching Logic', 'Audit Trail'],
     order: 'img' as const,
     slides: [
       slide('policy-rules.png', 'Policy Rules catalog with UID-based detail and linked finding context'),
@@ -85,8 +85,8 @@ export const FEATURES = [
   {
     id: 'monitoring',
     title: 'Pipeline and Runtime Health',
-    desc: 'Monitoring verifies pipeline activity, Agent sync, CVE/SBOM processing, Falco/runtime visibility, process snapshots, and data timestamps. The UI distinguishes not installed, disabled, quiet, unavailable, and events-arriving states.',
-    tags: ['Falco', 'Pipeline', 'Runtime'],
+    desc: 'Agent sync, CVE processing, runtime sensor state (when enabled), and data freshness with explicit unavailable states.',
+    tags: ['Agent Health', 'Processing Status', 'Data Freshness'],
     order: 'text' as const,
     slides: [
       slide('monitoring.png', 'Pipeline and Runtime Health with agent sync, Falco visibility, and processing activity'),

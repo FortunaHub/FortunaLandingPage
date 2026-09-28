@@ -278,13 +278,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         {children}
       </main>
 
-      <footer className="bg-fortuna-dark border-t border-white/5 py-12">
+      <footer className="bg-fortuna-dark border-t border-white/5 py-12" role="contentinfo">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
             <div className="col-span-1 md:col-span-2">
               <div className="flex items-center gap-2 mb-6">
                 <Logo size={24} className="flex-shrink-0" />
-                <Link to="/" className="text-lg font-extrabold tracking-tighter">
+                <Link to="/" className="text-lg font-extrabold tracking-tighter focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-fortuna-pink">
                   Fortuna<span className="text-fortuna-pink">Hub</span>
                 </Link>
               </div>
@@ -292,27 +292,27 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <div>
               <h4 className="text-xs font-bold uppercase tracking-[0.2em] text-white mb-6">Product</h4>
               <ul className="space-y-4">
-                <li><Link to="/" className="text-sm text-white/55 hover:text-fortuna-pink transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-fortuna-pink">Platform</Link></li>
-                <li><Link to="/features" className="text-sm text-white/55 hover:text-fortuna-pink transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-fortuna-pink">Features</Link></li>
-                <li><Link to="/docs" className="text-sm text-white/55 hover:text-fortuna-pink transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-fortuna-pink">Documentation</Link></li>
-                <li><Link to="/about" className="text-sm text-white/55 hover:text-fortuna-pink transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-fortuna-pink">About</Link></li>
+                <li><Link to="/" className="text-sm text-white/70 hover:text-fortuna-pink transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-fortuna-pink">Platform</Link></li>
+                <li><Link to="/features" className="text-sm text-white/70 hover:text-fortuna-pink transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-fortuna-pink">Features</Link></li>
+                <li><Link to="/docs" className="text-sm text-white/70 hover:text-fortuna-pink transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-fortuna-pink">Documentation</Link></li>
+                <li><Link to="/about" className="text-sm text-white/70 hover:text-fortuna-pink transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-fortuna-pink">About</Link></li>
               </ul>
             </div>
             <div>
               <h4 className="text-xs font-bold uppercase tracking-[0.2em] text-white mb-6">Company</h4>
               <ul className="space-y-4">
-                <li><Link to="/about" className="text-sm text-white/55 hover:text-fortuna-pink transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-fortuna-pink">About Fortuna</Link></li>
-                <li><a href="mailto:contact@fortunahub.com" className="text-sm text-white/55 hover:text-fortuna-pink transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-fortuna-pink">Contact</a></li>
+                <li><Link to="/about" className="text-sm text-white/70 hover:text-fortuna-pink transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-fortuna-pink">About Fortuna</Link></li>
+                <li><a href="https://github.com/FortunaHub/fortuna" target="_blank" rel="noopener noreferrer" className="text-sm text-white/70 hover:text-fortuna-pink transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-fortuna-pink">GitHub</a></li>
               </ul>
             </div>
           </div>
           <div className="mt-12 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-xs text-white/35 uppercase tracking-widest">
+            <p className="text-xs text-white/60 uppercase tracking-widest">
               © 2026 FortunaHub. All rights reserved.
             </p>
             <div className="flex gap-6">
-              <a href="mailto:contact@fortunahub.com?subject=Privacy%20policy%20request" className="text-xs text-white/45 hover:text-white transition-colors uppercase tracking-widest focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-fortuna-pink">Privacy Policy</a>
-              <a href="mailto:contact@fortunahub.com?subject=Terms%20of%20service%20request" className="text-xs text-white/45 hover:text-white transition-colors uppercase tracking-widest focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-fortuna-pink">Terms of Service</a>
+              <Link to="/privacy" className="text-xs text-white/70 hover:text-white transition-colors uppercase tracking-widest focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-fortuna-pink">Privacy Policy</Link>
+              <Link to="/terms" className="text-xs text-white/70 hover:text-white transition-colors uppercase tracking-widest focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-fortuna-pink">Terms of Service</Link>
             </div>
           </div>
         </div>

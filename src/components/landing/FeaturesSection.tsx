@@ -41,7 +41,7 @@ export default function FeaturesSection() {
                 {item.tags.map((tag) => (
                   <span
                     key={tag}
-                    className="px-2.5 py-1.5 bg-white/5 border border-white/10 rounded text-[10px] font-mono uppercase tracking-wider text-white/60"
+                    className="px-2.5 py-1.5 bg-white/5 border border-white/10 rounded text-[10px] font-mono uppercase tracking-wider text-white/70"
                   >
                     {tag}
                   </span>
@@ -76,13 +76,13 @@ export default function FeaturesSection() {
             </div>
           </div>
           <div className="flex flex-wrap gap-2">
-            <span className="px-3 py-1.5 bg-white/5 border border-white/10 rounded text-[10px] font-mono uppercase tracking-wider text-white/60">
+            <span className="px-3 py-1.5 bg-white/5 border border-white/10 rounded text-[10px] font-mono uppercase tracking-wider text-white/70">
               DaemonSet
             </span>
-            <span className="px-3 py-1.5 bg-white/5 border border-white/10 rounded text-[10px] font-mono uppercase tracking-wider text-white/60">
+            <span className="px-3 py-1.5 bg-white/5 border border-white/10 rounded text-[10px] font-mono uppercase tracking-wider text-white/70">
               Rule Catalog
             </span>
-            <span className="px-3 py-1.5 bg-white/5 border border-white/10 rounded text-[10px] font-mono uppercase tracking-wider text-white/60">
+            <span className="px-3 py-1.5 bg-white/5 border border-white/10 rounded text-[10px] font-mono uppercase tracking-wider text-white/70">
               Runtime Health
             </span>
           </div>

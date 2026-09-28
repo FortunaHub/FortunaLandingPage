@@ -5,10 +5,16 @@
   "type": "module",
   "scripts": {
     "dev": "vite --port=3000 --host=0.0.0.0",
-    "build": "vite build",
+    "build": "vite build && npm run track-versions",
     "preview": "vite preview",
     "clean": "rm -rf dist",
-    "lint": "tsc --noEmit"
+    "lint": "tsc --noEmit",
+    "typecheck": "tsc --noEmit",
+    "check-links": "tsx scripts/check-links.ts",
+    "test-seo": "tsx scripts/test-seo.ts",
+    "test-a11y": "tsx scripts/test-a11y.ts",
+    "track-versions": "tsx scripts/track-versions.ts",
+    "ci": "npm run typecheck && npm run build && npm run check-links && npm run test-seo && npm run test-a11y"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.14",

@@ -2,10 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronRight } from 'lucide-react';
 import FeaturesSection from '../components/landing/FeaturesSection';
+import { SeoHead } from '../components/SeoHead';
 
 export default function FeaturesPage() {
   return (
     <div className="overflow-x-hidden bg-fortuna-dark">
+      <SeoHead route="features" />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-12">
         <Link
           to="/"

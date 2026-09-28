@@ -2,10 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, BookOpen, FileText, Info, Zap } from 'lucide-react';
 import { HeroSection, KeyStrengths, ProductProofSection, EvaluatorPathsSection, CTASection } from './landing';
+import { SeoHead } from './SeoHead';
 
 export default function LandingPage() {
   return (
     <div className="overflow-x-hidden">
+      <SeoHead route="home" />
       <HeroSection />
       <ProductProofSection />
       <EvaluatorPathsSection />
