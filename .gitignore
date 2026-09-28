@@ -10,4 +10,21 @@ coverage/
 .github/skills/
 .impeccable/
 .agents/
+
+# Documentation and reports (keep README.md in git)
+ACCESSIBILITY.md
+CI.md
+COMPLETION_REPORT.md
+COMPREHENSIVE_REVIEW.md
 CRITICAL_FIXES_SUMMARY.md
+IMPLEMENTATION_INDEX.md
+PR-*.md
+PR*.md
+SEO_*.md
+PRODUCT.md
+*_IMPLEMENTATION.md
+*_SUMMARY.md
+*_REPORT.md
+QUICKSTART.md
+DEPLOYMENT_GUIDE.md
+VERSION_TRACKING.md
