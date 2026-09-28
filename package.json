@@ -10,11 +10,17 @@
     "clean": "rm -rf dist",
     "lint": "tsc --noEmit",
     "typecheck": "tsc --noEmit",
-    "check-links": "tsx scripts/check-links.ts",
-    "test-seo": "tsx scripts/test-seo.ts",
-    "test-a11y": "tsx scripts/test-a11y.ts",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:debug": "playwright test --debug",
+    "playwright:install": "playwright install",
+    "test:a11y": "playwright test scripts/e2e/accessibility.spec.ts",
+    "test:links": "playwright test scripts/e2e/links.spec.ts",
+    "test:seo": "playwright test scripts/e2e/seo.spec.ts",
+    "test:product": "playwright test scripts/e2e/product-metadata.spec.ts",
+    "test:all": "playwright test",
     "track-versions": "tsx scripts/track-versions.ts",
-    "ci": "npm run typecheck && npm run build && npm run check-links && npm run test-seo && npm run test-a11y"
+    "ci": "npm run typecheck && npm run build && npm run test:all"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.14",
@@ -27,6 +33,7 @@
     "vite": "^6.2.0"
   },
   "devDependencies": {
+    "@playwright/test": "^1.48.2",
     "@types/node": "^22.14.0",
     "autoprefixer": "^10.4.21",
     "tailwindcss": "^4.1.14",

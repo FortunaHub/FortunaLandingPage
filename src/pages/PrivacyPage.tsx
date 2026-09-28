@@ -42,23 +42,16 @@ export default function PrivacyPage() {
                 <div>
                   <h3 className="text-lg font-semibold text-white mb-2">Demo Request Form</h3>
                   <p className="text-white/68 leading-7">
-                    When you submit a demo request through our contact form, we collect:
+                    When you submit a demo request through our contact form, we collect only:
                   </p>
                   <ul className="list-disc list-inside text-white/68 leading-7 mt-2 space-y-1">
-                    <li>Name</li>
-                    <li>Email address</li>
-                    <li>Company/organization</li>
-                    <li>Message or inquiry details</li>
+                    <li>Full name</li>
+                    <li>Work email address</li>
+                    <li>Job title / role</li>
+                    <li>Company / organization</li>
                   </ul>
                   <p className="text-white/68 leading-7 mt-3">
-                    This information is used solely to respond to your inquiry and facilitate a demo discussion. We do not sell or share this data with third parties.
-                  </p>
-                </div>
-
-                <div>
-                  <h3 className="text-lg font-semibold text-white mb-2">Website Analytics</h3>
-                  <p className="text-white/68 leading-7">
-                    We may collect anonymized usage data such as page views, referrers, and general browser/device information to understand how visitors use our site. This data is aggregated and does not identify individuals.
+                    This information is used solely to respond to your demo request and facilitate discussion with the Fortuna team. We do not sell or share this data with third parties.
                   </p>
                 </div>
               </div>
@@ -67,9 +60,8 @@ export default function PrivacyPage() {
             <div>
               <h2 className="text-2xl font-bold text-white mb-4">How We Use Your Information</h2>
               <ul className="list-disc list-inside text-white/68 leading-7 space-y-2">
-                <li><strong className="text-white">Demo Requests:</strong> To respond to your inquiry and schedule a demonstration</li>
-                <li><strong className="text-white">Communication:</strong> To send updates or follow-up messages related to your request</li>
-                <li><strong className="text-white">Improvement:</strong> To analyze site usage and improve our documentation and landing experience</li>
+                <li><strong className="text-white">Demo Requests:</strong> To respond to your inquiry and schedule a demonstration with the Fortuna team</li>
+                <li><strong className="text-white">Communication:</strong> To send follow-up messages related to your demo request</li>
                 <li><strong className="text-white">Legal Compliance:</strong> To comply with applicable laws and regulations</li>
               </ul>
             </div>
@@ -77,11 +69,11 @@ export default function PrivacyPage() {
             <div>
               <h2 className="text-2xl font-bold text-white mb-4">Data Retention</h2>
               <p className="text-white/68 leading-7">
-                Demo request submissions are retained for up to 12 months to facilitate follow-up communication. You may request deletion of your data at any time by contacting us at{' '}
+                Demo request submissions are processed through Formspree and retained for up to 12 months to facilitate follow-up communication. You may request deletion of your data at any time by contacting us at{' '}
                 <a href="mailto:privacy@fortunahub.io" className="text-fortuna-pink hover:text-fortuna-pink/80 transition-colors">
                   privacy@fortunahub.io
                 </a>
-                .
+                . Formspree's data handling practices are governed by their privacy policy.
               </p>
             </div>
 

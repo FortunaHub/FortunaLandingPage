@@ -55,7 +55,7 @@ export default function AboutPage() {
             <figure className="relative min-w-0 overflow-hidden rounded-lg border border-white/12 bg-[#08080A] p-2 shadow-[0_30px_120px_rgba(0,0,0,0.55)]">
               <img
                 src={`${base}images/attack-path-analysis.png`}
-                alt="Fortuna attack path analysis screen with risk context and investigation workflow"
+                alt="Fortuna attack path analysis showing RBAC escalation and service account identity exposure"
                 width={1365}
                 height={803}
                 className="aspect-[1365/803] w-full rounded-md object-cover object-left-top"
@@ -87,12 +87,12 @@ export default function AboutPage() {
               <p className="text-white/68 leading-7">
                 Fortuna is released under the{' '}
                 <a
-                  href="https://opensource.org/licenses/MIT"
+                  href="https://www.apache.org/licenses/LICENSE-2.0"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-fortuna-pink hover:text-fortuna-pink/80 transition-colors"
                 >
-                  MIT License
+                  Apache License 2.0
                 </a>
                 . You are free to use, modify, and distribute the software in accordance with the license terms.
               </p>

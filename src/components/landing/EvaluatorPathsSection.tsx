@@ -10,16 +10,16 @@ const paths = [
     to: '/features',
   },
   {
-    icon: Network,
-    question: 'Which policies drifted?',
-    proof: 'Compare NetworkPolicy intent with observed traffic before turning review into YAML work.',
+    icon: GitBranch,
+    question: 'Which paths should we break?',
+    proof: 'Trace RBAC escalation and service-account exposure chains back to fixable controls.',
     to: '/features',
   },
   {
-    icon: GitBranch,
-    question: 'Which paths should we break?',
-    proof: 'Trace lateral movement and privilege escalation chains back to fixable controls.',
-    to: '/features',
+    icon: Network,
+    question: 'What traffic should we block?',
+    proof: 'Observe runtime network flows and verify reachability against risk context.',
+    to: '/docs/overview',
   },
   {
     icon: Radar,

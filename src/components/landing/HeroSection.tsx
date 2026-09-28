@@ -111,7 +111,7 @@ export default function HeroSection() {
               <div className="hidden overflow-hidden rounded-md border border-white/12 bg-fortuna-card p-2 shadow-xl xl:block">
                 <img
                   src={`${base}images/attack-path-graph-view.png`}
-                  alt="Attack path graph highlighting lateral movement paths across workloads"
+                  alt="Attack path graph showing RBAC and identity escalation chains"
                   width={1440}
                   height={1000}
                   loading="lazy"

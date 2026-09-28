@@ -10,7 +10,7 @@ FortunaHub presents Fortuna as a Kubernetes risk operations platform with:
 - OSV-backed CVE matching and package intelligence stored in PostgreSQL.
 - One unified user-facing risk score across dashboard, findings, inventory, and reports.
 - Findings Queue workflow for triage, evidence review, export, and remediation tracking.
-- Attack Paths for RBAC escalation, service-account token paths, host/node escape paths, and lateral movement.
+- Attack Paths for RBAC escalation, service-account token exposure, and vulnerable image exploitation.
 - Runtime Network for observed pod, service, and external traffic by cluster.
 - Kubernetes Inventory for pods, service accounts, roles, bindings, SBOM, runtime, and identity detail.
 - Policy Rules catalog with rule metadata and linked findings.
@@ -89,6 +89,8 @@ Do not commit screenshots that expose private customer names, tokens, kubeconfig
 
 ## Content Accuracy Notes
 
-- Admission webhook enforcement, SIEM export, OIDC/SAML, and advanced federation controls are roadmap items in the product README unless the product repo says otherwise.
+- **Attack Paths**: Built from RBAC role bindings, service-account identity exposure, and SBOM-backed CVE data. Runtime and observed network flows provide supporting context when sensors are enabled. Host/node escape analysis and lateral movement detection are under development.
+- **NetworkPolicy Analysis**: NetworkPolicy drift detection and enforcement analysis are roadmap items and not currently available.
+- **Admission webhook enforcement**: SIEM export, OIDC/SAML, and advanced federation controls are roadmap items in the product README unless the product repo says otherwise.
 - Remote clusters should run Agent/Falco only; Core, Dashboard, PostgreSQL, and NATS run once in the management cluster.
 - Browser WebSocket origins must be allowlisted in Core when demonstrating live Findings Queue streams through a NodePort or custom host.
