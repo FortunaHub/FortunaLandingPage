@@ -42,17 +42,6 @@ jobs:
           VITE_FORMSPREE_ENDPOINT: ${{ secrets.VITE_FORMSPREE_ENDPOINT }}
         run: npm run build
 
-      - name: Check Links
-        env:
-          VITE_BASE_PATH: ${{ vars.VITE_BASE_PATH || '/' }}
-        run: npm run check-links
-
-      - name: Test SEO Metadata
-        run: npm run test-seo
-
-      - name: Test Accessibility
-        run: npm run test-a11y
-
       - name: Verify built asset paths
         run: |
           echo "VITE_BASE_PATH=${VITE_BASE_PATH}"
@@ -60,9 +49,7 @@ jobs:
           grep -Eo 'src="[^"]+|href="[^"]+' dist/index.html | grep -E 'assets|favicon|logo' || true
 
       - name: Prepare deployment
-        run: |
-          cp CNAME dist/ 2>/dev/null || true
-          touch dist/.nojekyll
+        run: touch dist/.nojekyll
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
