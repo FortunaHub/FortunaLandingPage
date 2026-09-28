@@ -10,6 +10,7 @@ coverage/
 .github/skills/
 .impeccable/
 .agents/
+scripts/e2e/
 
 # Documentation and reports (keep README.md in git)
 ACCESSIBILITY.md
