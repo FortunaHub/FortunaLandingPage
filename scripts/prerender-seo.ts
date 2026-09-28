@@ -157,9 +157,6 @@ ${websiteSchema}
 
     <!-- Preload critical assets -->
     <link rel="preload" href="/logo.png" as="image" />
-    
-    <!-- Stylesheet (will be injected by build) -->
-    <link rel="stylesheet" href="/src/index.css" />
   </head>
   <body>
     <div id="root"></div>
