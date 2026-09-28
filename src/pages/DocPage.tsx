@@ -131,6 +131,105 @@ const DOC_CONTENT: Record<DocSlug, React.ReactNode> = {
 
   'getting-started': (
     <div className="space-y-6 text-sm text-white/68">
+      <Section title="Repository and releases">
+        <p className="mb-3">
+          Fortuna source code is published on GitHub. Releases include built images, manifests, and installation scripts.
+        </p>
+        <ul className="ml-2 list-inside list-disc space-y-2 text-xs">
+          <li><strong className="text-white/72">Source:</strong> <code className="text-fortuna-pink">https://github.com/FortunaHub/fortuna</code></li>
+          <li><strong className="text-white/72">Releases:</strong> <code className="text-fortuna-pink">https://github.com/FortunaHub/fortuna/releases</code></li>
+          <li><strong className="text-white/72">Container registry:</strong> <code className="text-fortuna-pink">ghcr.io/fortunahub/fortuna</code></li>
+          <li><strong className="text-white/72">Available images:</strong> <code className="text-fortuna-pink">fortuna-core</code>, <code className="text-fortuna-pink">fortuna-agent</code>, <code className="text-fortuna-pink">fortuna-dashboard</code></li>
+        </ul>
+      </Section>
+
+      <Section title="Quick install from release">
+        <CodeBlock>{`# Clone the repository
+git clone https://github.com/FortunaHub/fortuna.git
+cd fortuna
+
+# Checkout a specific release (e.g., v0.1.0)
+git checkout v0.1.0
+
+# Set image registry and version
+export FORTUNA_REGISTRY="ghcr.io/fortunahub/fortuna"
+export FORTUNA_VERSION="v0.1.0"
+export FORTUNA_ADMIN_PASSWORD="<choose-strong-password>"
+
+# Create secrets
+./scripts/utils/ensure-fortuna-secrets.sh fortuna
+
+# Apply Kubernetes manifests
+kubectl apply -f deploy/postgres-deployment.yaml
+kubectl apply -f deploy/nats-statefulset.yaml
+kubectl apply -f deploy/fortuna-rbac.yaml
+kubectl apply -f deploy/dashboard-nginx-configmap.yaml
+kubectl apply -f deploy/fortuna-core-deployment.yaml
+kubectl apply -f deploy/fortuna-agent-daemonset.yaml
+kubectl apply -f deploy/dashboard-deployment.yaml
+
+# Verify rollout
+kubectl -n fortuna rollout status deploy/fortuna-core
+kubectl -n fortuna rollout status daemonset/fortuna-agent
+kubectl -n fortuna rollout status deploy/fortuna-dashboard`}</CodeBlock>
+      </Section>
+
+      <Section title="Container images">
+        <p className="mb-3">
+          Published images are available from GitHub Container Registry (ghcr.io). Authenticate with GitHub credentials for pull access.
+        </p>
+        <CodeBlock>{`# Log in to ghcr.io (use GitHub token or password)
+docker login ghcr.io
+
+# Pull specific component
+docker pull ghcr.io/fortunahub/fortuna/fortuna-core:v0.1.0
+docker pull ghcr.io/fortunahub/fortuna/fortuna-agent:v0.1.0
+docker pull ghcr.io/fortunahub/fortuna/fortuna-dashboard:v0.1.0
+
+# List available tags
+crane ls ghcr.io/fortunahub/fortuna/fortuna-core`}</CodeBlock>
+        <p className="mt-3 text-xs text-white/62">
+          For Kubernetes, create an imagePullSecret and reference it in deployments. See <code className="text-fortuna-pink">deploy/</code> manifests for examples.
+        </p>
+      </Section>
+
+      <Section title="Kubernetes manifests">
+        <p className="mb-3">
+          Reference manifests are in the repository <code className="text-fortuna-pink">deploy/</code> directory. Each component has a separate manifest file.
+        </p>
+        <ul className="ml-2 list-inside list-disc space-y-2 text-xs">
+          <li><strong className="text-white/72">postgres-deployment.yaml</strong>: PostgreSQL database (primary data store).</li>
+          <li><strong className="text-white/72">nats-statefulset.yaml</strong>: NATS JetStream (async work queues).</li>
+          <li><strong className="text-white/72">fortuna-rbac.yaml</strong>: ServiceAccount, ClusterRole, ClusterRoleBinding.</li>
+          <li><strong className="text-white/72">fortuna-core-deployment.yaml</strong>: Core API and processing engine.</li>
+          <li><strong className="text-white/72">fortuna-agent-daemonset.yaml</strong>: Agent on every node (SBOM extraction, inventory sync).</li>
+          <li><strong className="text-white/72">dashboard-deployment.yaml</strong>: React UI and proxy.</li>
+          <li><strong className="text-white/72">dashboard-nginx-configmap.yaml</strong>: Nginx configuration for dashboard proxy.</li>
+          <li><strong className="text-white/72">fortuna-core-external-service.yaml</strong>: External service for remote cluster connections (optional).</li>
+        </ul>
+      </Section>
+
+      <Section title="Runtime agent (optional)">
+        <p className="mb-3">
+          Fortuna can be enhanced with optional runtime sensors for process monitoring and network traffic capture. Runtime agents communicate with Core and provide additional context for findings and attack paths.
+        </p>
+        <CodeBlock>{`# Install runtime sensors (Falco/eBPF)
+./scripts/deploy/install-runtime-fortuna.sh
+
+# Restart Agent DaemonSet to reload with runtime
+kubectl -n fortuna rollout restart daemonset/fortuna-agent
+kubectl -n fortuna rollout status daemonset/fortuna-agent --timeout=180s
+
+# Verify runtime state in Dashboard
+# Monitor -> Runtime State should show "installed and enabled"
+
+# Optional: disable runtime without uninstalling
+kubectl -n fortuna set env daemonset/fortuna-agent RUNTIME_ENABLED=false`}</CodeBlock>
+        <p className="mt-3 text-xs text-white/62">
+          Runtime sensors increase Agent memory by 200-400 MB per node. They are optional and under active development. For production, evaluate performance overhead in your environment before enabling broadly.
+        </p>
+      </Section>
+
       <Section title="Deploy from published images">
         <p className="mb-3">
           Recommended first path for users is to deploy Fortuna from built images. Use a release tag instead of{' '}
