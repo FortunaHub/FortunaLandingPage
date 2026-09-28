@@ -14,7 +14,7 @@ import fs from 'fs';
 import path from 'path';
 
 // SEO configuration (mirrors src/config/seo.ts)
-const SITE_URL = 'https://fortunahub.io';
+const SITE_URL = 'https://fortunahub.dev';
 
 interface SeoMeta {
   title: string;
@@ -277,11 +277,11 @@ function verifyPrerenderedHtml(): void {
     const checks = {
       hasTitle: /<title>.*?<\/title>/.test(content),
       hasMetaDescription: /meta name="description"/.test(content),
-      hasCanonical: /link rel="canonical".*href="https:\/\/fortunahub\.io/.test(content),
+      hasCanonical: /link rel="canonical".*href="https:\/\/fortunahub\.dev/.test(content),
       hasOgTitle: /property="og:title"/.test(content),
       hasOgDescription: /property="og:description"/.test(content),
       hasOgImage: /property="og:image"/.test(content),
-      hasOgUrl: /property="og:url".*content="https:\/\/fortunahub\.io/.test(content),
+      hasOgUrl: /property="og:url".*content="https:\/\/fortunahub\.dev/.test(content),
       hasJsonLd: /script type="application\/ld\+json"/.test(content),
       hasOrganizationSchema: /"@type":\s*"Organization"/.test(content),
       hasWebsiteSchema: /"@type":\s*"WebSite"/.test(content),

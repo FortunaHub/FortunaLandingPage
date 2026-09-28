@@ -89,8 +89,8 @@ export default function TermsPage() {
               <h2 className="text-2xl font-bold text-white mb-4">Questions</h2>
               <p className="text-white/68 leading-7">
                 If you have questions about these terms or our practices, please contact us at{' '}
-                <a href="mailto:legal@fortunahub.io" className="text-fortuna-pink hover:text-fortuna-pink/80 transition-colors">
-                  legal@fortunahub.io
+                <a href="mailto:legal@fortunahub.dev" className="text-fortuna-pink hover:text-fortuna-pink/80 transition-colors">
+                  legal@fortunahub.dev
                 </a>
                 .
               </p>

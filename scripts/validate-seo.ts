@@ -5,7 +5,7 @@
  * - All routes return HTTP 200
  * - HTML contains proper meta tags in source
  * - JSON-LD is valid according to schema.org
- * - OG URLs are absolute (https://fortunahub.io/...)
+ * - OG URLs are absolute (https://fortunahub.dev/...)
  * - No duplicate schema scripts
  * 
  * Usage: npx tsx scripts/validate-seo.ts

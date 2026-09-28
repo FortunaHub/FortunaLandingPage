@@ -13,7 +13,7 @@ export interface SeoMeta {
 }
 
 const base = import.meta.env.BASE_URL || '/';
-const siteUrl = 'https://fortunahub.io';
+const siteUrl = 'https://fortunahub.dev';
 
 const normalizePath = (path: string) => {
   const normalizedBase = base === '/' ? '' : base.replace(/\/$/, '');

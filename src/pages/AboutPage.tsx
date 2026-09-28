@@ -123,10 +123,10 @@ export default function AboutPage() {
               <p className="text-white/68 leading-7">
                 If you discover a security vulnerability, please report it responsibly to{' '}
                 <a
-                  href="mailto:security@fortunahub.io"
+                  href="mailto:security@fortunahub.dev"
                   className="text-fortuna-pink hover:text-fortuna-pink/80 transition-colors"
                 >
-                  security@fortunahub.io
+                  security@fortunahub.dev
                 </a>
                 . Please do not open public issues for security vulnerabilities.
               </p>
@@ -143,10 +143,10 @@ export default function AboutPage() {
                 </Link>
                 {' '}or contact us at{' '}
                 <a
-                  href="mailto:hello@fortunahub.io"
+                  href="mailto:hello@fortunahub.dev"
                   className="text-fortuna-pink hover:text-fortuna-pink/80 transition-colors"
                 >
-                  hello@fortunahub.io
+                  hello@fortunahub.dev
                 </a>
                 .
               </p>

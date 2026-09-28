@@ -70,8 +70,8 @@ export default function PrivacyPage() {
               <h2 className="text-2xl font-bold text-white mb-4">Data Retention</h2>
               <p className="text-white/68 leading-7">
                 Demo request submissions are processed through Formspree and retained for up to 12 months to facilitate follow-up communication. You may request deletion of your data at any time by contacting us at{' '}
-                <a href="mailto:privacy@fortunahub.io" className="text-fortuna-pink hover:text-fortuna-pink/80 transition-colors">
-                  privacy@fortunahub.io
+                <a href="mailto:privacy@fortunahub.dev" className="text-fortuna-pink hover:text-fortuna-pink/80 transition-colors">
+                  privacy@fortunahub.dev
                 </a>
                 . Formspree's data handling practices are governed by their privacy policy.
               </p>
@@ -90,8 +90,8 @@ export default function PrivacyPage() {
               </ul>
               <p className="text-white/68 leading-7 mt-3">
                 To exercise these rights, contact us at{' '}
-                <a href="mailto:privacy@fortunahub.io" className="text-fortuna-pink hover:text-fortuna-pink/80 transition-colors">
-                  privacy@fortunahub.io
+                <a href="mailto:privacy@fortunahub.dev" className="text-fortuna-pink hover:text-fortuna-pink/80 transition-colors">
+                  privacy@fortunahub.dev
                 </a>
                 .
               </p>
@@ -125,8 +125,8 @@ export default function PrivacyPage() {
               </p>
               <div className="flex items-center gap-2 text-fortuna-pink">
                 <Mail className="w-5 h-5" />
-                <a href="mailto:privacy@fortunahub.io" className="hover:text-fortuna-pink/80 transition-colors">
-                  privacy@fortunahub.io
+                <a href="mailto:privacy@fortunahub.dev" className="hover:text-fortuna-pink/80 transition-colors">
+                  privacy@fortunahub.dev
                 </a>
               </div>
             </div>

@@ -11,7 +11,7 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const SITE_URL = 'https://fortunahub.io';
+const SITE_URL = 'https://fortunahub.dev';
 
 // All public routes that should appear in sitemap
 const routes = [
