@@ -13,8 +13,24 @@
 }
 
 @layer base {
+  :root {
+    /* Layout dimensions */
+    --header-height: 72px;
+    --sidebar-width: 240px;
+    --content-max-width: 1280px;
+    --docs-content-width: 720px;
+    
+    /* Spacing */
+    --gutter-mobile: 16px;
+    --gutter-tablet: 24px;
+    --gutter-desktop: 32px;
+    
+    --section-spacing-mobile: 40px;
+    --section-spacing-desktop: 64px;
+  }
+
   html {
-    scroll-padding-top: 5.5rem;
+    scroll-padding-top: var(--header-height);
   }
 
   /* Respect prefers-reduced-motion for smooth scrolling */
@@ -55,7 +71,51 @@
 
 @layer utilities {
   .scroll-mt-header {
-    scroll-margin-top: 5.5rem;
+    scroll-margin-top: var(--header-height);
+  }
+
+  /* Centering and constraining content */
+  .container-max {
+    @apply mx-auto w-full;
+    max-width: var(--content-max-width);
+    padding-left: var(--gutter-mobile);
+    padding-right: var(--gutter-mobile);
+  }
+
+  @media (min-width: 768px) {
+    .container-max {
+      padding-left: var(--gutter-tablet);
+      padding-right: var(--gutter-tablet);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .container-max {
+      padding-left: var(--gutter-desktop);
+      padding-right: var(--gutter-desktop);
+    }
+  }
+
+  /* Page header component spacing */
+  .page-header-spacing {
+    margin-bottom: var(--section-spacing-mobile);
+  }
+
+  @media (min-width: 1024px) {
+    .page-header-spacing {
+      margin-bottom: var(--section-spacing-desktop);
+    }
+  }
+
+  /* Section spacing */
+  .section-spacing {
+    margin-bottom: var(--section-spacing-mobile);
+  }
+
+  @media (min-width: 1024px) {
+    .section-spacing {
+      margin-bottom: var(--section-spacing-desktop);
+    }
   }
 
   /* Screen reader only - for skip links and a11y announcements */
