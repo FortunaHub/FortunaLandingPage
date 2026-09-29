@@ -167,7 +167,7 @@ export const SCHEMA_ORG = {
     description:
       'Kubernetes risk operations platform connecting SBOM/CVE evidence, attack paths, identity context, and runtime visibility.',
     sameAs: [
-      'https://github.com/FortunaHub/fortuna',
+      'https://github.com/shino-337/Fortuna-Community',
       'https://twitter.com/FortunaHub', // Update with actual Twitter if available
     ],
   },
@@ -182,8 +182,8 @@ export const SCHEMA_ORG = {
     url: siteUrl,
     applicationCategory: 'SecurityApplication',
     operatingSystem: 'Kubernetes',
-    downloadUrl: 'https://github.com/FortunaHub/fortuna',
-    license: 'https://github.com/FortunaHub/fortuna/blob/main/LICENSE',
+    downloadUrl: 'https://github.com/shino-337/Fortuna-Community',
+    license: 'https://github.com/shino-337/Fortuna-Community/blob/main/LICENSE',
     softwareRequirements: 'Kubernetes 1.20+, containerd or Docker runtime',
     inLanguage: 'en-US',
   },
@@ -193,13 +193,5 @@ export const SCHEMA_ORG = {
     '@type': 'WebSite',
     name: 'FortunaHub',
     url: siteUrl,
-    potentialAction: {
-      '@type': 'SearchAction',
-      target: {
-        '@type': 'EntryPoint',
-        urlTemplate: `${siteUrl}/search?q={search_term_string}`,
-      },
-      'query-input': 'required name=search_term_string',
-    },
   },
 };

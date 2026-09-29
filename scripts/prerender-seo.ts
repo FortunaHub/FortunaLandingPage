@@ -57,11 +57,71 @@ const SEO_ROUTES: Record<string, SeoMeta> = {
       'FortunaHub terms of service: license rights, open source software, user conduct, liability, and governing law.',
     path: '/terms',
   },
+  docs: {
+    title: 'Documentation - FortunaHub Kubernetes Risk Operations',
+    description:
+      'Complete documentation for Fortuna: quickstart, deployment, architecture, components, API, security, and troubleshooting guides.',
+    path: '/docs',
+  },
   docs_overview: {
     title: 'Fortuna Documentation - Platform Overview',
     description:
       'Fortuna platform overview: surfaces, components, multi-cluster support, and optional features for Kubernetes security and risk operations.',
     path: '/docs/overview',
+  },
+  docs_components: {
+    title: 'Fortuna Components - Architecture & Deployment',
+    description:
+      'Fortuna components: Core, Agent, Dashboard, PostgreSQL, NATS, and optional runtime sensors. Architecture, roles, and data ownership.',
+    path: '/docs/components',
+  },
+  docs_getting_started: {
+    title: 'Fortuna Getting Started - Quick Install & Setup',
+    description:
+      'Quick install guide for Fortuna: clone repository, deploy from images, configure environment, access dashboard, and add remote clusters.',
+    path: '/docs/getting-started',
+  },
+  docs_user_guide: {
+    title: 'Fortuna User Guide - Dashboard & Operations',
+    description:
+      'User guide for FortunaHub dashboard: access, roles, cluster scope, navigation, findings triage, attack paths, and inventory review.',
+    path: '/docs/user-guide',
+  },
+  docs_use_cases: {
+    title: 'Fortuna Use Cases - Scenarios & Workflows',
+    description:
+      'Real use cases and workflows: confirm platform health, triage findings, investigate attack paths, review pod posture, verify runtime network, audit policies.',
+    path: '/docs/use-cases',
+  },
+  docs_architecture: {
+    title: 'Fortuna Architecture - System Design & Data Flow',
+    description:
+      'Architecture overview: logical design, data ownership, cluster identity, UI state contracts, runtime visibility states, and multi-cluster topology.',
+    path: '/docs/architecture',
+  },
+  docs_deployment: {
+    title: 'Fortuna Deployment - Production Setup & Configuration',
+    description:
+      'Deployment guide: reference manifests, local rebuild, published images, production inputs, CVE/runtime data, multi-cluster, and post-deploy checks.',
+    path: '/docs/deployment',
+  },
+  docs_api: {
+    title: 'Fortuna API - REST & gRPC Endpoints',
+    description:
+      'API documentation: public endpoints, authentication, domain route groups, important contracts, and API error handling.',
+    path: '/docs/api',
+  },
+  docs_security: {
+    title: 'Fortuna Security - Authentication & Deployment Security',
+    description:
+      'Security guide: authentication, default admin, secrets and mTLS, repository hygiene, and production security best practices.',
+    path: '/docs/security',
+  },
+  docs_troubleshooting: {
+    title: 'Fortuna Troubleshooting - Common Issues & Solutions',
+    description:
+      'Troubleshooting guide: long builds, CVE catalog, default admin issues, images/DNS/runtime, and debugging failing deployments.',
+    path: '/docs/troubleshooting',
   },
 };
 
@@ -202,22 +262,18 @@ function prerenderStaticHtml(): void {
   const results: Array<{ path: string; file: string; status: string }> = [];
 
   Object.entries(SEO_ROUTES).forEach(([key, route]) => {
-    // Skip home route - let Vite's index.html handle it
-    if (route.path === '/') {
-      results.push({
-        path: route.path,
-        file: 'dist/index.html (Vite-built, skipped)',
-        status: '⊘',
-      });
-      return;
-    }
-
     const html = generateHtmlWithMetadata(route);
 
-    // Determine file path for nested routes
-    const dirPath = path.join(distDir, route.path);
-    ensureDir(dirPath);
-    const filePath = path.join(dirPath, 'index.html');
+    // Determine file path
+    let filePath: string;
+    if (route.path === '/') {
+      filePath = path.join(distDir, 'index.html');
+    } else {
+      // Create directory structure: /features → dist/features/index.html
+      const dirPath = path.join(distDir, route.path);
+      ensureDir(dirPath);
+      filePath = path.join(dirPath, 'index.html');
+    }
 
     // Write file
     try {
@@ -243,9 +299,9 @@ function prerenderStaticHtml(): void {
   });
 
   const successCount = results.filter((r) => r.status === '✓').length;
-  console.log(`\n✓ Pre-rendered ${successCount}/5 nested routes (home route uses Vite-built index.html)\n`);
+  console.log(`\n✓ Pre-rendered ${successCount}/${Object.keys(SEO_ROUTES).length} routes\n`);
 
-  if (successCount !== 5) {
+  if (successCount !== Object.keys(SEO_ROUTES).length) {
     process.exit(1);
   }
 }
@@ -261,12 +317,12 @@ function verifyPrerenderedHtml(): void {
   const verifications: Array<{ file: string; checks: Record<string, boolean> }> = [];
 
   Object.values(SEO_ROUTES).forEach((route) => {
-    // Skip home route - it's Vite-built
+    let filePath: string;
     if (route.path === '/') {
-      return;
+      filePath = path.join(distDir, 'index.html');
+    } else {
+      filePath = path.join(distDir, route.path, 'index.html');
     }
-
-    const filePath = path.join(distDir, route.path, 'index.html');
 
     if (!fs.existsSync(filePath)) {
       console.log(`⚠ File not found: ${filePath}`);

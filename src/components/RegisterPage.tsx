@@ -9,7 +9,7 @@ const FORMSPREE_ENDPOINT = import.meta.env.VITE_FORMSPREE_ENDPOINT || 'https://f
 
 const demoTopics = [
   'Runtime Network and cluster traffic evidence',
-  'Attack-path analysis and blast radius review',
+  'Attack-path analysis and evidence review',
   'SBOM, CVE, and runtime risk prioritization',
 ] as const;
 

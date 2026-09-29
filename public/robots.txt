@@ -34,4 +34,4 @@ User-agent: SemrushBot
 Disallow: /
 
 # Sitemap location
-Sitemap: https://fortunahub.io/sitemap.xml
+Sitemap: https://fortunahub.dev/sitemap.xml

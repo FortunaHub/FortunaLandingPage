@@ -51,7 +51,7 @@ export default function PrivacyPage() {
                     <li>Company / organization</li>
                   </ul>
                   <p className="text-white/68 leading-7 mt-3">
-                    This information is used solely to respond to your demo request and facilitate discussion with the Fortuna team. We do not sell or share this data with third parties.
+                    This information is used solely to respond to your demo request and facilitate discussion with the Fortuna team. Demo submissions are processed through Formspree, our form processing service. We do not sell personal data to third parties.
                   </p>
                 </div>
               </div>
@@ -69,11 +69,11 @@ export default function PrivacyPage() {
             <div>
               <h2 className="text-2xl font-bold text-white mb-4">Data Retention</h2>
               <p className="text-white/68 leading-7">
-                Demo request submissions are processed through Formspree and retained for up to 12 months to facilitate follow-up communication. You may request deletion of your data at any time by contacting us at{' '}
+                Demo request submissions are processed through Formspree, our form processing service, and retained for up to 12 months to facilitate follow-up communication. Formspree's data handling practices are governed by their <a href="https://formspree.io/legal/privacy-policy/" target="_blank" rel="noopener noreferrer" className="text-fortuna-pink hover:text-fortuna-pink/80 transition-colors">privacy policy</a>. You may request deletion of your data at any time by contacting us at{' '}
                 <a href="mailto:privacy@fortunahub.dev" className="text-fortuna-pink hover:text-fortuna-pink/80 transition-colors">
                   privacy@fortunahub.dev
                 </a>
-                . Formspree's data handling practices are governed by their privacy policy.
+                .
               </p>
             </div>
 

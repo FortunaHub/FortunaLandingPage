@@ -40,17 +40,20 @@ export default function TermsPage() {
               <h2 className="text-2xl font-bold text-white mb-4">Open Source License</h2>
               <p className="text-white/68 leading-7">
                 Fortuna is released under the Apache License 2.0. The open source project is governed by the Apache License 2.0 terms as published in the GitHub repository at{' '}
-                <a href="https://github.com/FortunaHub/fortuna" className="text-fortuna-pink hover:text-fortuna-pink/80 transition-colors" target="_blank" rel="noopener noreferrer">
-                  github.com/FortunaHub/fortuna
+                <a href="https://github.com/shino-337/Fortuna-Community" className="text-fortuna-pink hover:text-fortuna-pink/80 transition-colors" target="_blank" rel="noopener noreferrer">
+                  github.com/shino-337/Fortuna-Community
                 </a>
                 . This means you are free to use, modify, and distribute Fortuna in accordance with Apache License 2.0.
               </p>
             </div>
 
             <div>
-              <h2 className="text-2xl font-bold text-white mb-4">Landing Page Content</h2>
+              <h2 className="text-2xl font-bold text-white mb-4">Landing Page Source Code & Content</h2>
+              <p className="text-white/68 leading-7 mb-3">
+                The FortunaHub landing page source code is released under the Apache License 2.0, consistent with the Fortuna product. You are free to use, modify, and distribute the source code in accordance with Apache License 2.0.
+              </p>
               <p className="text-white/68 leading-7">
-                The FortunaHub landing page content and marketing materials are proprietary. You may view and share these materials for personal, informational use, but you may not reproduce, republish, or repackage them without permission.
+                However, the FortunaHub branding, logos, trademarks, and marketing copy are proprietary. You may view and share these materials for personal, informational use, but you may not reproduce, republish, repackage, or use the branding for other purposes without permission.
               </p>
             </div>
 

@@ -42,7 +42,7 @@ export default function AboutPage() {
                   Request a demo <ArrowRight className="h-4 w-4" />
                 </Link>
                 <a
-                  href="https://github.com/FortunaHub/fortuna"
+                  href="https://github.com/shino-337/Fortuna-Community"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex min-h-12 items-center justify-center rounded-md border border-white/15 px-7 py-3 text-sm font-semibold text-white/85 transition-colors hover:border-white/35 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white/70"
@@ -105,12 +105,12 @@ export default function AboutPage() {
               <p className="text-white/68 leading-7">
                 Source code is available on{' '}
                 <a
-                  href="https://github.com/FortunaHub/fortuna"
+                  href="https://github.com/shino-337/Fortuna-Community"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-fortuna-pink hover:text-fortuna-pink/80 transition-colors"
                 >
-                  GitHub at FortunaHub/fortuna
+                  GitHub at shino-337/Fortuna-Community
                 </a>
                 . Contributions, issues, and discussions are welcome. Please review our contributing guidelines.
               </p>

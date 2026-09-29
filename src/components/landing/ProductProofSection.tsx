@@ -13,8 +13,8 @@ const workflow = [
   },
   {
     icon: GitBranch,
-    title: 'Trace the blast radius',
-    copy: 'Move from vulnerable or over-permissioned workloads into path context so teams can break the chains that matter first.',
+    title: 'Trace the attack path',
+    copy: 'Move from vulnerable or over-permissioned workloads into path context so teams can remediate the chains that matter first.',
   },
   {
     icon: ShieldAlert,
@@ -104,7 +104,7 @@ export default function ProductProofSection() {
                   className="aspect-[1440/1000] w-full object-cover object-left-top"
                 />
                 <figcaption className="border-t border-white/10 px-4 py-3 text-xs leading-5 text-white/60">
-                  Attack Paths connect privilege escalation, token access, and workload reachability to remediation priority.
+                  Attack Paths connect privilege escalation, token access, and workload relationships to remediation priority.
                 </figcaption>
               </motion.figure>
 

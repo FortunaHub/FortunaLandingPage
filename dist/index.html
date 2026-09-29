@@ -4,29 +4,51 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>FortunaHub - Kubernetes Risk Operations Platform</title>
-    <meta name="description" content="FortunaHub helps teams operate Kubernetes risk with SBOM/CVE evidence, attack-path analysis, identity and RBAC context, runtime network visibility, Falco signals, unified scoring, and multi-cluster telemetry." />
+    <meta name="description" content="Prioritize Kubernetes security findings with unified risk scores. SBOM/CVE evidence, attack paths, identity context, observed network traffic, and optional runtime signals." />
+    <meta name="robots" content="index, follow" />
 
     <!-- Favicon & Icons -->
     <link rel="icon" type="image/png" href="/favicon.png" sizes="32x32" />
     <link rel="icon" type="image/png" href="/logo.png" sizes="192x192" />
     <link rel="apple-touch-icon" href="/logo.png" />
 
-    <!-- Open Graph / Logo đại diện (social sharing) -->
+    <!-- Canonical URL (absolute) -->
+    <link rel="canonical" href="https://fortunahub.dev/" />
+
+    <!-- Open Graph / Social Sharing -->
     <meta property="og:type" content="website" />
     <meta property="og:title" content="FortunaHub - Kubernetes Risk Operations Platform" />
-    <meta property="og:description" content="FortunaHub helps teams operate Kubernetes risk with SBOM/CVE evidence, attack-path analysis, identity and RBAC context, runtime network visibility, Falco signals, unified scoring, and multi-cluster telemetry." />
-    <meta property="og:image" content="/logo.png" />
+    <meta property="og:description" content="Prioritize Kubernetes security findings with unified risk scores. SBOM/CVE evidence, attack paths, identity context, observed network traffic, and optional runtime signals." />
+    <meta property="og:image" content="https://fortunahub.dev/images/dashboard-overview.png" />
     <meta property="og:image:alt" content="Fortuna - Kubernetes Security & Risk Management" />
+    <meta property="og:url" content="https://fortunahub.dev/" />
+    <meta property="og:site_name" content="FortunaHub" />
+
+    <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:image" content="/logo.png" />
+    <meta name="twitter:title" content="FortunaHub - Kubernetes Risk Operations Platform" />
+    <meta name="twitter:description" content="Prioritize Kubernetes security findings with unified risk scores. SBOM/CVE evidence, attack paths, identity context, observed network traffic, and optional runtime signals." />
+    <meta name="twitter:image" content="https://fortunahub.dev/images/dashboard-overview.png" />
+    <meta name="twitter:site" content="@FortunaHub" />
 
     <!-- SEO and Sitemap -->
     <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
-    <link rel="canonical" href="https://fortunahub.dev" />
-    <script type="module" crossorigin src="/assets/index-DkE1BC_D.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-DHW75x0C.css">
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Organization","name":"FortunaHub","url":"https://fortunahub.dev","logo":"https://fortunahub.dev/logo.png","description":"Kubernetes risk operations platform connecting SBOM/CVE evidence, attack paths, identity context, and runtime visibility.","sameAs":["https://github.com/FortunaHub/fortuna"]}
+    </script>
+    <script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebSite","name":"FortunaHub","url":"https://fortunahub.dev"}
+    </script>
+
+    <!-- Preload critical assets -->
+    <link rel="preload" href="/logo.png" as="image" />
   </head>
   <body>
     <div id="root"></div>
+    <noscript>This site requires JavaScript to run properly.</noscript>
+    <!-- Note: Script tag is injected by the 404.html fallback to root.tsx via React Router -->
+    <!-- The actual JS module is loaded by the SPA router when this route is accessed via /#/path -->
   </body>
 </html>

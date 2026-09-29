@@ -136,32 +136,32 @@ const DOC_CONTENT: Record<DocSlug, React.ReactNode> = {
           Fortuna source code is published on GitHub. Releases include built images, manifests, and installation scripts.
         </p>
         <ul className="ml-2 list-inside list-disc space-y-2 text-xs">
-          <li><strong className="text-white/72">Source:</strong> <code className="text-fortuna-pink">https://github.com/FortunaHub/fortuna</code></li>
-          <li><strong className="text-white/72">Releases:</strong> <code className="text-fortuna-pink">https://github.com/FortunaHub/fortuna/releases</code></li>
-          <li><strong className="text-white/72">Container registry:</strong> <code className="text-fortuna-pink">ghcr.io/fortunahub/fortuna</code></li>
+          <li><strong className="text-white/72">Source:</strong> <code className="text-fortuna-pink">https://github.com/shino-337/Fortuna-Community</code></li>
+          <li><strong className="text-white/72">Releases:</strong> <code className="text-fortuna-pink">https://github.com/shino-337/Fortuna-Community/releases</code></li>
+          <li><strong className="text-white/72">Container registry:</strong> <code className="text-fortuna-pink">ghcr.io/shino-337/fortuna-community</code></li>
           <li><strong className="text-white/72">Available images:</strong> <code className="text-fortuna-pink">fortuna-core</code>, <code className="text-fortuna-pink">fortuna-agent</code>, <code className="text-fortuna-pink">fortuna-dashboard</code></li>
         </ul>
       </Section>
 
       <Section title="Quick install from release">
         <CodeBlock>{`# Clone the repository
-git clone https://github.com/FortunaHub/fortuna.git
-cd fortuna
+git clone https://github.com/shino-337/Fortuna-Community.git
+cd Fortuna-Community
 
-# Checkout a specific release (e.g., v0.1.0)
-git checkout v0.1.0
+# Checkout a specific release (e.g., v1.0.0)
+git checkout v1.0.0
 
 # Set image registry and version
-export FORTUNA_REGISTRY="ghcr.io/fortunahub/fortuna"
-export FORTUNA_VERSION="v0.1.0"
+export FORTUNA_REGISTRY="ghcr.io/shino-337/fortuna-community"
+export FORTUNA_VERSION="v1.0.0"
 export FORTUNA_ADMIN_PASSWORD="<choose-strong-password>"
 
 # Create secrets
 ./scripts/utils/ensure-fortuna-secrets.sh fortuna
 
 # Apply Kubernetes manifests
-kubectl apply -f deploy/postgres-deployment.yaml
-kubectl apply -f deploy/nats-statefulset.yaml
+kubectl apply -f deploy/infrastructure/postgresql-with-age.yaml
+kubectl apply -f deploy/infrastructure/nats.yaml
 kubectl apply -f deploy/fortuna-rbac.yaml
 kubectl apply -f deploy/dashboard-nginx-configmap.yaml
 kubectl apply -f deploy/fortuna-core-deployment.yaml
@@ -182,12 +182,12 @@ kubectl -n fortuna rollout status deploy/fortuna-dashboard`}</CodeBlock>
 docker login ghcr.io
 
 # Pull specific component
-docker pull ghcr.io/fortunahub/fortuna/fortuna-core:v0.1.0
-docker pull ghcr.io/fortunahub/fortuna/fortuna-agent:v0.1.0
-docker pull ghcr.io/fortunahub/fortuna/fortuna-dashboard:v0.1.0
+docker pull ghcr.io/shino-337/fortuna-community/fortuna-core:v1.0.0
+docker pull ghcr.io/shino-337/fortuna-community/fortuna-agent:v1.0.0
+docker pull ghcr.io/shino-337/fortuna-community/fortuna-dashboard:v1.0.0
 
 # List available tags
-crane ls ghcr.io/fortunahub/fortuna/fortuna-core`}</CodeBlock>
+crane ls ghcr.io/shino-337/fortuna-community/fortuna-core`}</CodeBlock>
         <p className="mt-3 text-xs text-white/62">
           For Kubernetes, create an imagePullSecret and reference it in deployments. See <code className="text-fortuna-pink">deploy/</code> manifests for examples.
         </p>
@@ -198,8 +198,8 @@ crane ls ghcr.io/fortunahub/fortuna/fortuna-core`}</CodeBlock>
           Reference manifests are in the repository <code className="text-fortuna-pink">deploy/</code> directory. Each component has a separate manifest file.
         </p>
         <ul className="ml-2 list-inside list-disc space-y-2 text-xs">
-          <li><strong className="text-white/72">postgres-deployment.yaml</strong>: PostgreSQL database (primary data store).</li>
-          <li><strong className="text-white/72">nats-statefulset.yaml</strong>: NATS JetStream (async work queues).</li>
+          <li><strong className="text-white/72">postgresql-with-age.yaml</strong>: PostgreSQL database (primary data store).</li>
+          <li><strong className="text-white/72">nats.yaml</strong>: NATS JetStream (async work queues).</li>
           <li><strong className="text-white/72">fortuna-rbac.yaml</strong>: ServiceAccount, ClusterRole, ClusterRoleBinding.</li>
           <li><strong className="text-white/72">fortuna-core-deployment.yaml</strong>: Core API and processing engine.</li>
           <li><strong className="text-white/72">fortuna-agent-daemonset.yaml</strong>: Agent on every node (SBOM extraction, inventory sync).</li>
@@ -209,24 +209,24 @@ crane ls ghcr.io/fortunahub/fortuna/fortuna-core`}</CodeBlock>
         </ul>
       </Section>
 
-      <Section title="Runtime agent (optional)">
+      <Section title="Runtime sensors (optional)">
         <p className="mb-3">
-          Fortuna can be enhanced with optional runtime sensors for process monitoring and network traffic capture. Runtime agents communicate with Core and provide additional context for findings and attack paths.
+          Fortuna supports optional runtime sensors for process monitoring and network traffic visibility. Falco event ingestion is currently functional; eBPF support is experimental. Runtime sensors communicate with Core and provide additional context for findings and attack paths.
         </p>
-        <CodeBlock>{`# Install runtime sensors (Falco/eBPF)
-./scripts/deploy/install-runtime-fortuna.sh
+        <CodeBlock>{`# Enable Falco for runtime event ingestion (if not already enabled)
+# Check current product documentation for runtime integration setup
 
-# Restart Agent DaemonSet to reload with runtime
+# Restart Agent DaemonSet after runtime configuration changes
 kubectl -n fortuna rollout restart daemonset/fortuna-agent
 kubectl -n fortuna rollout status daemonset/fortuna-agent --timeout=180s
 
 # Verify runtime state in Dashboard
-# Monitor -> Runtime State should show "installed and enabled"
+# Monitor -> Runtime State should show actual sensor status
 
 # Optional: disable runtime without uninstalling
 kubectl -n fortuna set env daemonset/fortuna-agent RUNTIME_ENABLED=false`}</CodeBlock>
         <p className="mt-3 text-xs text-white/62">
-          Runtime sensors increase Agent memory by 200-400 MB per node. They are optional and under active development. For production, evaluate performance overhead in your environment before enabling broadly.
+          Runtime sensors increase Agent memory by 200-400 MB per node. They are optional and under active development. Falco ingestion is supported; eBPF is experimental. For production, evaluate performance overhead in your environment before enabling broadly. Refer to the product repository for current Falco integration and configuration.
         </p>
       </Section>
 
@@ -235,17 +235,17 @@ kubectl -n fortuna set env daemonset/fortuna-agent RUNTIME_ENABLED=false`}</Code
           Recommended first path for users is to deploy Fortuna from built images. Use a release tag instead of{' '}
           <code className="text-fortuna-pink">latest</code> when validating a fixed version.
         </p>
-        <CodeBlock>{`git clone https://github.com/FortunaHub/fortuna.git
+        <CodeBlock>{`git clone https://github.com/shino-337/Fortuna-Community.git
 cd fortuna
 
-export FORTUNA_REGISTRY="ghcr.io/fortunahub/fortuna"
+export FORTUNA_REGISTRY="ghcr.io/shino-337/fortuna-community"
 export FORTUNA_VERSION="latest"
 export FORTUNA_ADMIN_PASSWORD="<strong-admin-password>"
 
 ./scripts/utils/ensure-fortuna-secrets.sh fortuna
 
-kubectl apply -f deploy/postgres-deployment.yaml
-kubectl apply -f deploy/nats-statefulset.yaml
+kubectl apply -f deploy/infrastructure/postgresql-with-age.yaml
+kubectl apply -f deploy/infrastructure/nats.yaml
 kubectl apply -f deploy/fortuna-rbac.yaml
 kubectl apply -f deploy/dashboard-nginx-configmap.yaml
 kubectl apply -f deploy/fortuna-core-deployment.yaml
@@ -606,13 +606,13 @@ Remote clusters
       </Section>
 
       <Section title="Published image deploy">
-        <CodeBlock>{`export FORTUNA_REGISTRY="ghcr.io/fortunahub/fortuna"
+        <CodeBlock>{`export FORTUNA_REGISTRY="ghcr.io/shino-337/fortuna-community"
 export FORTUNA_VERSION="<release-tag>"
 export FORTUNA_ADMIN_PASSWORD="<strong-admin-password>"
 
 ./scripts/utils/ensure-fortuna-secrets.sh fortuna
-kubectl apply -f deploy/postgres-deployment.yaml
-kubectl apply -f deploy/nats-statefulset.yaml
+kubectl apply -f deploy/infrastructure/postgresql-with-age.yaml
+kubectl apply -f deploy/infrastructure/nats.yaml
 kubectl apply -f deploy/fortuna-rbac.yaml
 kubectl apply -f deploy/dashboard-nginx-configmap.yaml
 kubectl apply -f deploy/fortuna-core-deployment.yaml
@@ -626,7 +626,7 @@ kubectl apply -f deploy/dashboard-deployment.yaml`}</CodeBlock>
           on local containerd images for multi-node production clusters.
         </p>
         <CodeBlock>{`export NAMESPACE="fortuna"
-export FORTUNA_REGISTRY="ghcr.io/fortunahub/fortuna"
+export FORTUNA_REGISTRY="ghcr.io/shino-337/fortuna-community"
 export FORTUNA_VERSION="<release-tag-or-sha>"
 export FORTUNA_JWT_SECRET="$(openssl rand -base64 32)"
 export FORTUNA_ADMIN_PASSWORD="<strong-admin-password>"
@@ -637,7 +637,8 @@ export FORTUNA_DATABASE_URL="postgres://postgres:\${FORTUNA_POSTGRES_PASSWORD}@p
       <Section title="CVE and runtime data">
         <CodeBlock>{`./scripts/utils/load-cve-data.sh
 
-./scripts/deploy/install-runtime-fortuna.sh
+# For runtime sensor setup, refer to product documentation
+# Runtime configuration is environment-specific and may require additional setup
 kubectl rollout restart -n "$NAMESPACE" daemonset/fortuna-agent
 kubectl -n "$NAMESPACE" rollout status daemonset/fortuna-agent --timeout=180s`}</CodeBlock>
         <p className="mt-3 text-xs text-white/62">

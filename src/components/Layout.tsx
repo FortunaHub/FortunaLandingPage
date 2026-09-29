@@ -302,7 +302,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               <h4 className="text-xs font-bold uppercase tracking-[0.2em] text-white mb-6">Company</h4>
               <ul className="space-y-4">
                 <li><Link to="/about" className="text-sm text-white/70 hover:text-fortuna-pink transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-fortuna-pink">About Fortuna</Link></li>
-                <li><a href="https://github.com/FortunaHub/fortuna" target="_blank" rel="noopener noreferrer" className="text-sm text-white/70 hover:text-fortuna-pink transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-fortuna-pink">GitHub</a></li>
+                <li><a href="https://github.com/shino-337/Fortuna-Community" target="_blank" rel="noopener noreferrer" className="text-sm text-white/70 hover:text-fortuna-pink transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-fortuna-pink">GitHub</a></li>
               </ul>
             </div>
           </div>
