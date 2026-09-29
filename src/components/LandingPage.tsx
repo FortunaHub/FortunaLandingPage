@@ -1,77 +1,90 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, BookOpen, FileText, Info, Zap } from 'lucide-react';
-import { HeroSection, KeyStrengths, ProductProofSection, EvaluatorPathsSection, CTASection } from './landing';
+import { ArrowRight, Zap, BookOpen, Info } from 'lucide-react';
+import HeroSection from './landing/HeroSection';
 import { SeoHead } from './SeoHead';
+
+const capabilities = [
+  {
+    icon: Zap,
+    title: 'Attack Paths',
+    description: 'Trace RBAC relationships from workload identity through role bindings toward sensitive cluster access.',
+  },
+  {
+    icon: BookOpen,
+    title: 'Workload Evidence',
+    description: 'Connect SBOM packages, CVE matches, pod security, and runtime observations to attack context.',
+  },
+  {
+    icon: Info,
+    title: 'Unified Risk',
+    description: 'One risk score with visible contributing evidence helps you prioritize remediation before spending time.',
+  },
+];
 
 export default function LandingPage() {
   return (
-    <div className="overflow-x-hidden">
+    <div className="overflow-x-hidden bg-fortuna-dark">
       <SeoHead route="home" />
-      <HeroSection />
-      <ProductProofSection />
-      <EvaluatorPathsSection />
-      <KeyStrengths />
 
-      <section className="py-24 bg-fortuna-dark border-t border-white/5">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="mb-10 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
-            <div>
-              <p className="mb-3 text-sm font-semibold text-fortuna-pink">Evaluate Fortuna</p>
-              <h2 className="text-3xl md:text-4xl font-black uppercase leading-tight">
-                Choose the next depth of detail
-              </h2>
-            </div>
-            <p className="max-w-xl text-sm leading-6 text-white/62">
-              Move from product evidence into capabilities, implementation notes, or company context
-              without losing the Kubernetes security workflow.
+      {/* Hero */}
+      <HeroSection />
+
+      {/* Capabilities Grid */}
+      <section className="py-16 md:py-24 border-t border-white/5">
+        <div className="container-max">
+          <div className="mb-12 max-w-2xl">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">
+              Three ways Fortuna helps you investigate
+            </h2>
+            <p className="text-lg text-white/70">
+              Connect identity and privilege paths with evidence to decide what's worth fixing first.
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-            <Link
-              to="/features"
-              className="group rounded-lg border border-white/10 bg-white/[0.035] p-6 transition-colors hover:border-fortuna-pink/35 hover:bg-white/[0.055] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-fortuna-pink"
-            >
-              <div className="mb-8 flex items-center justify-between">
-                <Zap className="h-6 w-6 text-fortuna-pink" />
-                <ArrowRight className="h-5 w-5 text-white/35 transition-transform group-hover:translate-x-1 group-hover:text-fortuna-pink" />
-              </div>
-              <h3 className="text-lg font-bold text-white">Inspect platform capabilities</h3>
-              <p className="mt-3 text-sm leading-6 text-white/58">
-                SBOM, CVE matching, Findings Queue, Attack Paths, Runtime Network, inventory, and runtime health.
-              </p>
-            </Link>
-            <Link
-              to="/docs"
-              className="group rounded-lg border border-white/10 bg-white/[0.035] p-6 transition-colors hover:border-fortuna-pink/35 hover:bg-white/[0.055] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-fortuna-pink"
-            >
-              <div className="mb-8 flex items-center justify-between">
-                <BookOpen className="h-6 w-6 text-fortuna-pink" />
-                <ArrowRight className="h-5 w-5 text-white/35 transition-transform group-hover:translate-x-1 group-hover:text-fortuna-pink" />
-              </div>
-              <h3 className="text-lg font-bold text-white">Read architecture notes</h3>
-              <p className="mt-3 text-sm leading-6 text-white/58">
-                Deployment model, API surfaces, prerequisites, and operational runbooks.
-              </p>
-            </Link>
-            <Link
-              to="/about"
-              className="group rounded-lg border border-white/10 bg-white/[0.035] p-6 transition-colors hover:border-fortuna-pink/35 hover:bg-white/[0.055] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-fortuna-pink"
-            >
-              <div className="mb-8 flex items-center justify-between">
-                <Info className="h-6 w-6 text-fortuna-pink" />
-                <FileText className="h-5 w-5 text-white/35 transition-transform group-hover:translate-x-1 group-hover:text-fortuna-pink" />
-              </div>
-              <h3 className="text-lg font-bold text-white">Understand the platform</h3>
-              <p className="mt-3 text-sm leading-6 text-white/58">
-                Why Fortuna brings security evidence, topology, and runtime context together.
-              </p>
-            </Link>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+            {capabilities.map((cap) => {
+              const Icon = cap.icon;
+              return (
+                <div
+                  key={cap.title}
+                  className="p-6 rounded-lg border border-white/10 bg-white/[0.03] hover:border-white/20 hover:bg-white/[0.05] transition-colors"
+                >
+                  <Icon className="w-6 h-6 text-fortuna-pink mb-4" />
+                  <h3 className="text-lg font-semibold text-white mb-2">{cap.title}</h3>
+                  <p className="text-sm text-white/65 leading-relaxed">{cap.description}</p>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
 
-      <CTASection />
+      {/* Next Steps CTA */}
+      <section className="py-16 md:py-20 border-t border-white/5">
+        <div className="container-max text-center">
+          <h2 className="text-2xl md:text-3xl font-bold mb-4 text-white">Ready to explore?</h2>
+          <p className="text-white/70 mb-8 max-w-lg mx-auto">
+            Start with an interactive walkthrough of a real Kubernetes attack scenario.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link
+              to="/docs/first-investigation"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg bg-fortuna-pink text-white font-semibold hover:bg-[#EA2A70] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-fortuna-pink"
+            >
+              Begin investigation walkthrough <ArrowRight className="w-4 h-4" />
+            </Link>
+            <a
+              href="https://github.com/shino-337/Fortuna-Community"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg border border-white/20 text-white font-semibold hover:border-white/40 hover:bg-white/5 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-fortuna-pink"
+            >
+              View on GitHub
+            </a>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
