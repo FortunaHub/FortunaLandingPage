@@ -7,19 +7,19 @@ const base = import.meta.env.BASE_URL;
 
 const workflow = [
   {
-    icon: Radar,
-    title: 'Inspect runtime traffic',
-    copy: 'Review observed pod, service, and external flows in the selected cluster before network assumptions turn into exposure.',
-  },
-  {
     icon: GitBranch,
-    title: 'Trace the attack path',
-    copy: 'Move from vulnerable or over-permissioned workloads into path context so teams can remediate the chains that matter first.',
+    title: 'Trace identity and privilege paths',
+    copy: 'Follow workload, ServiceAccount, binding, role, host-access, and lateral relationships toward sensitive Kubernetes access.',
   },
   {
     icon: ShieldAlert,
-    title: 'Prioritize runtime risk',
-    copy: 'Use runtime and attack-path evidence with the unified risk score instead of treating every finding equally.',
+    title: 'Add workload evidence',
+    copy: 'Bring vulnerability, pod security, runtime events, processes, and observed network activity into the same investigation.',
+  },
+  {
+    icon: Radar,
+    title: 'Prioritize remediation',
+    copy: 'Use one risk result with visible contributing evidence to decide which workload or path needs action first.',
   },
 ] as const;
 
@@ -42,24 +42,23 @@ export default function ProductProofSection() {
               Product proof
             </p>
             <h2 className="max-w-2xl text-3xl sm:text-5xl font-black leading-tight uppercase text-balance">
-              Start with the evidence your cluster already produces
+              Connect workload identity, RBAC permissions, and evidence
             </h2>
             <p className="mt-6 max-w-xl text-base leading-8 text-white/70">
-              Fortuna is built around inspection, not decoration. Findings, attack paths,
-              runtime network activity, SBOM/CVE context, identities, and telemetry health stay connected in one Kubernetes risk workflow.
+              Fortuna is built around investigation, not decoration. Follow identity and privilege relationships from pod to dangerous permissions, bring supporting evidence from SBOM, CVE, runtime, and network observations, then prioritize the remediation that matters most.
             </p>
             <div className="mt-8 flex flex-col sm:flex-row gap-4">
               <Link
                 to="/features"
                 className="inline-flex min-h-12 items-center justify-center gap-2 rounded-md border border-fortuna-pink/45 px-6 py-3 text-sm font-bold text-white transition-colors hover:bg-fortuna-pink/12 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-fortuna-pink"
               >
-                View feature evidence <ArrowRight className="h-4 w-4" />
+                Explore attack paths <ArrowRight className="h-4 w-4" />
               </Link>
               <Link
                 to="/docs"
                 className="inline-flex min-h-12 items-center justify-center rounded-md px-6 py-3 text-sm font-semibold text-white/75 transition-colors hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white/70"
               >
-                Read architecture notes
+                Start first investigation
               </Link>
             </div>
           </motion.div>

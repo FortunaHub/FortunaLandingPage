@@ -336,6 +336,164 @@ REMOTE_KUBECONFIGS="cluster101=\${REMOTE_KUBECONFIG}" \\
     </div>
   ),
 
+  'first-investigation': (
+    <div className="space-y-6 text-sm text-white/68">
+      <Section title="What is a First Investigation?">
+        <p className="mb-3">
+          A first investigation walks through one complete Kubernetes security workflow: find a workload, trace its identity and permissions, discover possible attack paths, review evidence, and verify remediation. This is the fastest way to understand Fortuna's approach to attack-path investigation.
+        </p>
+        <p className="text-xs text-white/62">
+          This guide uses a real RBAC scenario from Fortuna. We'll trace from pod → ServiceAccount → role binding → dangerous permissions → remediation.
+        </p>
+      </Section>
+
+      <Section title="Step 1: Verify platform health">
+        <p className="mb-3">
+          Start in the <strong>Platform Integrity</strong> workspace to confirm that Agent, CVE processing, and runtime visibility are operational. A quiet findings queue only means something if the dashboard is complete.
+        </p>
+        <DocImage
+          src="live-platform-integrity.png"
+          alt="Fortuna Platform Integrity workspace showing healthy telemetry state"
+          caption="Platform Integrity confirms Agent sync, CVE processing freshness, and data availability before interpreting findings."
+        />
+        <p className="mt-2 text-xs text-white/62">
+          Verify: Agent sync age, CVE catalog timestamp, runtime sensor state (if enabled). If any show "unavailable" or are stale, investigate the cause before relying on finding results.
+        </p>
+      </Section>
+
+      <Section title="Step 2: Find your workload">
+        <p className="mb-3">
+          Open <strong>Kubernetes Inventory</strong> and locate a pod or workload. In a test scenario, we're looking for a pod that uses a ServiceAccount with elevated permissions. The inventory shows identity context: which ServiceAccount the pod is running as.
+        </p>
+        <DocImage
+          src="live-inventory-rbac-pod.png"
+          alt="Kubernetes Inventory filtered to show a pod with ServiceAccount and RBAC identity"
+          caption="Kubernetes Inventory shows the workload, its namespace, ServiceAccount, risk level, and image. This is your starting point for investigation."
+        />
+        <p className="mt-3 text-xs text-white/62">
+          Filter by namespace, pod name, or risk level. Click on a pod to inspect its ServiceAccount, SBOM, CVEs, and identity context.
+        </p>
+      </Section>
+
+      <Section title="Step 3: Inspect the ServiceAccount and RBAC grants">
+        <p className="mb-3">
+          From the pod detail, click to open the <strong>ServiceAccount identity</strong>. This shows the exact source: which RoleBinding or ClusterRoleBinding grants permissions, and what those permissions are.
+        </p>
+        <DocImage
+          src="live-serviceaccount-identity.png"
+          alt="ServiceAccount identity detail showing RoleBinding source and effective RBAC permissions"
+          caption="Identity detail reveals the binding and role source. Verify the permissions match expectations before assuming risk."
+        />
+        <p className="mt-3 text-xs text-white/62">
+          Compare the effective verbs and resources against what the workload actually needs. Dangerous permissions: <code className="text-fortuna-pink">*</code> (wildcards), <code className="text-fortuna-pink">admin</code> roles, or <code className="text-fortuna-pink">get secrets</code> on <code className="text-fortuna-pink">*</code>.
+        </p>
+      </Section>
+
+      <Section title="Step 4: Review the attack path">
+        <p className="mb-3">
+          Open <strong>Attack Paths</strong> and find a scenario matching your pod or ServiceAccount. The graph shows the relationship chain: pod → ServiceAccount → binding → role → target permission. This is the path from which a compromised workload could escalate its privilege.
+        </p>
+        <DocImage
+          src="live-rbac-attack-path.png"
+          alt="Attack Paths graph showing pod connected to ServiceAccount, binding, and role leading to sensitive permissions"
+          caption="Attack Paths graph visualizes the privilege relationship. The path represents possible access from this identity; it does not prove exploitation."
+        />
+        <p className="mt-3 text-xs text-white/62">
+          Remember: a static attack path is possible access based on role configuration, not proof that an attacker has exploited it. Use runtime observations and findings to determine actual risk.
+        </p>
+      </Section>
+
+      <Section title="Step 5: Gather evidence: SBOM and CVEs">
+        <p className="mb-3">
+          From Kubernetes Inventory, navigate to the pod detail and check the <strong>SBOM</strong> tab. Review the container image, packages, and any CVE matches. This evidence is part of the risk assessment.
+        </p>
+        <DocImage
+          src="live-pod-sbom-cve.png"
+          alt="Pod detail showing SBOM packages and CVE correlation for the workload image"
+          caption="SBOM and CVE evidence adds supply-chain context to the attack path. A vulnerable workload can amplify identity-based risk."
+        />
+        <p className="mt-3 text-xs text-white/62">
+          If CVE processing is incomplete (stale or unavailable), findings may be incomplete. Check Platform Integrity again.
+        </p>
+      </Section>
+
+      <Section title="Step 6: Check runtime and network context">
+        <p className="mb-3">
+          If runtime sensors are enabled, check <strong>Runtime Network</strong> to see actual workload traffic. This distinguishes hypothetical access from observed behavior.
+        </p>
+        <DocImage
+          src="live-runtime-network.png"
+          alt="Runtime Network showing observed connections from workload to other pods and external services"
+          caption="Observed network activity shows what the workload actually communicates with. This context complements static RBAC analysis."
+        />
+        <p className="mt-3 text-xs text-white/62">
+          A workload with dangerous permissions that only connects to internal services has a different risk profile than one exposing connections to external hosts. Runtime context matters.
+        </p>
+      </Section>
+
+      <Section title="Step 7: Make a remediation decision">
+        <p className="mb-3">
+          Based on the attack path, SBOM evidence, and runtime observations, decide on remediation:
+        </p>
+        <ul className="ml-2 list-inside list-disc space-y-2 text-xs">
+          <li><strong className="text-white/72">Narrow the role:</strong> Remove unnecessary verbs or resources from the ClusterRole/Role.</li>
+          <li><strong className="text-white/72">Use a least-privilege role:</strong> Replace the role with a minimal one that covers only required permissions.</li>
+          <li><strong className="text-white/72">Change the ServiceAccount:</strong> Use a different ServiceAccount that already has the minimal set of permissions.</li>
+          <li><strong className="text-white/72">Update the binding:</strong> Remove or narrow the RoleBinding to apply the role only to the necessary ServiceAccount(s).</li>
+        </ul>
+      </Section>
+
+      <Section title="Step 8: Apply the fix and verify reconciliation">
+        <p className="mb-3">
+          Apply the remediation change directly using kubectl:
+        </p>
+        <CodeBlock>{`# Example: remove a dangerous verb from a ClusterRole
+kubectl patch clusterrole <role-name> --type json -p='[{"op": "remove", "path": "/rules/0/verbs/0"}]'
+
+# Or edit directly
+kubectl edit clusterrole <role-name>
+
+# Verify the Agent reconciles the change (usually within 30 seconds)
+kubectl -n fortuna logs -l app=fortuna-agent -f | grep reconcil`}</CodeBlock>
+        <p className="mt-3">
+          After applying the fix, Fortuna's Agent will reconcile the current state within its sync interval (typically 30-60 seconds). The attack path and findings should update to reflect the new permissions.
+        </p>
+      </Section>
+
+      <Section title="Step 9: Verify the evidence changed">
+        <p className="mb-3">
+          Return to <strong>Attack Paths</strong> and check whether the path still exists with the narrowed permissions. If the dangerous verbs have been removed, the path may disappear or change classification.
+        </p>
+        <DocImage
+          src="live-findings-queue.png"
+          alt="Findings Queue after remediation showing updated risk status"
+          caption="After remediation and Agent reconciliation, findings and paths reflect the new state. Historical entries remain for audit context."
+        />
+        <p className="mt-3 text-xs text-white/62">
+          Verify in Attack Paths and Findings Queue that the evidence has updated. Some findings may remain as historical records with different workflow states; this is by design for audit and compliance.
+        </p>
+      </Section>
+
+      <Section title="Key concepts">
+        <ul className="ml-2 list-inside list-disc space-y-2 text-xs">
+          <li><strong className="text-white/72">Static vs Observed:</strong> Attack paths show possible access from role configuration. Runtime observations show actual activity. Both matter.</li>
+          <li><strong className="text-white/72">Evidence connection:</strong> Risk combines identity, SBOM, CVEs, and runtime. No single signal tells the whole story.</li>
+          <li><strong className="text-white/72">Remediation verification:</strong> After applying a fix, wait for Agent reconciliation. Check that the path or finding evidence changes in the dashboard.</li>
+          <li><strong className="text-white/72">Audit trail:</strong> Findings and attack paths are kept for context. Workflow state (acknowledged, in-progress, resolved) helps track remediation progress.</li>
+        </ul>
+      </Section>
+
+      <Section title="Next steps">
+        <ul className="ml-2 list-inside list-disc space-y-2 text-xs">
+          <li>Read the <strong>User Guide</strong> for full dashboard navigation and feature details.</li>
+          <li>Explore <strong>Use Cases</strong> for other investigation workflows: CVE triage, network verification, policy rule matching.</li>
+          <li>Check <strong>Architecture</strong> to understand how Agent, Core, and Dashboard coordinate.</li>
+          <li>Review <strong>Security</strong> for authentication, mTLS, and production hardening.</li>
+        </ul>
+      </Section>
+    </div>
+  ),
+
   'user-guide': (
     <div className="space-y-6 text-sm text-white/68">
       <Section title="Access">

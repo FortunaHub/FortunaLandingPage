@@ -5,23 +5,23 @@ import { Activity, ArrowRight, CircleCheck, DatabaseZap, Network, Search, Shield
 const principles = [
   {
     icon: Network,
-    title: 'Scope before opinion',
-    copy: 'Fortuna starts from cluster identity, workloads, namespaces, service accounts, and observed traffic. Security review begins from the scope teams actually operate.',
+    title: 'Evidence before opinion',
+    copy: 'Start from workload identity, RBAC permissions, SBOM, runtime signals, and observed traffic. Security conclusions follow from collected evidence, not the other way around.',
   },
   {
     icon: ShieldCheck,
-    title: 'Risk tied to evidence',
-    copy: 'SBOM, CVE, capability, attack-path, and runtime signals stay connected to one risk decision instead of becoming disconnected queues.',
+    title: 'Connected investigation',
+    copy: 'Attack paths, SBOM, CVE, capabilities, and runtime observations stay linked to one security question instead of becoming disconnected findings.',
   },
   {
     icon: Activity,
-    title: 'Runtime changes matter',
+    title: 'Observed and inferred',
     copy: 'Runtime network, Falco, and process signals keep posture reviews aligned with changing workloads, not only with yesterday’s manifests.',
   },
   {
     icon: DatabaseZap,
-    title: 'Automation must explain itself',
-    copy: 'Unified risk scoring, rule matching, and path analysis need clear inputs so platform and security teams can defend the decision.',
+    title: 'Explainable results',
+    copy: 'Risk scoring, path analysis, and rule matching need transparent inputs so security and platform teams can defend the decision and understand limits.',
   },
 ] as const;
 
@@ -61,21 +61,17 @@ export default function AboutSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-[0.86fr_1.14fr] gap-12 lg:gap-16 items-start">
           <div>
-            <p className="mb-4 text-sm font-semibold text-fortuna-pink">Operating model</p>
+            <p className="mb-4 text-sm font-semibold text-fortuna-pink">Product philosophy</p>
             <h2 className="text-3xl md:text-5xl font-black uppercase leading-tight text-balance">
-              Security decisions should survive handoff
+              Understand Kubernetes attack paths and the evidence behind them
             </h2>
           </div>
           <div>
             <p className="text-white/70 text-lg leading-8 mb-6">
-              Kubernetes risk crosses several teams before it is fixed: platform engineers, service
-              owners, security reviewers, and incident responders. Fortuna keeps the evidence in one
-              place so a finding can move from discovery to remediation without losing context.
+              Fortuna is a Kubernetes security project built around attack-path investigation: understand what a workload can access, why that access matters, and what evidence supports the risk. FortunaHub represents the open-source project and documentation site.
             </p>
             <p className="text-white/70 text-sm leading-7">
-              The product combines SBOM extraction, OSV-backed CVE matching, Findings Queue triage,
-              Attack Paths, Runtime Network, Kubernetes Inventory, Policy Rules, and Pipeline & Runtime
-              Health for teams that need current cluster evidence without adding another queue.
+              The product combines workload identity and RBAC analysis, attack-path discovery, SBOM/CVE matching, findings triage, runtime visibility, and telemetry health so security teams can move from one investigation without losing context.
             </p>
           </div>
         </div>
@@ -93,28 +89,28 @@ export default function AboutSection() {
         <div className="mt-14 rounded-lg border border-white/10 bg-[#08080A] p-6 sm:p-8">
           <div className="grid grid-cols-1 lg:grid-cols-[0.75fr_1.25fr] gap-8 lg:gap-12">
             <div>
-              <p className="text-sm font-bold text-fortuna-pink">Evidence handoff model</p>
+              <p className="text-sm font-bold text-fortuna-pink">Investigation workflow</p>
               <h3 className="mt-4 text-2xl sm:text-3xl font-black uppercase leading-tight text-balance">
-                Keep the reason attached to the fix
+                Keep evidence and context connected through investigation
               </h3>
               <p className="mt-5 text-sm leading-7 text-white/70">
-                Fortuna is organized around the moment a finding moves between teams. Each view
-                preserves the evidence, owner, and next action so a risk review does not become a
-                screenshot thread.
+                Fortuna connects identity, attack paths, evidence, and runtime signals through each investigation phase so findings don't lose context during discovery, triage, remediation, and verification.
               </p>
               <div className="mt-7 flex flex-col sm:flex-row lg:flex-col xl:flex-row gap-3">
                 <Link
-                  to="/features"
-                  className="inline-flex min-h-11 items-center justify-center gap-2 rounded-md border border-white/15 px-5 py-3 text-sm font-semibold text-white/85 transition-colors hover:border-white/35 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white/70"
+                  to="/docs"
+                  className="inline-flex min-h-11 items-center justify-center gap-2 rounded-md border border-fortuna-pink/45 px-5 py-3 text-sm font-bold text-white transition-colors hover:bg-fortuna-pink/12 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-fortuna-pink"
                 >
-                  Inspect capabilities <ArrowRight className="h-4 w-4" />
+                  Start investigation <ArrowRight className="h-4 w-4" />
                 </Link>
-                <Link
-                  to="/docs/overview"
+                <a
+                  href="https://github.com/shino-337/Fortuna-Community"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="inline-flex min-h-11 items-center justify-center rounded-md border border-white/15 px-5 py-3 text-sm font-semibold text-white/85 transition-colors hover:border-white/35 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white/70"
                 >
-                  Read overview
-                </Link>
+                  View on GitHub
+                </a>
               </div>
             </div>
             <div className="divide-y divide-white/10 border-y border-white/10">

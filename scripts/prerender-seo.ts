@@ -25,11 +25,11 @@ interface SeoMeta {
 
 const SEO_ROUTES: Record<string, SeoMeta> = {
   home: {
-    title: 'FortunaHub - Kubernetes Risk Operations Platform',
+    title: 'Fortuna — Kubernetes RBAC Attack Paths & Workload Security',
     description:
-      'Prioritize Kubernetes security findings with unified risk scores. SBOM/CVE evidence, attack paths, identity context, observed network traffic, and optional runtime signals.',
+      'Trace Kubernetes RBAC and ServiceAccount attack paths, connect SBOM/CVE and runtime evidence, inspect workload activity, and prioritize remediation with Fortuna.',
     path: '/',
-    ogImage: 'dashboard-overview.png',
+    ogImage: 'live-rbac-attack-path.png',
   },
   features: {
     title: 'Capabilities - FortunaHub Kubernetes Security',
@@ -80,6 +80,13 @@ const SEO_ROUTES: Record<string, SeoMeta> = {
     description:
       'Quick install guide for Fortuna: clone repository, deploy from images, configure environment, access dashboard, and add remote clusters.',
     path: '/docs/getting-started',
+  },
+  docs_first_investigation: {
+    title: 'Fortuna First Investigation - RBAC Attack Path Walkthrough',
+    description:
+      'Complete walkthrough: find a workload, trace RBAC attack paths, gather evidence, and verify remediation. Your fastest path to understanding Fortuna.',
+    path: '/docs/first-investigation',
+    ogImage: 'live-rbac-attack-path.png',
   },
   docs_user_guide: {
     title: 'Fortuna User Guide - Dashboard & Operations',

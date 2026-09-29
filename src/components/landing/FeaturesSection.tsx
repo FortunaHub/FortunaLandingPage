@@ -1,6 +1,5 @@
 import React from 'react';
 import { motion, useReducedMotion } from 'motion/react';
-import { Cpu } from 'lucide-react';
 import { FEATURES } from '../../config/landing';
 import FeatureSlideshow from './FeatureSlideshow';
 
@@ -15,11 +14,10 @@ export default function FeaturesSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-16 max-w-3xl">
           <h2 className="text-3xl md:text-5xl font-black leading-tight uppercase text-balance">
-            Evidence across the Kubernetes risk workflow
+            Security questions and investigation outcomes
           </h2>
           <p className="mt-5 text-base leading-8 text-white/68">
-            Each capability below is paired with the dashboard screenshot that represents that workflow:
-            integrity, finding triage, inventory, supply-chain evidence, attack paths, runtime traffic, rules, or telemetry health.
+            Fortuna organizes around the questions security teams ask. Each capability below answers one question and connects the evidence teams need to make the decision.
           </p>
         </div>
 
@@ -53,40 +51,6 @@ export default function FeaturesSection() {
             </div>
           </motion.div>
         ))}
-
-        <motion.div
-          initial={reduceMotion ? false : { opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-          className="mt-16 rounded-lg border border-white/10 bg-white/[0.035] p-6 sm:p-8 flex flex-col md:flex-row md:items-center md:justify-between gap-6"
-        >
-          <div className="flex items-center gap-6">
-            <div className="w-14 h-14 rounded-md bg-fortuna-pink/15 border border-fortuna-pink/25 flex items-center justify-center flex-shrink-0">
-              <Cpu className="w-7 h-7 text-fortuna-pink" />
-            </div>
-            <div>
-              <h3 className="text-xl font-black uppercase leading-tight mb-3">
-                Agent, Rules, and Runtime Visibility
-              </h3>
-              <p className="text-white/68 text-sm leading-7 max-w-md">
-                Agent DaemonSet per node, SBOM extraction through containerd, rule catalog matching,
-                runtime event ingestion, and cluster-scoped telemetry for the dashboard.
-              </p>
-            </div>
-          </div>
-          <div className="flex flex-wrap gap-2">
-            <span className="px-3 py-1.5 bg-white/5 border border-white/10 rounded text-[10px] font-mono uppercase tracking-wider text-white/70">
-              DaemonSet
-            </span>
-            <span className="px-3 py-1.5 bg-white/5 border border-white/10 rounded text-[10px] font-mono uppercase tracking-wider text-white/70">
-              Rule Catalog
-            </span>
-            <span className="px-3 py-1.5 bg-white/5 border border-white/10 rounded text-[10px] font-mono uppercase tracking-wider text-white/70">
-              Runtime Health
-            </span>
-          </div>
-        </motion.div>
       </div>
     </section>
   );

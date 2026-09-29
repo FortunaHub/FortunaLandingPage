@@ -7,9 +7,9 @@ import Tooltip from '../Tooltip';
 const base = import.meta.env.BASE_URL;
 
 const proofPoints = [
-  { icon: Workflow, label: 'Triage with one score', value: 'Findings Queue' },
-  { icon: ShieldCheck, label: 'Break risky paths', value: 'Attack Paths' },
-  { icon: Activity, label: 'Correlate live flows', value: 'Runtime Network' },
+  { icon: ShieldCheck, label: 'Follow identity and privilege relationships', value: 'Attack Paths' },
+  { icon: Workflow, label: 'Bring vulnerability and workload context', value: 'Workload Evidence' },
+  { icon: Activity, label: 'Add observed network activity', value: 'Runtime Network' },
 ] as const;
 
 const screenshotNotes = [
@@ -46,30 +46,37 @@ export default function HeroSection() {
             transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
           >
             <p className="mb-5 inline-flex items-center gap-2 rounded-full border border-fortuna-pink/25 bg-fortuna-pink/10 px-4 py-2 text-xs font-semibold text-fortuna-pink">
-              Kubernetes risk backed by SBOM, CVE, and identity evidence
+              Kubernetes attack paths and workload evidence
             </p>
             <h1 className="max-w-3xl text-[3.3rem] sm:text-[4.6rem] lg:text-[5.6rem] font-black leading-[0.92] mb-7 uppercase text-balance">
-              Prioritize security findings with one unified risk score
+              Understand how a Kubernetes workload can become broader cluster access
             </h1>
             <p className="text-white/70 text-base md:text-lg leading-8 max-w-2xl mb-9">
-              FortunaHub provides one security findings dashboard for SBOM/CVE evidence, attack paths,
-              identity and RBAC context, observed network traffic, optional runtime signals, and unified risk scoring across clusters.
+              Fortuna connects ServiceAccounts, RBAC permissions, workload configuration, SBOM/CVE findings, runtime signals, and observed network activity so security teams can investigate attack paths and prioritize the risks that matter.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
-              <Tooltip content="Discuss your cluster risk workflow" position="bottom">
+              <Tooltip content="Explore your first attack path" position="bottom">
                 <Link
-                  to="/register"
+                  to="/docs"
                   className="inline-flex min-h-12 items-center justify-center gap-2 rounded-md bg-fortuna-pink px-7 py-3 text-sm font-bold text-white transition-colors hover:bg-[#EA2A70] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-fortuna-pink"
                 >
-                  Request a demo <ArrowRight className="w-4 h-4" />
+                  Explore your first attack path <ArrowRight className="w-4 h-4" />
                 </Link>
               </Tooltip>
               <Link
                 to="/features"
                 className="inline-flex min-h-12 items-center justify-center rounded-md border border-white/15 px-7 py-3 text-sm font-semibold text-white/85 transition-colors hover:border-white/35 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white/70"
               >
-                Inspect capabilities
+                View capabilities
               </Link>
+              <a
+                href="https://github.com/shino-337/Fortuna-Community"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex min-h-12 items-center justify-center rounded-md border border-white/15 px-7 py-3 text-sm font-semibold text-white/85 transition-colors hover:border-white/35 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white/70"
+              >
+                View on GitHub
+              </a>
             </div>
           </motion.div>
 
