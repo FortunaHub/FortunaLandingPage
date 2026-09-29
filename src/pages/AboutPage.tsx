@@ -16,7 +16,7 @@ export default function AboutPage() {
 
       {/* Main Content */}
       <div className="bg-fortuna-dark page-header-spacing">
-        <div className="container-max py-4 md:py-8">
+        <div className="container-max py-3 md:py-4">
           <div className="space-y-16 md:space-y-20">
             {/* Purpose */}
             <section>
