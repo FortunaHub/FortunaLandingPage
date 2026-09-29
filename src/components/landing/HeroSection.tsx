@@ -12,11 +12,6 @@ const proofPoints = [
   { icon: Activity, label: 'Add observed network activity', value: 'Runtime Network' },
 ] as const;
 
-const screenshotNotes = [
-  { label: 'Cluster scope', className: 'left-[7%] top-[17%]' },
-  { label: 'Observed flows', className: 'right-[8%] top-[39%]' },
-  { label: 'Traffic weight', className: 'left-[18%] bottom-[13%]' },
-] as const;
 
 export default function HeroSection() {
   const reduceMotion = useReducedMotion();
@@ -24,7 +19,7 @@ export default function HeroSection() {
   return (
     <section
       id="platform"
-      className="relative min-h-[calc(100svh-4rem)] flex items-center pt-20 pb-14 bg-[#050505] overflow-hidden scroll-mt-[5.5rem]"
+      className="relative min-h-[calc(100svh-4rem)] flex items-center pt-12 pb-14 bg-[#050505] overflow-hidden scroll-mt-[5.5rem]"
     >
       <div className="absolute inset-0 z-0">
         <div
@@ -38,9 +33,10 @@ export default function HeroSection() {
         <div className="absolute top-20 right-[8%] h-72 w-72 rounded-full bg-fortuna-pink/10 blur-[120px]" />
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:gap-12 xl:gap-14 items-center">
           <motion.div
+            className="min-w-0"
             initial={reduceMotion ? false : { opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
@@ -48,24 +44,24 @@ export default function HeroSection() {
             <p className="mb-5 inline-flex items-center gap-2 rounded-full border border-fortuna-pink/25 bg-fortuna-pink/10 px-4 py-2 text-xs font-semibold text-fortuna-pink">
               Kubernetes attack paths and workload evidence
             </p>
-            <h1 className="max-w-3xl text-[3.3rem] sm:text-[4.6rem] lg:text-[5.6rem] font-black leading-[0.92] mb-7 uppercase text-balance">
-              Understand how a Kubernetes workload can become broader cluster access
+            <h1 className="max-w-3xl text-[2.5rem] sm:text-5xl xl:text-6xl font-black leading-[1.05] mb-6 text-balance">
+              Trace Kubernetes attack paths. Prioritize the fix.
             </h1>
             <p className="text-white/70 text-base md:text-lg leading-8 max-w-2xl mb-9">
-              Fortuna connects ServiceAccounts, RBAC permissions, workload configuration, SBOM/CVE findings, runtime signals, and observed network activity so security teams can investigate attack paths and prioritize the risks that matter.
+              Follow workload identities and RBAC permissions toward cluster access. Connect SBOM, CVE, and runtime evidence to decide what to fix first.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4">
+            <div className="flex flex-wrap gap-3">
               <Tooltip content="Explore your first attack path" position="bottom">
                 <Link
-                  to="/docs"
-                  className="inline-flex min-h-12 items-center justify-center gap-2 rounded-md bg-fortuna-pink px-7 py-3 text-sm font-bold text-white transition-colors hover:bg-[#EA2A70] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-fortuna-pink"
+                  to="/docs/first-investigation"
+                  className="inline-flex min-h-12 items-center justify-center gap-2 rounded-md bg-fortuna-pink px-5 py-3 text-sm font-bold text-white transition-colors hover:bg-[#EA2A70] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-fortuna-pink"
                 >
                   Explore your first attack path <ArrowRight className="w-4 h-4" />
                 </Link>
               </Tooltip>
               <Link
                 to="/features"
-                className="inline-flex min-h-12 items-center justify-center rounded-md border border-white/15 px-7 py-3 text-sm font-semibold text-white/85 transition-colors hover:border-white/35 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white/70"
+                className="inline-flex min-h-12 items-center justify-center rounded-md border border-white/15 px-5 py-3 text-sm font-semibold text-white/85 transition-colors hover:border-white/35 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white/70"
               >
                 View capabilities
               </Link>
@@ -73,7 +69,7 @@ export default function HeroSection() {
                 href="https://github.com/shino-337/Fortuna-Community"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex min-h-12 items-center justify-center rounded-md border border-white/15 px-7 py-3 text-sm font-semibold text-white/85 transition-colors hover:border-white/35 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white/70"
+                className="inline-flex min-h-12 items-center justify-center rounded-md border border-white/15 px-5 py-3 text-sm font-semibold text-white/85 transition-colors hover:border-white/35 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white/70"
               >
                 View on GitHub
               </a>
@@ -91,39 +87,31 @@ export default function HeroSection() {
                 <span className="h-2.5 w-2.5 rounded-full bg-[#EF476F]" />
                 <span className="h-2.5 w-2.5 rounded-full bg-[#FFD166]" />
                 <span className="h-2.5 w-2.5 rounded-full bg-[#06D6A0]" />
-                <span className="ml-3 text-xs font-medium text-white/45">runtime network / cluster scope</span>
+                <span className="ml-3 text-xs font-medium text-white/45">attack paths / RBAC relationships</span>
               </div>
               <img
-                src={`${base}images/Network-design.png`}
-                alt="Fortuna Runtime Network showing observed Kubernetes workload traffic"
-                width={1440}
-                height={1000}
+                src={`${base}images/live-rbac-attack-path.png`}
+                alt="RBAC path from rbac-pod through sa-rbac and crb-rbac-admin to cluster-admin"
+                width={1363}
+                height={936}
                 loading="eager"
                 fetchpriority="high"
                 decoding="async"
-                className="aspect-[1440/1000] w-full rounded-md object-cover object-top"
+                className="aspect-[1363/936] w-full rounded-md object-contain object-top"
               />
-              <div aria-hidden="true" className="pointer-events-none absolute inset-x-2 bottom-2 top-[2.9rem] hidden sm:block">
-                {screenshotNotes.map(({ label, className }) => (
-                  <div key={label} className={`absolute ${className}`}>
-                    <div className="flex items-center gap-2 rounded-md border border-white/14 bg-[#070709]/82 px-3 py-2 text-[0.7rem] font-bold text-white shadow-xl shadow-black/30 backdrop-blur-sm">
-                      <span className="h-2 w-2 rounded-full bg-fortuna-pink shadow-[0_0_18px_rgba(209,26,94,0.9)]" />
-                      {label}
-                    </div>
-                  </div>
-                ))}
-              </div>
+              <p className="px-3 py-3 text-xs leading-5 text-white/65">Live demo: rbac-pod → sa-rbac → crb-rbac-admin → cluster-admin. A possible access path, not proof of exploitation.</p>
+              <a href={`${base}images/live-rbac-attack-path.png`} target="_blank" rel="noopener noreferrer" className="inline-block px-3 pb-3 text-sm text-fortuna-pink underline">View full-size screenshot</a>
             </div>
             <div className="mt-4 grid grid-cols-1 gap-3 xl:grid-cols-[0.42fr_0.58fr]">
               <div className="hidden overflow-hidden rounded-md border border-white/12 bg-fortuna-card p-2 shadow-xl xl:block">
                 <img
-                  src={`${base}images/attack-path-graph-view.png`}
-                  alt="Attack path graph showing RBAC and identity escalation chains"
-                  width={1440}
-                  height={1000}
+                  src={`${base}images/live-runtime-network.png`}
+                  alt="Observed NATS traffic in a separate 15-minute network view"
+                  width={1363}
+                  height={936}
                   loading="lazy"
                   decoding="async"
-                  className="aspect-[1440/1000] w-full rounded object-cover object-left-top"
+                  className="aspect-[1363/936] w-full rounded object-contain object-left-top"
                 />
               </div>
               <div className="grid grid-cols-1 gap-3 sm:grid-cols-3 xl:grid-cols-1">

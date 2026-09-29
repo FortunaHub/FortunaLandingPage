@@ -42,11 +42,14 @@ export function SeoHead({
     }
     canonical.setAttribute('href', meta.canonical);
     
+    const image = ogImage || meta.ogImage || 'logo.png';
+    const imageUrl = /^https?:\/\//.test(image) ? image : `https://fortunahub.dev${import.meta.env.BASE_URL}${image === 'logo.png' ? image : `images/${image}`}`;
+
     // Update Open Graph tags
     updateOrCreateMeta('og:title', ogTitle || meta.ogTitle || meta.title);
     updateOrCreateMeta('og:description', ogDescription || meta.ogDescription || meta.description);
     updateOrCreateMeta('og:url', meta.canonical);
-    updateOrCreateMeta('og:image', ogImage || meta.ogImage || 'logo.png');
+    updateOrCreateMeta('og:image', imageUrl);
     updateOrCreateMeta('og:site_name', 'FortunaHub');
     updateOrCreateMeta('og:type', 'website');
     
@@ -54,7 +57,7 @@ export function SeoHead({
     updateOrCreateMeta('twitter:card', 'summary_large_image');
     updateOrCreateMeta('twitter:title', ogTitle || meta.ogTitle || meta.title);
     updateOrCreateMeta('twitter:description', ogDescription || meta.ogDescription || meta.description);
-    updateOrCreateMeta('twitter:image', ogImage || meta.ogImage || 'logo.png');
+    updateOrCreateMeta('twitter:image', imageUrl);
   }, [route, ogTitle, ogDescription, ogImage]);
 
   return null; // This component only manages head, no render output

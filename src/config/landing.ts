@@ -15,8 +15,9 @@ export const FEATURES = [
     tags: ['ServiceAccounts', 'RBAC', 'Permissions'],
     order: 'text' as const,
     slides: [
-      slide('live-serviceaccount-identity.png', 'Fortuna identity detail showing ServiceAccount, binding source, and effective Kubernetes RBAC permissions'),
-      slide('live-inventory-rbac-pod.png', 'Kubernetes Inventory filtered to workload with identity and RBAC context'),
+      slide("live-serviceaccount-permissions.png", "Effective RBAC grants, including wildcard rules and five ClusterRoleBindings."),
+      slide("live-serviceaccount-identity.png", "ServiceAccount sa-rbac and its identity context in fortuna-test."),
+      slide("live-inventory-rbac-pod.png", "rbac-pod inventory detail: Failed status, Low risk (11/100), and no SBOM."),
     ],
   },
   {
@@ -26,7 +27,7 @@ export const FEATURES = [
     tags: ['RBAC Escalation', 'Identity Paths', 'Privilege Chains'],
     order: 'img' as const,
     slides: [
-      slide('live-rbac-attack-path.png', 'Fortuna Attack Paths showing a Kubernetes workload connected through its ServiceAccount and RBAC grants toward sensitive cluster access'),
+      slide("live-rbac-attack-path.png", "Possible access: rbac-pod → sa-rbac → crb-rbac-admin → cluster-admin. This graph does not prove exploitation."),
     ],
   },
   {
@@ -36,8 +37,8 @@ export const FEATURES = [
     tags: ['SBOM', 'CVE Matching', 'Configuration'],
     order: 'text' as const,
     slides: [
-      slide('live-pod-sbom-cve.png', 'Fortuna Pod Detail showing workload SBOM package evidence and CVE correlation'),
-      slide('live-inventory-rbac-pod.png', 'Inventory context with SBOM and risk indicators'),
+      slide("live-pod-sbom-cve.png", "Separate PostgreSQL example: 48 SBOM packages. The empty OSV mirror means zero CVEs is not a clean verdict."),
+      slide("live-inventory-rbac-pod.png", "rbac-pod inventory detail: Failed status, Low risk (11/100), and no SBOM."),
     ],
   },
   {
@@ -47,7 +48,7 @@ export const FEATURES = [
     tags: ['Pod Traffic', 'Service Flows', 'External Connections'],
     order: 'img' as const,
     slides: [
-      slide('live-runtime-network.png', 'Fortuna Runtime Network showing observed Kubernetes workload connections and external destinations'),
+      slide("live-runtime-network.png", "Separate NATS example: two sources, two destinations, three edges in a 15-minute window."),
     ],
   },
   {
@@ -57,7 +58,7 @@ export const FEATURES = [
     tags: ['Risk Scoring', 'Triage', 'Evidence Review'],
     order: 'text' as const,
     slides: [
-      slide('live-findings-queue.png', 'Fortuna Findings Queue showing Kubernetes security findings ranked by unified risk with linked workload evidence'),
+      slide("live-findings-queue.png", "Findings Queue filtered to ServiceAccount Token Access. This is a triage capture, not an after-remediation result."),
     ],
   },
   {
@@ -67,8 +68,8 @@ export const FEATURES = [
     tags: ['Agent Health', 'Processing Status', 'Data Freshness'],
     order: 'img' as const,
     slides: [
-      slide('live-platform-integrity.png', 'Fortuna Platform Integrity view showing cluster telemetry freshness, Agent status, and security data processing health'),
-      slide('live-pipeline-runtime-health.png', 'Pipeline and Runtime Health with Agent, runtime sensor, processing, and data freshness status'),
+      slide("live-platform-integrity.png", "Platform Integrity overview. Inspect Pipeline & Runtime Health for component-level readiness."),
+      slide("live-pipeline-runtime-health.png", "Monitoring reports DEGRADED: stale catalog, empty OSV mirror, and 0/18 matched images."),
     ],
   },
 ] as const;

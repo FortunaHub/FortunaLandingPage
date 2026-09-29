@@ -12,7 +12,7 @@ export interface SeoMeta {
   ogImage?: string;
 }
 
-const base = import.meta.env.BASE_URL || '/';
+const base = import.meta.env?.BASE_URL || '/';
 const siteUrl = 'https://fortunahub.dev';
 
 const normalizePath = (path: string) => {
@@ -23,7 +23,7 @@ const normalizePath = (path: string) => {
 
 const getCanonicalUrl = (path: string) => {
   // For development, return relative canonical; for production, return absolute URL
-  if (import.meta.env.DEV) {
+  if (import.meta.env?.DEV) {
     return normalizePath(path);
   }
   return `${siteUrl}${normalizePath(path)}`;
@@ -42,14 +42,14 @@ export const SEO_ROUTES: Record<string, SeoMeta> = {
     description:
       'Explore FortunaHub features: SBOM/CVE matching, attack path analysis, RBAC context, observed network activity, policy rules, runtime health, and unified risk scoring.',
     path: '/features',
-    ogImage: 'risk-operations.png',
+    ogImage: 'live-findings-queue.png',
   },
   about: {
     title: 'About FortunaHub - Kubernetes Risk Management',
     description:
       'Learn about FortunaHub, the open-source Kubernetes risk operations platform built for security teams operating real workloads across multiple clusters.',
     path: '/about',
-    ogImage: 'attack-path-analysis.png',
+    ogImage: 'live-rbac-attack-path.png',
   },
   privacy: {
     title: 'Privacy Policy - FortunaHub',
@@ -175,7 +175,6 @@ export const SCHEMA_ORG = {
       'Kubernetes risk operations platform connecting SBOM/CVE evidence, attack paths, identity context, and runtime visibility.',
     sameAs: [
       'https://github.com/shino-337/Fortuna-Community',
-      'https://twitter.com/FortunaHub', // Update with actual Twitter if available
     ],
   },
 
@@ -191,7 +190,6 @@ export const SCHEMA_ORG = {
     operatingSystem: 'Kubernetes',
     downloadUrl: 'https://github.com/shino-337/Fortuna-Community',
     license: 'https://github.com/shino-337/Fortuna-Community/blob/main/LICENSE',
-    softwareRequirements: 'Kubernetes 1.20+, containerd or Docker runtime',
     inLanguage: 'en-US',
   },
 

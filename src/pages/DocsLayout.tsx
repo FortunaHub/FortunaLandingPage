@@ -22,7 +22,7 @@ export default function DocsLayout() {
               Back to homepage
             </Link>
 
-            <h1 className="text-2xl font-black uppercase leading-tight">Documentation</h1>
+            <p className="text-2xl font-black uppercase leading-tight">Documentation</p>
             <p className="text-white/60 text-xs mt-3 leading-relaxed">
               Curated product docs for FortunaHub: quickstart, deployment, architecture, components, API
               contracts, multi-cluster telemetry, SBOM/CVE evidence, attack paths, identity context, and unified risk operations.

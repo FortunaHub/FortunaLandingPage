@@ -15,6 +15,14 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const location = useLocation();
   const reduceMotion = useReducedMotion();
 
+  useEffect(() => {
+    setIsMenuOpen(false);
+    setShowSolutionsDropdown(false);
+    const target = location.hash ? document.getElementById(decodeURIComponent(location.hash.slice(1))) : null;
+    if (target) target.scrollIntoView({ block: 'start', behavior: 'instant' });
+    else window.scrollTo({ top: 0, behavior: 'instant' });
+  }, [location.pathname, location.hash]);
+
   const navLinks = [
     { name: 'Platform', to: '/', tooltip: 'Home' },
     { name: 'Features', to: '/features', tooltip: 'Capabilities' },

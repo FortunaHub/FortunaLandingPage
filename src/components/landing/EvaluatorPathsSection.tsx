@@ -7,25 +7,25 @@ const paths = [
     icon: Bug,
     question: 'Which workloads are exposed?',
     proof: 'Start with SBOM and CVE context, then review affected services and namespaces.',
-    to: '/features',
+    to: '/features#workload-evidence',
   },
   {
     icon: GitBranch,
     question: 'Which paths should we break?',
     proof: 'Trace RBAC escalation and service-account exposure chains back to fixable controls.',
-    to: '/features',
+    to: '/features#attack-paths',
   },
   {
     icon: Network,
     question: 'What traffic should we block?',
     proof: 'Observe runtime network flows and verify reachability against risk context.',
-    to: '/docs/overview',
+    to: '/features#runtime-network',
   },
   {
     icon: Radar,
     question: 'Which signals confirm risk?',
     proof: 'Use runtime and process evidence to separate static findings from active concern.',
-    to: '/docs/overview',
+    to: '/features#unified-risk',
   },
 ] as const;
 

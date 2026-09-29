@@ -26,13 +26,15 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 function DocImage({ src, alt, caption }: { src: string; alt: string; caption: string }) {
   return (
     <figure className="mt-4 overflow-hidden rounded-lg border border-white/10 bg-white/[0.03]">
+      <a href={`${import.meta.env.BASE_URL}images/${src}`} target="_blank" rel="noopener noreferrer" aria-label={`Open full-size screenshot: ${alt}`}>
       <img
         src={`${import.meta.env.BASE_URL}images/${src}`}
         alt={alt}
         loading="lazy"
         className="w-full border-b border-white/10 object-cover"
       />
-      <figcaption className="px-4 py-3 text-[11px] leading-relaxed text-white/56">{caption}</figcaption>
+      </a>
+      <figcaption className="px-4 py-3 text-xs leading-relaxed text-white/65">{caption} <a href={`${import.meta.env.BASE_URL}images/${src}`} target="_blank" rel="noopener noreferrer" className="text-fortuna-pink underline">View full size</a></figcaption>
     </figure>
   );
 }
@@ -410,7 +412,7 @@ REMOTE_KUBECONFIGS="cluster101=\${REMOTE_KUBECONFIG}" \\
         <DocImage
           src="live-pod-sbom-cve.png"
           alt="Pod detail showing SBOM packages and CVE correlation for the workload image"
-          caption="SBOM and CVE evidence adds supply-chain context to the attack path. A vulnerable workload can amplify identity-based risk."
+          caption="Separate example: postgres-ff8999b99-chqds has 48 packages from postgres:15-alpine. The OSV mirror was empty, so zero CVEs is not a clean verdict. This is not the rbac-pod workload."
         />
         <p className="mt-3 text-xs text-white/62">
           If CVE processing is incomplete (stale or unavailable), findings may be incomplete. Check Platform Integrity again.
@@ -423,8 +425,8 @@ REMOTE_KUBECONFIGS="cluster101=\${REMOTE_KUBECONFIG}" \\
         </p>
         <DocImage
           src="live-runtime-network.png"
-          alt="Runtime Network showing observed connections from workload to other pods and external services"
-          caption="Observed network activity shows what the workload actually communicates with. This context complements static RBAC analysis."
+          alt="NATS-filtered network view with three observed traffic edges"
+          caption="Separate NATS example in a 15-minute window: two sources, two destinations, and three edges. This capture does not show rbac-pod traffic or external destinations."
         />
         <p className="mt-3 text-xs text-white/62">
           A workload with dangerous permissions that only connects to internal services has a different risk profile than one exposing connections to external hosts. Runtime context matters.
@@ -466,8 +468,8 @@ kubectl -n fortuna logs -l app=fortuna-agent -f | grep reconcil`}</CodeBlock>
         </p>
         <DocImage
           src="live-findings-queue.png"
-          alt="Findings Queue after remediation showing updated risk status"
-          caption="After remediation and Agent reconciliation, findings and paths reflect the new state. Historical entries remain for audit context."
+          alt="Findings Queue filtered to ServiceAccount Token Access"
+          caption="Triage example only. No before/after remediation was captured; repeat this view after your own change and compare evidence timestamps, path steps, and findings."
         />
         <p className="mt-3 text-xs text-white/62">
           Verify in Attack Paths and Findings Queue that the evidence has updated. Some findings may remain as historical records with different workflow states; this is by design for audit and compliance.

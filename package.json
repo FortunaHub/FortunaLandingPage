@@ -5,12 +5,12 @@
   "type": "module",
   "scripts": {
     "dev": "vite --port=3000 --host=0.0.0.0",
-    "build": "vite build && npm run track-versions",
+    "build": "vite build && node --import tsx scripts/prerender-seo.ts && node --import tsx scripts/verify-build.ts && npm run track-versions",
     "preview": "vite preview",
     "clean": "rm -rf dist",
     "lint": "tsc --noEmit",
     "typecheck": "tsc --noEmit",
-    "track-versions": "tsx scripts/track-versions.ts",
+    "track-versions": "node --import tsx scripts/track-versions.ts",
     "ci": "npm run typecheck && npm run build"
   },
   "dependencies": {

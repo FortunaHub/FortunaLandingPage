@@ -24,11 +24,12 @@ export default function FeaturesSection() {
         {FEATURES.map((item) => (
           <motion.div
             key={item.id}
+            id={item.id}
             initial={reduceMotion ? false : { opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-            className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center py-14 border-t border-white/8 first:border-t-0 first:pt-0 last:pb-0"
+            className="scroll-mt-24 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center py-14 border-t border-white/8 first:border-t-0 first:pt-0 last:pb-0"
           >
             <div className={item.order === 'img' ? 'lg:order-2' : 'lg:order-1'}>
               <h3 className="text-xl md:text-2xl font-black uppercase leading-tight mb-4">

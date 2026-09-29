@@ -16,7 +16,7 @@ export default function CTASection() {
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
           <Link
-            to="/docs"
+            to="/docs/first-investigation"
             className="inline-flex min-h-12 items-center justify-center gap-2 rounded-md bg-fortuna-pink px-8 py-4 text-sm font-bold text-white transition-colors hover:bg-[#EA2A70] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-fortuna-pink"
           >
             Explore your first attack path
