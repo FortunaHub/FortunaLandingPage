@@ -1,984 +1,136 @@
 import React from 'react';
-import { useParams, Navigate } from 'react-router-dom';
-import { Terminal, Layers, Rocket, FileCode, BookOpen, Cpu, ShieldCheck, Wrench } from 'lucide-react';
-import { DOC_META, DOC_SLUGS, type DocSlug } from '../config/docs';
+import { Link, Navigate, useParams } from 'react-router-dom';
+import { DOC_ALIASES, DOC_META, DOC_SLUGS, type DocSlug } from '../config/docs';
 import { SeoHead } from '../components/SeoHead';
 
-const ICONS = { Terminal, Layers, Rocket, FileCode, BookOpen, Cpu, ShieldCheck, Wrench };
-
-function CodeBlock({ children }: { children: string }) {
-  return (
-    <pre className="overflow-x-auto rounded-md border border-white/10 bg-black/35 p-4 text-[11px] leading-relaxed text-white/76">
-      <code>{children}</code>
-    </pre>
-  );
+const repository = 'https://github.com/shino-337/Fortuna-Community';
+function Source({ path, children, version = 'main' }: { path: string; children: React.ReactNode; version?: string }) {
+  return <a className="text-fortuna-pink underline underline-offset-4" href={`${repository}/blob/${version}/${path}`}>{children}</a>;
 }
-
-function Section({ title, children }: { title: string; children: React.ReactNode }) {
-  return (
-    <section>
-      <h3 className="mb-2 font-bold text-white/82">{title}</h3>
-      {children}
-    </section>
-  );
+function Next({ to, children }: { to: DocSlug; children: React.ReactNode }) {
+  return <Link className="text-fortuna-pink underline underline-offset-4" to={`/docs/${to}`}>{children}</Link>;
 }
-
-function DocImage({ src, alt, caption }: { src: string; alt: string; caption: string }) {
-  return (
-    <figure className="mt-4 overflow-hidden rounded-lg border border-white/10 bg-white/[0.03]">
-      <a href={`${import.meta.env.BASE_URL}images/${src}`} target="_blank" rel="noopener noreferrer" aria-label={`Open full-size screenshot: ${alt}`}>
-      <img
-        src={`${import.meta.env.BASE_URL}images/${src}`}
-        alt={alt}
-        loading="lazy"
-        className="w-full border-b border-white/10 object-cover"
-      />
-      </a>
-      <figcaption className="px-4 py-3 text-xs leading-relaxed text-white/65">{caption} <a href={`${import.meta.env.BASE_URL}images/${src}`} target="_blank" rel="noopener noreferrer" className="text-fortuna-pink underline">View full size</a></figcaption>
-    </figure>
-  );
+function Code({ children }: { children: string }) {
+  return <pre className="overflow-x-auto rounded-md border border-white/10 bg-black/35 p-4 text-xs leading-6 text-white/80"><code>{children}</code></pre>;
 }
-
-const DOC_CONTENT: Record<DocSlug, React.ReactNode> = {
-  overview: (
-    <div className="space-y-6 text-sm text-white/68">
-      <p>
-        <strong className="text-white/82">Fortuna</strong> is a Kubernetes risk operations platform for connecting SBOM/CVE
-        evidence, attack paths, identity and RBAC context, observed network traffic, optional runtime signals, and one user-facing risk
-        score across Kubernetes clusters.
-      </p>
-
-      <Section title="Current product surfaces">
-        <ul className="ml-2 list-inside list-disc space-y-2">
-          <li><strong className="text-white/72">Platform Integrity</strong> (<code className="text-fortuna-pink">/#/</code>): telemetry reliability, governance, and operational oversight.</li>
-          <li><strong className="text-white/72">Operations Dashboard</strong> (<code className="text-fortuna-pink">/#/dashboard</code>): cluster posture, risk totals, and operating summaries.</li>
-          <li><strong className="text-white/72">Findings Queue</strong> (<code className="text-fortuna-pink">/#/risks/findings</code>): active findings, workflow state, evidence, and context links.</li>
-          <li><strong className="text-white/72">Attack Paths</strong> (<code className="text-fortuna-pink">/#/attack-paths</code>): scenario groups, graph focus, RBAC steps, and remediation context.</li>
-          <li><strong className="text-white/72">Observed Network Activity</strong> (<code className="text-fortuna-pink">/#/network-activity</code>): observed pod, service, and external traffic topology.</li>
-          <li><strong className="text-white/72">Kubernetes Inventory</strong> (<code className="text-fortuna-pink">/#/resources</code>): pods, service accounts, roles, bindings, SBOM, and identity context.</li>
-          <li><strong className="text-white/72">Policy Rules</strong> (<code className="text-fortuna-pink">/#/rules</code>): rule catalog, UID-based detail routes, and mapped legacy rule codes.</li>
-          <li><strong className="text-white/72">Pipeline & Runtime Health</strong> (<code className="text-fortuna-pink">/#/monitoring</code>): agent sync, CVE/SBOM processing, optional runtime sensor state, and data freshness.</li>
-        </ul>
-      </Section>
-
-      <Section title="What Fortuna correlates">
-        <ul className="ml-2 list-inside list-disc space-y-2">
-          <li>Agent-synced Kubernetes inventory and identities, always scoped by <code className="text-fortuna-pink">cluster_id</code>.</li>
-          <li>Image SBOM packages and OSV-backed CVE matches persisted in PostgreSQL.</li>
-          <li>Unified risk scores generated by Core and reused consistently by UI surfaces.</li>
-          <li>Observed network traffic and optional runtime events (Falco/runtime sensors) when enabled.</li>
-          <li>Attack paths built from RBAC, service-account identity, and vulnerable images. Runtime and network observations provide supporting context when available.</li>
-        </ul>
-      </Section>
-
-      <Section title="Multi-cluster support">
-        <p className="text-xs text-white/62 mb-2">
-          Fortuna supports a management cluster topology where Core, Dashboard, PostgreSQL, and NATS run once in a management cluster, and Agents (with optional runtime sensors) run on remote clusters. Multi-cluster setup is architecture support for lab and development use. For production deployments, verify mTLS trust, network stability, and Agent recovery behavior before scaling to multiple clusters.
-        </p>
-      </Section>
-
-      <Section title="Optional features">
-        <ul className="ml-2 list-inside list-disc space-y-1 text-xs text-white/62">
-          <li>Runtime sensors (Falco/eBPF events) are optional and under active development. Provide additional process-context and event enrichment when enabled.</li>
-          <li>NetworkPolicy drift detection and enforcement analysis are roadmap features; currently unavailable.</li>
-        </ul>
-      </Section>
-
-      <Section title="Screenshots on this site">
-        <p className="text-xs text-white/62">
-          Product images are representative dashboard captures. They should reflect the current Fortuna application state, not a
-          separate marketing mockup.
-        </p>
-      </Section>
-    </div>
-  ),
-
-  components: (
-    <div className="space-y-6 text-sm text-white/68">
-      <Section title="Runtime components">
-        <ul className="ml-2 list-inside list-disc space-y-2">
-          <li><strong className="text-white/72">Core</strong>: REST API, gRPC ingest, DB migrations, CVE matching, rule matching, unified scoring, attack-path generation, and dashboard aggregates.</li>
-          <li><strong className="text-white/72">Agent</strong>: DaemonSet on each observed node; syncs pod inventory, extracts SBOMs, reports pod detail, and can forward runtime context.</li>
-          <li><strong className="text-white/72">Dashboard</strong>: React SPA served behind Nginx; proxies <code className="text-fortuna-pink">/api</code> and WebSocket traffic to Core.</li>
-          <li><strong className="text-white/72">PostgreSQL</strong>: source of truth for inventory, SBOMs, CVEs, findings, reports, cluster rows, and workflow state.</li>
-          <li><strong className="text-white/72">NATS JetStream</strong>: asynchronous work queues for SBOM, CVE, normalized events, insights, and risk refreshes.</li>
-          <li><strong className="text-white/72">runtime</strong>: optional runtime sensor. When enabled, events appear in Monitoring, Pod Detail, Findings Queue, and attack-path evidence.</li>
-        </ul>
-      </Section>
-
-      <Section title="Dashboard workspaces">
-        <p className="mb-2 text-xs text-white/62">The UI is organized around investigation and verification, not marketing pages:</p>
-        <ul className="ml-2 list-inside list-disc space-y-1 text-xs">
-          <li>Platform Integrity: telemetry reliability and governance oversight.</li>
-          <li>Findings Queue: actionable finding triage with context links.</li>
-          <li>Attack Paths: scenario groups with visible path counts, graph focus, and compact evidence.</li>
-          <li>Runtime Network: observed traffic topology with node-type colors and traffic-weighted links.</li>
-          <li>Kubernetes Inventory: resource detail, Inspect Detail, and Open Identity flows.</li>
-          <li>Policy Rules: UID-based rule detail and catalog management.</li>
-        </ul>
-      </Section>
-
-      <Section title="Risk and rule contracts">
-        <p className="mb-2">
-          Fortuna exposes one user-facing risk score. Core owns the scoring calculation and the dashboard reuses that value across
-          clusters, resources, findings, reports, and attack paths.
-        </p>
-        <p className="text-xs text-white/62">
-          Policy detail routes use stable rule UIDs, while legacy code/name identifiers are mapped into the rule catalog so older
-          findings remain navigable.
-        </p>
-      </Section>
-    </div>
-  ),
-
-  'getting-started': (
-    <div className="space-y-6 text-sm text-white/68">
-      <Section title="Repository and releases">
-        <p className="mb-3">
-          Fortuna source code is published on GitHub. Releases include built images, manifests, and installation scripts.
-        </p>
-        <ul className="ml-2 list-inside list-disc space-y-2 text-xs">
-          <li><strong className="text-white/72">Source:</strong> <code className="text-fortuna-pink">https://github.com/shino-337/Fortuna-Community</code></li>
-          <li><strong className="text-white/72">Releases:</strong> <code className="text-fortuna-pink">https://github.com/shino-337/Fortuna-Community/releases</code></li>
-          <li><strong className="text-white/72">Container registry:</strong> <code className="text-fortuna-pink">ghcr.io/shino-337/fortuna-community</code></li>
-          <li><strong className="text-white/72">Available images:</strong> <code className="text-fortuna-pink">fortuna-core</code>, <code className="text-fortuna-pink">fortuna-agent</code>, <code className="text-fortuna-pink">fortuna-dashboard</code></li>
-        </ul>
-      </Section>
-
-      <Section title="Quick install from release">
-        <CodeBlock>{`# Clone the repository
-git clone https://github.com/shino-337/Fortuna-Community.git
-cd Fortuna-Community
-
-# Checkout a specific release (e.g., v1.0.0)
-git checkout v1.0.0
-
-# Set image registry and version
-export FORTUNA_REGISTRY="ghcr.io/shino-337/fortuna-community"
-export FORTUNA_VERSION="v1.0.0"
-export FORTUNA_ADMIN_PASSWORD="<choose-strong-password>"
-
-# Create secrets
-./scripts/utils/ensure-fortuna-secrets.sh fortuna
-
-# Apply Kubernetes manifests
-kubectl apply -f deploy/infrastructure/postgresql-with-age.yaml
-kubectl apply -f deploy/infrastructure/nats.yaml
-kubectl apply -f deploy/fortuna-rbac.yaml
-kubectl apply -f deploy/dashboard-nginx-configmap.yaml
-kubectl apply -f deploy/fortuna-core-deployment.yaml
-kubectl apply -f deploy/fortuna-agent-daemonset.yaml
-kubectl apply -f deploy/dashboard-deployment.yaml
-
-# Verify rollout
-kubectl -n fortuna rollout status deploy/fortuna-core
-kubectl -n fortuna rollout status daemonset/fortuna-agent
-kubectl -n fortuna rollout status deploy/fortuna-dashboard`}</CodeBlock>
-      </Section>
-
-      <Section title="Container images">
-        <p className="mb-3">
-          Published images are available from GitHub Container Registry (ghcr.io). Authenticate with GitHub credentials for pull access.
-        </p>
-        <CodeBlock>{`# Log in to ghcr.io (use GitHub token or password)
-docker login ghcr.io
-
-# Pull specific component
-docker pull ghcr.io/shino-337/fortuna-community/fortuna-core:v1.0.0
-docker pull ghcr.io/shino-337/fortuna-community/fortuna-agent:v1.0.0
-docker pull ghcr.io/shino-337/fortuna-community/fortuna-dashboard:v1.0.0
-
-# List available tags
-crane ls ghcr.io/shino-337/fortuna-community/fortuna-core`}</CodeBlock>
-        <p className="mt-3 text-xs text-white/62">
-          For Kubernetes, create an imagePullSecret and reference it in deployments. See <code className="text-fortuna-pink">deploy/</code> manifests for examples.
-        </p>
-      </Section>
-
-      <Section title="Kubernetes manifests">
-        <p className="mb-3">
-          Reference manifests are in the repository <code className="text-fortuna-pink">deploy/</code> directory. Each component has a separate manifest file.
-        </p>
-        <ul className="ml-2 list-inside list-disc space-y-2 text-xs">
-          <li><strong className="text-white/72">postgresql-with-age.yaml</strong>: PostgreSQL database (primary data store).</li>
-          <li><strong className="text-white/72">nats.yaml</strong>: NATS JetStream (async work queues).</li>
-          <li><strong className="text-white/72">fortuna-rbac.yaml</strong>: ServiceAccount, ClusterRole, ClusterRoleBinding.</li>
-          <li><strong className="text-white/72">fortuna-core-deployment.yaml</strong>: Core API and processing engine.</li>
-          <li><strong className="text-white/72">fortuna-agent-daemonset.yaml</strong>: Agent on every node (SBOM extraction, inventory sync).</li>
-          <li><strong className="text-white/72">dashboard-deployment.yaml</strong>: React UI and proxy.</li>
-          <li><strong className="text-white/72">dashboard-nginx-configmap.yaml</strong>: Nginx configuration for dashboard proxy.</li>
-          <li><strong className="text-white/72">fortuna-core-external-service.yaml</strong>: External service for remote cluster connections (optional).</li>
-        </ul>
-      </Section>
-
-      <Section title="Runtime sensors (optional)">
-        <p className="mb-3">
-          Fortuna supports optional runtime sensors for process monitoring and network traffic visibility. Falco event ingestion is currently functional; eBPF support is experimental. Runtime sensors communicate with Core and provide additional context for findings and attack paths.
-        </p>
-        <CodeBlock>{`# Enable Falco for runtime event ingestion (if not already enabled)
-# Check current product documentation for runtime integration setup
-
-# Restart Agent DaemonSet after runtime configuration changes
-kubectl -n fortuna rollout restart daemonset/fortuna-agent
-kubectl -n fortuna rollout status daemonset/fortuna-agent --timeout=180s
-
-# Verify runtime state in Dashboard
-# Monitor -> Runtime State should show actual sensor status
-
-# Optional: disable runtime without uninstalling
-kubectl -n fortuna set env daemonset/fortuna-agent RUNTIME_ENABLED=false`}</CodeBlock>
-        <p className="mt-3 text-xs text-white/62">
-          Runtime sensors increase Agent memory by 200-400 MB per node. They are optional and under active development. Falco ingestion is supported; eBPF is experimental. For production, evaluate performance overhead in your environment before enabling broadly. Refer to the product repository for current Falco integration and configuration.
-        </p>
-      </Section>
-
-      <Section title="Deploy from published images">
-        <p className="mb-3">
-          Recommended first path for users is to deploy Fortuna from built images. Use a release tag instead of{' '}
-          <code className="text-fortuna-pink">latest</code> when validating a fixed version.
-        </p>
-        <CodeBlock>{`git clone https://github.com/shino-337/Fortuna-Community.git
-cd fortuna
-
-export FORTUNA_REGISTRY="ghcr.io/shino-337/fortuna-community"
-export FORTUNA_VERSION="latest"
-export FORTUNA_ADMIN_PASSWORD="<strong-admin-password>"
-
-./scripts/utils/ensure-fortuna-secrets.sh fortuna
-
-kubectl apply -f deploy/infrastructure/postgresql-with-age.yaml
-kubectl apply -f deploy/infrastructure/nats.yaml
-kubectl apply -f deploy/fortuna-rbac.yaml
-kubectl apply -f deploy/dashboard-nginx-configmap.yaml
-kubectl apply -f deploy/fortuna-core-deployment.yaml
-kubectl apply -f deploy/fortuna-agent-daemonset.yaml
-kubectl apply -f deploy/dashboard-deployment.yaml
-
-kubectl -n fortuna set image deploy/fortuna-core core="\${FORTUNA_REGISTRY}/fortuna-core:\${FORTUNA_VERSION}"
-kubectl -n fortuna set image daemonset/fortuna-agent agent="\${FORTUNA_REGISTRY}/fortuna-agent:\${FORTUNA_VERSION}"
-kubectl -n fortuna set image deploy/fortuna-dashboard dashboard="\${FORTUNA_REGISTRY}/fortuna-dashboard:\${FORTUNA_VERSION}"
-
-kubectl -n fortuna rollout status deploy/fortuna-core
-kubectl -n fortuna rollout status daemonset/fortuna-agent
-kubectl -n fortuna rollout status deploy/fortuna-dashboard`}</CodeBlock>
-      </Section>
-
-      <Section title="Environment baseline">
-        <p className="mb-2">
-          The documented baseline is Kubernetes with routable nodes, working DNS/CNI, persistent storage for PostgreSQL and NATS,
-          and a container runtime that allows Agent SBOM extraction (containerd is recommended).
-        </p>
-        <ul className="ml-2 list-inside list-disc space-y-1 text-xs">
-          <li><strong className="text-white/72">Lab baseline:</strong> 2 nodes, 4 total CPU cores, 8 GB RAM, 40 GB disk (single-cluster, without runtime sensors).</li>
-          <li><strong className="text-white/72">Lab recommended:</strong> 3 nodes, 8 total CPU cores, 16 GB RAM, 100 GB disk (better throughput and headroom).</li>
-          <li><strong className="text-white/72">Production baseline:</strong> 3+ nodes, 8+ CPU cores, 16+ GB RAM, 100+ GB disk, stable DNS/CNI, persistent storage class, containerd or CRI-O.</li>
-          <li><strong className="text-white/72">Runtime considerations:</strong> Enabling optional Falco/runtime sensors increases Agent memory by ~200-400 MB per node.</li>
-        </ul>
-      </Section>
-
-      <Section title="Local rebuild pipeline">
-        <p className="mb-3">
-          For lab development, the product repository includes automated build and deploy scripts in <code className="text-fortuna-pink">scripts/pipeline/</code>. Add <code className="text-fortuna-pink">--with-runtime</code> only when testing optional Falco/runtime sensor integration.
-        </p>
-        <CodeBlock>{`# Full rebuild, database reset, deploy without runtime sensors
-./scripts/pipeline/full-clean-database-rebuild-deploy.sh --full --db-reset
-
-# Full rebuild with optional runtime sensors enabled
-./scripts/pipeline/full-clean-database-rebuild-deploy.sh --full --db-reset --with-runtime`}</CodeBlock>
-        <p className="mt-2 text-xs text-white/62">
-          Runtime sensors (Falco) are optional and under active development. For production, evaluate stability and resource overhead in your environment before enabling.
-        </p>
-      </Section>
-
-      <Section title="Dashboard access and first login">
-        <CodeBlock>{`kubectl port-forward --address 0.0.0.0 -n fortuna svc/fortuna-dashboard 8081:80`}</CodeBlock>
-        <p className="mt-3 text-xs text-white/62">
-          Open <code className="text-fortuna-pink">http://localhost:8081</code> or the host IP used by your lab. The default user is{' '}
-          <code className="text-fortuna-pink">admin</code>. Prefer setting <code className="text-fortuna-pink">FORTUNA_ADMIN_PASSWORD</code>
-          before deploy. If omitted on a fresh bootstrap, the temporary password is{' '}
-          <code className="text-fortuna-pink">Fortuna_ChangeMe_123!</code> and must be changed on first use.
-        </p>
-      </Section>
-
-      <Section title="Add a remote cluster (Alpha)">
-        <p className="mb-3">
-          In multi-cluster mode the management cluster runs Core, Dashboard, PostgreSQL, NATS, Agent, and optional runtime sensors. A remote cluster runs Agent and optional runtime only, communicating with the management Core over a stable external service.
-        </p>
-        <p className="mb-3 text-xs text-white/62">
-          Multi-cluster setup is supported for lab and development use. For production, verify mTLS trust, network latency, Agent sync recovery, and data consistency before scaling to multiple clusters.
-        </p>
-        <CodeBlock>{`kubectl -n fortuna apply -f deploy/fortuna-core-external-service.yaml
-
-export REMOTE_KUBECONFIG=/path/to/remote.kubeconfig
-export MANAGEMENT_NODE=<management-node-ip-or-dns>
-
-KUBECONFIG="$REMOTE_KUBECONFIG" kubectl create namespace fortuna --dry-run=client -o yaml | \\
-  KUBECONFIG="$REMOTE_KUBECONFIG" kubectl apply -f -
-
-KUBECONFIG="$REMOTE_KUBECONFIG" NAMESPACE=fortuna ./scripts/utils/create_mtls_secret.sh
-
-KUBECONFIG="$REMOTE_KUBECONFIG" kubectl -n fortuna apply -f deploy/fortuna-rbac.yaml
-KUBECONFIG="$REMOTE_KUBECONFIG" kubectl -n fortuna apply -f deploy/fortuna-agent-daemonset.yaml
-
-KUBECONFIG="$REMOTE_KUBECONFIG" kubectl -n fortuna set env daemonset/fortuna-agent \\
-  CLUSTER_ID=cluster101 \\
-  CLUSTER_NAME=cluster101 \\
-  CORE_HTTP_ENDPOINT="http://\${MANAGEMENT_NODE}:30080" \\
-  CORE_GRPC_ENDPOINT="\${MANAGEMENT_NODE}:30090"
-
-KUBECONFIG="$REMOTE_KUBECONFIG" kubectl -n fortuna rollout status daemonset/fortuna-agent`}</CodeBlock>
-      </Section>
-
-      <Section title="Verification">
-        <CodeBlock>{`FORTUNA_JWT=<dashboard-jwt> \\
-CORE_URL=http://127.0.0.1:8080 \\
-REMOTE_KUBECONFIGS="cluster101=\${REMOTE_KUBECONFIG}" \\
-./scripts/verify/verify-multicluster-sync.sh`}</CodeBlock>
-      </Section>
-    </div>
-  ),
-
-  'first-investigation': (
-    <div className="space-y-6 text-sm text-white/68">
-      <Section title="What is a First Investigation?">
-        <p className="mb-3">
-          A first investigation walks through one complete Kubernetes security workflow: find a workload, trace its identity and permissions, discover possible attack paths, review evidence, and verify remediation. This is the fastest way to understand Fortuna's approach to attack-path investigation.
-        </p>
-        <p className="text-xs text-white/62">
-          This guide uses a real RBAC scenario from Fortuna. We'll trace from pod → ServiceAccount → role binding → dangerous permissions → remediation.
-        </p>
-      </Section>
-
-      <Section title="Step 1: Verify platform health">
-        <p className="mb-3">
-          Start in the <strong>Platform Integrity</strong> workspace to confirm that Agent, CVE processing, and runtime visibility are operational. A quiet findings queue only means something if the dashboard is complete.
-        </p>
-        <DocImage
-          src="live-platform-integrity.png"
-          alt="Fortuna Platform Integrity workspace showing healthy telemetry state"
-          caption="Platform Integrity confirms Agent sync, CVE processing freshness, and data availability before interpreting findings."
-        />
-        <p className="mt-2 text-xs text-white/62">
-          Verify: Agent sync age, CVE catalog timestamp, runtime sensor state (if enabled). If any show "unavailable" or are stale, investigate the cause before relying on finding results.
-        </p>
-      </Section>
-
-      <Section title="Step 2: Find your workload">
-        <p className="mb-3">
-          Open <strong>Kubernetes Inventory</strong> and locate a pod or workload. In a test scenario, we're looking for a pod that uses a ServiceAccount with elevated permissions. The inventory shows identity context: which ServiceAccount the pod is running as.
-        </p>
-        <DocImage
-          src="live-inventory-rbac-pod.png"
-          alt="Kubernetes Inventory filtered to show a pod with ServiceAccount and RBAC identity"
-          caption="Kubernetes Inventory shows the workload, its namespace, ServiceAccount, risk level, and image. This is your starting point for investigation."
-        />
-        <p className="mt-3 text-xs text-white/62">
-          Filter by namespace, pod name, or risk level. Click on a pod to inspect its ServiceAccount, SBOM, CVEs, and identity context.
-        </p>
-      </Section>
-
-      <Section title="Step 3: Inspect the ServiceAccount and RBAC grants">
-        <p className="mb-3">
-          From the pod detail, click to open the <strong>ServiceAccount identity</strong>. This shows the exact source: which RoleBinding or ClusterRoleBinding grants permissions, and what those permissions are.
-        </p>
-        <DocImage
-          src="live-serviceaccount-identity.png"
-          alt="ServiceAccount identity detail showing RoleBinding source and effective RBAC permissions"
-          caption="Identity detail reveals the binding and role source. Verify the permissions match expectations before assuming risk."
-        />
-        <p className="mt-3 text-xs text-white/62">
-          Compare the effective verbs and resources against what the workload actually needs. Dangerous permissions: <code className="text-fortuna-pink">*</code> (wildcards), <code className="text-fortuna-pink">admin</code> roles, or <code className="text-fortuna-pink">get secrets</code> on <code className="text-fortuna-pink">*</code>.
-        </p>
-      </Section>
-
-      <Section title="Step 4: Review the attack path">
-        <p className="mb-3">
-          Open <strong>Attack Paths</strong> and find a scenario matching your pod or ServiceAccount. The graph shows the relationship chain: pod → ServiceAccount → binding → role → target permission. This is the path from which a compromised workload could escalate its privilege.
-        </p>
-        <DocImage
-          src="live-rbac-attack-path.png"
-          alt="Attack Paths graph showing pod connected to ServiceAccount, binding, and role leading to sensitive permissions"
-          caption="Attack Paths graph visualizes the privilege relationship. The path represents possible access from this identity; it does not prove exploitation."
-        />
-        <p className="mt-3 text-xs text-white/62">
-          Remember: a static attack path is possible access based on role configuration, not proof that an attacker has exploited it. Use runtime observations and findings to determine actual risk.
-        </p>
-      </Section>
-
-      <Section title="Step 5: Gather evidence: SBOM and CVEs">
-        <p className="mb-3">
-          From Kubernetes Inventory, navigate to the pod detail and check the <strong>SBOM</strong> tab. Review the container image, packages, and any CVE matches. This evidence is part of the risk assessment.
-        </p>
-        <DocImage
-          src="live-pod-sbom-cve.png"
-          alt="Pod detail showing SBOM packages and CVE correlation for the workload image"
-          caption="Separate example: postgres-ff8999b99-chqds has 48 packages from postgres:15-alpine. The OSV mirror was empty, so zero CVEs is not a clean verdict. This is not the rbac-pod workload."
-        />
-        <p className="mt-3 text-xs text-white/62">
-          If CVE processing is incomplete (stale or unavailable), findings may be incomplete. Check Platform Integrity again.
-        </p>
-      </Section>
-
-      <Section title="Step 6: Check runtime and network context">
-        <p className="mb-3">
-          If runtime sensors are enabled, check <strong>Runtime Network</strong> to see actual workload traffic. This distinguishes hypothetical access from observed behavior.
-        </p>
-        <DocImage
-          src="live-runtime-network.png"
-          alt="NATS-filtered network view with three observed traffic edges"
-          caption="Separate NATS example in a 15-minute window: two sources, two destinations, and three edges. This capture does not show rbac-pod traffic or external destinations."
-        />
-        <p className="mt-3 text-xs text-white/62">
-          A workload with dangerous permissions that only connects to internal services has a different risk profile than one exposing connections to external hosts. Runtime context matters.
-        </p>
-      </Section>
-
-      <Section title="Step 7: Make a remediation decision">
-        <p className="mb-3">
-          Based on the attack path, SBOM evidence, and runtime observations, decide on remediation:
-        </p>
-        <ul className="ml-2 list-inside list-disc space-y-2 text-xs">
-          <li><strong className="text-white/72">Narrow the role:</strong> Remove unnecessary verbs or resources from the ClusterRole/Role.</li>
-          <li><strong className="text-white/72">Use a least-privilege role:</strong> Replace the role with a minimal one that covers only required permissions.</li>
-          <li><strong className="text-white/72">Change the ServiceAccount:</strong> Use a different ServiceAccount that already has the minimal set of permissions.</li>
-          <li><strong className="text-white/72">Update the binding:</strong> Remove or narrow the RoleBinding to apply the role only to the necessary ServiceAccount(s).</li>
-        </ul>
-      </Section>
-
-      <Section title="Step 8: Apply the fix and verify reconciliation">
-        <p className="mb-3">
-          Apply the remediation change directly using kubectl:
-        </p>
-        <CodeBlock>{`# Example: remove a dangerous verb from a ClusterRole
-kubectl patch clusterrole <role-name> --type json -p='[{"op": "remove", "path": "/rules/0/verbs/0"}]'
-
-# Or edit directly
-kubectl edit clusterrole <role-name>
-
-# Verify the Agent reconciles the change (usually within 30 seconds)
-kubectl -n fortuna logs -l app=fortuna-agent -f | grep reconcil`}</CodeBlock>
-        <p className="mt-3">
-          After applying the fix, Fortuna's Agent will reconcile the current state within its sync interval (typically 30-60 seconds). The attack path and findings should update to reflect the new permissions.
-        </p>
-      </Section>
-
-      <Section title="Step 9: Verify the evidence changed">
-        <p className="mb-3">
-          Return to <strong>Attack Paths</strong> and check whether the path still exists with the narrowed permissions. If the dangerous verbs have been removed, the path may disappear or change classification.
-        </p>
-        <DocImage
-          src="live-findings-queue.png"
-          alt="Findings Queue filtered to ServiceAccount Token Access"
-          caption="Triage example only. No before/after remediation was captured; repeat this view after your own change and compare evidence timestamps, path steps, and findings."
-        />
-        <p className="mt-3 text-xs text-white/62">
-          Verify in Attack Paths and Findings Queue that the evidence has updated. Some findings may remain as historical records with different workflow states; this is by design for audit and compliance.
-        </p>
-      </Section>
-
-      <Section title="Key concepts">
-        <ul className="ml-2 list-inside list-disc space-y-2 text-xs">
-          <li><strong className="text-white/72">Static vs Observed:</strong> Attack paths show possible access from role configuration. Runtime observations show actual activity. Both matter.</li>
-          <li><strong className="text-white/72">Evidence connection:</strong> Risk combines identity, SBOM, CVEs, and runtime. No single signal tells the whole story.</li>
-          <li><strong className="text-white/72">Remediation verification:</strong> After applying a fix, wait for Agent reconciliation. Check that the path or finding evidence changes in the dashboard.</li>
-          <li><strong className="text-white/72">Audit trail:</strong> Findings and attack paths are kept for context. Workflow state (acknowledged, in-progress, resolved) helps track remediation progress.</li>
-        </ul>
-      </Section>
-
-      <Section title="Next steps">
-        <ul className="ml-2 list-inside list-disc space-y-2 text-xs">
-          <li>Read the <strong>User Guide</strong> for full dashboard navigation and feature details.</li>
-          <li>Explore <strong>Use Cases</strong> for other investigation workflows: CVE triage, network verification, policy rule matching.</li>
-          <li>Check <strong>Architecture</strong> to understand how Agent, Core, and Dashboard coordinate.</li>
-          <li>Review <strong>Security</strong> for authentication, mTLS, and production hardening.</li>
-        </ul>
-      </Section>
-    </div>
-  ),
-
-  'user-guide': (
-    <div className="space-y-6 text-sm text-white/68">
-      <Section title="Access">
-        <CodeBlock>{`kubectl port-forward --address 0.0.0.0 -n fortuna svc/fortuna-dashboard 8081:80`}</CodeBlock>
-        <p className="mt-3 text-xs text-white/62">
-          Open <code className="text-fortuna-pink">http://127.0.0.1:8081/</code>. Development login is{' '}
-          <code className="text-fortuna-pink">admin</code> with <code className="text-fortuna-pink">FORTUNA_ADMIN_PASSWORD</code>,
-          or the fresh-bootstrap fallback <code className="text-fortuna-pink">Fortuna_ChangeMe_123!</code> which requires immediate
-          password change.
-        </p>
-      </Section>
-
-      <Section title="Roles">
-        <ul className="ml-2 list-inside list-disc space-y-1 text-xs">
-          <li><strong className="text-white/72">Admin</strong>: full platform, policy, monitoring, and user administration.</li>
-          <li><strong className="text-white/72">User admin</strong>: Fortuna account administration only.</li>
-          <li><strong className="text-white/72">Operator</strong>: investigation, triage, rules, runtime, and risk workflows.</li>
-          <li><strong className="text-white/72">Viewer</strong>: read-oriented posture and evidence review.</li>
-        </ul>
-      </Section>
-
-      <Section title="Cluster scope">
-        <p className="mb-2">
-          The header cluster selector controls most security data pages. Use All Clusters for global posture, finding triage, and
-          reports; use a specific cluster for Runtime Network, pod detail, attack paths, and inventory verification.
-        </p>
-        <p className="text-xs text-white/62">
-          Remote clusters appear after the remote Agent completes its first full sync. Dashboard totals should match the sum of active
-          cluster rows for the selected scope.
-        </p>
-      </Section>
-
-      <Section title="Empty and blocked states">
-        <ul className="ml-2 list-inside list-disc space-y-1 text-xs">
-          <li><strong className="text-white/72">Unauthenticated</strong>: sign in again.</li>
-          <li><strong className="text-white/72">Forbidden</strong>: ask an admin for role or permission changes.</li>
-          <li><strong className="text-white/72">Cluster scope</strong>: change selected cluster or request access.</li>
-          <li><strong className="text-white/72">No data</strong>: clear filters, widen time range, or verify Agent/CVE/runtime ingestion.</li>
-        </ul>
-      </Section>
-
-      <Section title="Recommended navigation">
-        <ol className="ml-2 list-inside list-decimal space-y-1 text-xs">
-          <li>Start at Platform Integrity to confirm freshness and runtime coverage.</li>
-          <li>Open Findings Queue and sort by unified risk score.</li>
-          <li>Inspect evidence, linked rules, and affected resources.</li>
-          <li>Use Attack Paths for path context.</li>
-          <li>Open pod detail in Kubernetes Inventory for SBOM, runtime, network, events, and spec.</li>
-          <li>Export from Reports for a time-windowed handoff.</li>
-        </ol>
-      </Section>
-    </div>
-  ),
-
-  'use-cases': (
-    <div className="space-y-6 text-sm text-white/68">
-      <Section title="1. Confirm platform health">
-        <p className="text-xs text-white/62">
-          Open <code className="text-fortuna-pink">/#/</code> and <code className="text-fortuna-pink">/#/monitoring</code>. Confirm
-          telemetry freshness, pipeline processing, agent visibility, runtime/runtime state, and recent timestamps before trusting a quiet
-          Findings Queue.
-        </p>
-      </Section>
-
-      <Section title="2. Triage high-risk findings">
-        <p className="text-xs text-white/62">
-          Open <code className="text-fortuna-pink">/#/risks/findings</code>, sort or filter by final risk, inspect the drawer, review
-          affected resource/evidence/rule links, then acknowledge, resolve, dismiss, or escalate based on role permissions.
-        </p>
-      </Section>
-
-      <Section title="3. Investigate an attack path">
-        <p className="text-xs text-white/62">
-          Open <code className="text-fortuna-pink">/#/attack-paths</code>, select a priority path, inspect graph nodes and edge labels,
-          validate confidence and runtime evidence, then open the source pod or linked finding for resource-level detail.
-        </p>
-      </Section>
-
-      <Section title="4. Review pod supply-chain posture">
-        <p className="text-xs text-white/62">
-          From <code className="text-fortuna-pink">/#/resources</code>, search by namespace, pod, image, or risk. Open pod detail and
-          review SBOM/CVE, risk, runtime, process, network, event, and spec tabs.
-        </p>
-      </Section>
-
-      <Section title="5. Verify runtime network">
-        <p className="text-xs text-white/62">
-          Use <code className="text-fortuna-pink">/#/network-activity</code> to inspect observed in-cluster, service, and external
-          traffic. Edge width and opacity should reflect traffic volume, not inferred policy intent.
-        </p>
-      </Section>
-
-      <Section title="6. Audit policy rules and reports">
-        <p className="text-xs text-white/62">
-          Use <code className="text-fortuna-pink">/#/rules</code> for UID-based rule detail and catalog matching, then use{' '}
-          <code className="text-fortuna-pink">/#/reports</code> with 1, 3, 7, or 30 day windows for operational handoff.
-        </p>
-      </Section>
-
-      <Section title="Sample flow: vulnerable image becomes a finding">
-        <ol className="ml-2 list-inside list-decimal space-y-2 text-xs text-white/62">
-          <li>
-            A new pod is created from an application image in Kubernetes. The node-local Fortuna Agent observes the pod through
-            Kubernetes inventory sync and records cluster, namespace, pod, workload, image, and owner metadata.
-          </li>
-          <li>
-            The Agent inspects the image through the container runtime and extracts package evidence into an SBOM. Core receives the
-            SBOM, persists components, and links them back to the pod and image digest.
-          </li>
-          <li>
-            Core matches SBOM packages against the loaded OSV-backed CVE catalog. If the catalog is unavailable or stale, the UI should
-            show an unavailable or partial state instead of presenting the pod as clean.
-          </li>
-          <li>
-            A CVE match creates or updates a finding with affected package, vulnerable version, fixed version when available, severity,
-            evidence, resource name, namespace, cluster, and unified risk score.
-          </li>
-          <li>
-            The operator opens <code className="text-fortuna-pink">/#/risks/findings</code> or pod detail in{' '}
-            <code className="text-fortuna-pink">/#/resources</code>, confirms the affected image and package evidence, then assigns the
-            finding to the owning team.
-          </li>
-          <li>
-            Remediation is usually to rebuild the image with a fixed package or base image, redeploy the workload, wait for Agent/Core
-            rescan, verify the CVE is gone from pod detail, and mark the finding resolved or export it in Reports.
-          </li>
-        </ol>
-        <DocImage
-          src="sample-sbom-pod-detail.png"
-          alt="Fortuna pod detail Risk and SBOM tab showing package evidence for rbac-pod"
-          caption="Pod Detail -> Risk & SBOM is where operators verify image package evidence, CVE count, malware status, exportable SBOM formats, and post-remediation scan results. This live lab capture has no active CVE for the selected package, so it demonstrates the verification surface rather than a vulnerable result."
-        />
-      </Section>
-
-      <Section title="Sample flow: RBAC exposure becomes an attack path">
-        <ol className="ml-2 list-inside list-decimal space-y-2 text-xs text-white/62">
-          <li>
-            A pod starts with a service account that is bound to a Role or ClusterRole with sensitive verbs such as pod exec, secret read,
-            workload patch, or broader cluster permissions.
-          </li>
-          <li>
-            Fortuna syncs pods, service accounts, roles, role bindings, and cluster roles. Core maps those relationships into identity
-            and capability context, then evaluates rule catalog matches and exposure signals.
-          </li>
-          <li>
-            If the same pod also has supporting evidence such as risky capabilities, vulnerable packages, runtime events, or observed
-            network reachability, Core can raise confidence and generate an attack-path scenario.
-          </li>
-          <li>
-            The operator opens <code className="text-fortuna-pink">/#/attack-paths</code>, selects the priority path, focuses the graph,
-            and reads the path from source pod to service account, RBAC edge, reachable workload, or sensitive target.
-          </li>
-          <li>
-            From the path, the operator opens pod detail and Open Identity to confirm exact service account, Role, RoleBinding, and
-            ClusterRole evidence before making changes.
-          </li>
-          <li>
-            Remediation is usually to remove unused service-account bindings, narrow verbs/resources, split workload identities, rotate
-            exposed tokens, restrict network reachability, and redeploy. After Agent sync, the path should disappear or drop in risk.
-          </li>
-        </ol>
-        <div className="mt-4 grid gap-4">
-          <DocImage
-            src="sample-rbac-attack-paths-overview.png"
-            alt="Fortuna Attack Paths page showing the rbac-pod scenario in the attack path graph"
-            caption="Attack Paths groups real scenario paths and graph relationships. In this sample, rbac-pod is a path start connected to service-account and ClusterRoleBinding evidence."
-          />
-          <DocImage
-            src="sample-rbac-resource-list.png"
-            alt="Fortuna Kubernetes Inventory filtered to rbac-pod"
-            caption="Kubernetes Inventory lets the operator filter to the affected pod, compare pod risk with attack-path context, and open Pod Detail from the same row."
-          />
-          <DocImage
-            src="sample-rbac-open-identity.png"
-            alt="Fortuna identity detail for service account sa-rbac showing ClusterRoleBinding and effective RBAC rules"
-            caption="Open Identity resolves the service account to the exact binding source and effective RBAC rules, which are the fields needed to remove or narrow excessive permissions."
-          />
-        </div>
-      </Section>
-    </div>
-  ),
-
-  architecture: (
-    <div className="space-y-6 text-sm text-white/68">
-      <Section title="Logical architecture">
-        <CodeBlock>{`Browser
-  -> Dashboard Nginx
-    -> Core REST API (:8080)
-
-Agent DaemonSet
-  -> Core gRPC ingest (mTLS / token)
-
- Runtime sensors
-  -> Core runtime ingest
-
-Core
-  -> PostgreSQL source of truth
-  -> NATS JetStream workers
-
-Remote clusters
-  -> Agent/runtime only
-  -> Management Core NodePort or Ingress`}</CodeBlock>
-      </Section>
-
-      <Section title="Data ownership">
-        <ul className="ml-2 list-inside list-disc space-y-2 text-xs">
-          <li><strong className="text-white/72">Inventory</strong>: Agent pod sync and Kubernetes observations feed Resources, Pod Detail, Monitoring, and Risk.</li>
-          <li><strong className="text-white/72">SBOM</strong>: Agent image/package extraction feeds Pod Detail, CVE views, Reports, and Risk.</li>
-          <li><strong className="text-white/72">CVE matches</strong>: Core matcher compares SBOM components with the loaded CVE catalog.</li>
-          <li><strong className="text-white/72">Runtime events</strong>: runtime and agent facts feed Monitoring, Pod Detail, Attack Analysis, and Risk.</li>
-          <li><strong className="text-white/72">Network activity</strong>: Agent runtime observations feed Runtime Network, Pod Detail, and Attack Analysis.</li>
-          <li><strong className="text-white/72">Rules</strong>: policy catalog and mapped legacy IDs feed Policy Rules and risk evidence.</li>
-          <li><strong className="text-white/72">Risk</strong>: Core unified scorer feeds Dashboard, Risk Operations, Resources, Pod Detail, and Reports.</li>
-        </ul>
-      </Section>
-
-      <Section title="Cluster identity contract">
-        <p>
-          Data is stored and retrieved with <code className="text-fortuna-pink">cluster_id</code>. All Clusters aggregates active
-          scoped data; cluster-specific pages pass the selected cluster ID. Management-cluster cleanup must not delete remote-cluster
-          pods; remote data is owned by remote Agent sync and stale-retention logic.
-        </p>
-      </Section>
-
-      <Section title="UI state contract">
-        <ul className="ml-2 list-inside list-disc space-y-1 text-xs">
-          <li><strong className="text-white/72">Unauthenticated</strong>: route to login.</li>
-          <li><strong className="text-white/72">Forbidden</strong>: current role lacks permission.</li>
-          <li><strong className="text-white/72">Cluster scope</strong>: selected cluster is outside assigned access.</li>
-          <li><strong className="text-white/72">No data</strong>: allowed request returned no records for the selected filters/time window.</li>
-          <li><strong className="text-white/72">Unavailable/partial</strong>: catalog, runtime, or pipeline dependency is not ready.</li>
-        </ul>
-      </Section>
-
-      <Section title="Runtime visibility states">
-        <p className="mb-2 text-xs text-white/62">
-          Runtime pages should explicitly distinguish sensor state so users do not confuse missing data with a safe environment:
-        </p>
-        <ul className="ml-2 list-inside list-disc space-y-1 text-xs">
-          <li>Runtime not installed.</li>
-          <li>Runtime installed but disabled.</li>
-          <li>Runtime enabled but quiet.</li>
-          <li>Runtime events arriving and correlated to resources/findings.</li>
-        </ul>
-      </Section>
-    </div>
-  ),
-
-  deployment: (
-    <div className="space-y-6 text-sm text-white/68">
-      <Section title="Deployment model">
-        <p className="mb-2">
-          Reference deploys use Kubernetes manifests in <code className="text-fortuna-pink">deploy/</code>: PostgreSQL,
-          NATS, RBAC, Core, Agent DaemonSet, Dashboard, Dashboard Nginx config, and the optional Core external service for
-          remote clusters.
-        </p>
-        <p className="text-xs text-white/62">
-          Core runs database migrations at startup. Agents must be able to pull the configured image on every node, or images must be
-          distributed by registry/workflow before rollout.
-        </p>
-      </Section>
-
-      <Section title="Local full deploy">
-        <CodeBlock>{`./scripts/pipeline/full-clean-database-rebuild-deploy.sh --full --db-reset
-
-# Include runtime/runtime verification
-./scripts/pipeline/full-clean-database-rebuild-deploy.sh --full --db-reset --with-runtime`}</CodeBlock>
-      </Section>
-
-      <Section title="Published image deploy">
-        <CodeBlock>{`export FORTUNA_REGISTRY="ghcr.io/shino-337/fortuna-community"
-export FORTUNA_VERSION="<release-tag>"
-export FORTUNA_ADMIN_PASSWORD="<strong-admin-password>"
-
-./scripts/utils/ensure-fortuna-secrets.sh fortuna
-kubectl apply -f deploy/infrastructure/postgresql-with-age.yaml
-kubectl apply -f deploy/infrastructure/nats.yaml
-kubectl apply -f deploy/fortuna-rbac.yaml
-kubectl apply -f deploy/dashboard-nginx-configmap.yaml
-kubectl apply -f deploy/fortuna-core-deployment.yaml
-kubectl apply -f deploy/fortuna-agent-daemonset.yaml
-kubectl apply -f deploy/dashboard-deployment.yaml`}</CodeBlock>
-      </Section>
-
-      <Section title="Production inputs">
-        <p className="mb-3">
-          Production deployment should use registry-published images, explicit secrets, and repeatable rollout verification. Do not rely
-          on local containerd images for multi-node production clusters.
-        </p>
-        <CodeBlock>{`export NAMESPACE="fortuna"
-export FORTUNA_REGISTRY="ghcr.io/shino-337/fortuna-community"
-export FORTUNA_VERSION="<release-tag-or-sha>"
-export FORTUNA_JWT_SECRET="$(openssl rand -base64 32)"
-export FORTUNA_ADMIN_PASSWORD="<strong-admin-password>"
-export FORTUNA_POSTGRES_PASSWORD="$(openssl rand -base64 24 | tr -d '=+/ ' | cut -c1-24)"
-export FORTUNA_DATABASE_URL="postgres://postgres:\${FORTUNA_POSTGRES_PASSWORD}@postgres.fortuna.svc.cluster.local:5432/fortuna?sslmode=disable"`}</CodeBlock>
-      </Section>
-
-      <Section title="CVE and runtime data">
-        <CodeBlock>{`./scripts/utils/load-cve-data.sh
-
-# For runtime sensor setup, refer to product documentation
-# Runtime configuration is environment-specific and may require additional setup
-kubectl rollout restart -n "$NAMESPACE" daemonset/fortuna-agent
-kubectl -n "$NAMESPACE" rollout status daemonset/fortuna-agent --timeout=180s`}</CodeBlock>
-        <p className="mt-3 text-xs text-white/62">
-          After a DB reset, reload CVE data before using supply-chain or vulnerability views for decisions.
-        </p>
-      </Section>
-
-      <Section title="Multi-cluster deploy">
-        <ul className="ml-2 list-inside list-disc space-y-2 text-xs">
-          <li>Management cluster: Core, Dashboard, PostgreSQL, NATS, local Agent, optional runtime.</li>
-          <li>Remote cluster: Agent DaemonSet and optional runtime only.</li>
-          <li>Expose management Core with <code className="text-fortuna-pink">deploy/fortuna-core-external-service.yaml</code> or a hardened Ingress.</li>
-          <li>Remote Agents need shared mTLS trust, ingest token, stable Core HTTP/gRPC endpoints, and unique <code className="text-fortuna-pink">CLUSTER_ID</code>.</li>
-          <li>Verify with <code className="text-fortuna-pink">scripts/verify/verify-multicluster-sync.sh</code>.</li>
-        </ul>
-      </Section>
-
-      <Section title="Post-deploy checks">
-        <ul className="ml-2 list-inside list-disc space-y-1 text-xs">
-          <li>PostgreSQL and NATS are ready before Core readiness is expected.</li>
-          <li>Core <code className="text-fortuna-pink">/healthz</code> and readiness respond through the dashboard proxy or port-forward.</li>
-          <li>One Agent pod is running on every observed node.</li>
-          <li>Dashboard WebSocket origins include the actual browser URL, for example <code className="text-fortuna-pink">FORTUNA_WS_ALLOWED_ORIGINS</code>.</li>
-          <li>Runtime pages show explicit states: not installed, installed but disabled, enabled but quiet, or events arriving.</li>
-        </ul>
-      </Section>
-    </div>
-  ),
-
-  api: (
-    <div className="space-y-6 text-sm text-white/68">
-      <p>
-        Core exposes REST under <code className="text-fortuna-pink">/api/v1/</code> and agent-facing gRPC ingest. Browser users
-        authenticate with JWT; Agents and runtime ingest use separate token/mTLS paths.
-      </p>
-
-      <Section title="Public and authenticated HTTP">
-        <ul className="space-y-2 font-mono text-xs">
-          <li><code className="text-fortuna-pink">GET /healthz</code>, <code className="text-fortuna-pink">GET /ready</code>: service probes.</li>
-          <li><code className="text-fortuna-pink">POST /api/v1/auth/login</code>: user login.</li>
-          <li><code className="text-fortuna-pink">GET /api/v1/me</code>: current authenticated user and permissions.</li>
-          <li><code className="text-fortuna-pink">GET /api/v1/ws/risks</code>: Findings Queue WebSocket stream; browser origin must be allowlisted.</li>
-        </ul>
-      </Section>
-
-      <Section title="Domain route groups">
-        <ul className="ml-2 list-inside list-disc space-y-2 text-xs">
-          <li><strong className="text-white/72">Dashboard</strong>: aggregate views for Platform Integrity, Operations Dashboard, Reports, and Monitoring.</li>
-          <li><strong className="text-white/72">Inventory</strong>: pods, workloads, service accounts, roles, bindings, cluster stats, capabilities, and detail routes.</li>
-          <li><strong className="text-white/72">Risk</strong>: findings, insights, evidence, workflow state, and unified risk values.</li>
-          <li><strong className="text-white/72">Runtime</strong>: runtime/runtime events, network activity, process snapshots, and visibility state.</li>
-          <li><strong className="text-white/72">Policy</strong>: rule catalog, rule detail, mapped legacy identifiers, and rule/finding linkage.</li>
-          <li><strong className="text-white/72">Attack paths</strong>: summary cards, scenario details, graph bundles, and path focus metadata.</li>
-          <li><strong className="text-white/72">Reports</strong>: time-windowed active finding summaries and exportable report data.</li>
-        </ul>
-      </Section>
-
-      <Section title="Important route contracts">
-        <ul className="ml-2 list-inside list-disc space-y-1 text-xs">
-          <li>Rule detail URLs use UID routes such as <code className="text-fortuna-pink">/policy/rules/uid/:uid</code>.</li>
-          <li>Resource and identity detail links should resolve by stable resource UID, then render human-readable names in the UI.</li>
-          <li>Cluster-scoped APIs must include or infer the selected cluster and must distinguish forbidden from no-data responses.</li>
-          <li>Null catalog or scan state should be surfaced as unavailable/partial, not as a successful zero-risk result.</li>
-        </ul>
-      </Section>
-    </div>
-  ),
-
-  security: (
-    <div className="space-y-6 text-sm text-white/68">
-      <Section title="Authentication">
-        <ul className="ml-2 list-inside list-disc space-y-1 text-xs">
-          <li>Core uses JWT authentication for dashboard and API users.</li>
-          <li>Set <code className="text-fortuna-pink">FORTUNA_JWT_SECRET</code> before creating <code className="text-fortuna-pink">fortuna-secrets</code>.</li>
-          <li>Rotating the JWT secret invalidates existing sessions.</li>
-        </ul>
-      </Section>
-
-      <Section title="Default admin">
-        <ul className="ml-2 list-inside list-disc space-y-1 text-xs">
-          <li>Fresh deployments create <code className="text-fortuna-pink">admin</code>.</li>
-          <li>Preferred: set <code className="text-fortuna-pink">FORTUNA_ADMIN_PASSWORD</code> before running secret setup.</li>
-          <li>Fallback: <code className="text-fortuna-pink">Fortuna_ChangeMe_123!</code> only for fresh bootstrap, followed by mandatory password change.</li>
-          <li>Existing databases keep the current admin password; Core does not reset it back to the bootstrap default.</li>
-        </ul>
-      </Section>
-
-      <Section title="Secrets and mTLS">
-        <CodeBlock>{`./scripts/utils/ensure-fortuna-secrets.sh fortuna
-NAMESPACE=fortuna ./scripts/utils/create_mtls_secret.sh`}</CodeBlock>
-        <p className="mt-3 text-xs text-white/62">
-          Expected production inputs include database URL, PostgreSQL password, JWT secret, admin password, ingest token, and optional
-          pod detail encryption key. Use <code className="text-fortuna-pink">MTLS_REGEN=1</code> only for intentional certificate rotation.
-        </p>
-      </Section>
-
-      <Section title="Repository hygiene">
-        <p className="text-xs text-white/62">
-          Do not push credentials, kubeconfigs, tokens, private screenshots, generated local reports, or E2E artifacts. Prefer published
-          image tags such as <code className="text-fortuna-pink">latest</code>, <code className="text-fortuna-pink">sha-&lt;commit&gt;</code>,
-          or <code className="text-fortuna-pink">v*</code> release tags in user-facing docs.
-        </p>
-      </Section>
-    </div>
-  ),
-
-  troubleshooting: (
-    <div className="space-y-6 text-sm text-white/68">
-      <Section title="Long builds">
-        <CodeBlock>{`RUN_ASYNC=1 PIPELINE_LOG_FILE=/tmp/pipeline.log \\
-./scripts/pipeline/full-clean-database-rebuild-deploy.sh --full
-
-./scripts/pipeline/watch-pipeline-log.sh /tmp/pipeline.log`}</CodeBlock>
-        <p className="mt-3 text-xs text-white/62">
-          Use component-only flags such as <code className="text-fortuna-pink">--only-core</code>,{' '}
-          <code className="text-fortuna-pink">--only-agent</code>, or <code className="text-fortuna-pink">--only-dashboard</code> for
-          focused rebuilds.
-        </p>
-      </Section>
-
-      <Section title="CVE catalog after DB reset">
-        <p className="text-xs text-white/62">
-          After <code className="text-fortuna-pink">--db-reset</code>, Phase 5 checks the CVE catalog. If empty and{' '}
-          <code className="text-fortuna-pink">AUTO_LOAD_CVE_CATALOG=true</code>, it runs{' '}
-          <code className="text-fortuna-pink">scripts/utils/load-cve-data.sh</code>. For smoke tests use{' '}
-          <code className="text-fortuna-pink">CVE_CATALOG_POST_DEPLOY_CHECK=skip</code>; for supply-chain validation keep the default or
-          set <code className="text-fortuna-pink">required</code>.
-        </p>
-      </Section>
-
-      <Section title="Default admin does not work">
-        <CodeBlock>{`kubectl -n fortuna get secret fortuna-secrets -o jsonpath='{.data.admin-password}' | base64 -d; echo
-kubectl -n fortuna get secret fortuna-secrets -o jsonpath='{.data.bootstrap-default-credential}' | base64 -d; echo
-
-kubectl exec -n fortuna deploy/postgres -- psql -U postgres -d fortuna -c \\
-  "select username,must_change_password,bootstrap_credential from users order by id;"`}</CodeBlock>
-        <p className="mt-3 text-xs text-white/62">
-          Existing databases intentionally preserve the current admin password. Reset the DB only for a fresh bootstrap or update the
-          user intentionally.
-        </p>
-      </Section>
-
-      <Section title="Images, DNS, and runtime">
-        <ul className="ml-2 list-inside list-disc space-y-1 text-xs">
-          <li>For multi-node local builds, push Core/Agent images with <code className="text-fortuna-pink">scripts/utils/push-images-to-workers.sh</code>; dashboard stays on control-plane by default.</li>
-          <li>If rebuilt code does not appear, compare manifest image tag, running pod image, and pod <code className="text-fortuna-pink">imageID</code>.</li>
-          <li>For Agent/Core DNS issues, run <code className="text-fortuna-pink">scripts/verify/check-dns-prereq.sh</code> and inspect Flannel/CNI health.</li>
-          <li>If Core is in CrashLoopBackOff, check Postgres/NATS endpoints, migrations, and missing secrets before restarting repeatedly.</li>
-        </ul>
-      </Section>
-    </div>
-  ),
+function List({ children }: { children: React.ReactNode }) {
+  return <ul className="list-disc space-y-2 pl-5">{children}</ul>;
+}
+function Table({ headings, rows }: { headings: string[]; rows: string[][] }) {
+  return <div className="overflow-x-auto"><table className="w-full text-left text-sm"><thead><tr>{headings.map(h => <th key={h} scope="col" className="border-b border-white/20 px-3 py-3 font-semibold text-white">{h}</th>)}</tr></thead><tbody>{rows.map((row, i) => <tr key={i}>{row.map((cell, j) => <td key={j} className="border-b border-white/10 px-3 py-3 align-top leading-6">{cell}</td>)}</tr>)}</tbody></table></div>;
+}
+function Capture({ name, caption }: { name: string; caption: string }) {
+  const url = `${import.meta.env.BASE_URL}images/${name}.png`;
+  return <figure className="overflow-hidden rounded-lg border border-white/10"><a href={url} target="_blank" rel="noopener noreferrer" aria-label={`View full-size screenshot: ${caption}`}><img src={url} alt={caption} width={1363} height={936} loading="lazy" decoding="async" className="h-auto w-full" /></a><figcaption className="p-4 text-xs leading-6 text-white/65">{caption} <a href={url} target="_blank" rel="noopener noreferrer" className="text-fortuna-pink underline">View full size</a></figcaption></figure>;
+}
+type Section = { id: string; title: string; content: React.ReactNode };
+export const DOC_CONTENT: Record<DocSlug, Section[]> = {
+  overview: [
+    { id: 'purpose', title: 'What Fortuna helps you investigate', content: <p>Fortuna connects Kubernetes workload inventory, ServiceAccounts, RBAC grants, SBOM/CVE evidence, and available runtime observations. Start with a workload, trace the access its identity holds, and inspect the evidence behind a finding before choosing a fix.</p> },
+    { id: 'start', title: 'Choose your next step', content: <List><li>New installation: <Next to="getting-started">prepare your lab and open the dashboard</Next>.</li><li>Fortuna already running: <Next to="first-investigation">follow one RBAC investigation</Next>.</li><li>Exploring the interface: <Next to="user-guide">find the right workspace</Next>.</li><li>Operating a deployment: review <Next to="deployment">deployment checks</Next> and <Next to="security">security configuration</Next>.</li></List> },
+    { id: 'evidence', title: 'Read the evidence in context', content: <Table headings={['Evidence', 'What it tells you']} rows={[
+      ['RBAC path', 'Possible access through workload identities and grants. A path alone does not prove exploitation.'],
+      ['SBOM and CVE matches', 'Packages and matches against the available catalog. Missing scans or an empty catalog leave coverage incomplete.'],
+      ['Runtime and network observations', 'Activity collected by the configured sensors in the selected time window. No observations do not establish that no activity occurred.'],
+      ['Risk score', 'A prioritization signal to review alongside contributing evidence, scope, and freshness.'],
+    ]} /> },
+    { id: 'versions', title: 'Versions and examples', content: <><p>Use installation instructions and manifests from the same Fortuna release. The repository's main branch can contain changes newer than a published image.</p><p>Screenshots here show a captured lab deployment. Counts, scores, names, and health states are examples; they are not benchmarks or remediation test results.</p><p><Source path="README.md">Product overview and current coverage</Source></p></> },
+  ],
+  'getting-started': [
+    { id: 'prepare', title: '1. Prepare an isolated lab', content: <><List><li>For v1.0.0, use Kubernetes 1.28+ with kubectl configured for the intended cluster.</li><li>Provide a working StorageClass for PostgreSQL and NATS, and access to the published container images.</li><li>Review the Agent's RBAC, host mounts, and Linux capabilities before installing.</li></List><Code>{'kubectl config current-context\nkubectl get nodes\nkubectl get storageclass'}</Code><p>Review the <Source path="docs/01-getting-started/ENVIRONMENT_REQUIREMENTS.md">environment requirements</Source> for your selected version.</p></> },
+    { id: 'install', title: '2. Install a matching release', content: <><p>Use a release checkout so the manifests and instructions match. For v1.0.0:</p><Code>{'git clone --branch v1.0.0 --depth 1 https://github.com/shino-337/Fortuna-Community.git\ncd Fortuna-Community'}</Code><p>Follow the <Source version="v1.0.0" path="docs/01-getting-started/QUICKSTART.md">v1.0.0 Quickstart — Public Install</Source>. Set the image version to v1.0.0, configure your own admin password and deployment secrets, create the mTLS material, then deploy infrastructure and Fortuna workloads. Registry authentication is needed only when the packages are private.</p><p>For another release, use the Quickstart inside that checkout. Source rebuilds and database resets are not required for this installation path.</p></> },
+    { id: 'open', title: '3. Open the dashboard', content: <><p>With the default namespace and Service name:</p><Code>{'kubectl port-forward -n fortuna svc/fortuna-dashboard 8081:80'}</Code><p>Open <code>http://127.0.0.1:8081/</code> and sign in with the credentials configured during deployment. Complete a password-change prompt if one appears.</p></> },
+    { id: 'verify', title: '4. Confirm data is arriving', content: <><List><li>Select your cluster and open Platform Integrity.</li><li>Check Agent sync and processing status in Pipeline &amp; Runtime Health.</li><li>Confirm that an expected workload appears in Kubernetes Inventory.</li><li>Before relying on CVE or runtime results, check their catalog, processing, and sensor coverage.</li></List><p>Inventory and derived findings update after collection and reconciliation. Use the configured sync interval and data timestamps; do not assume a fixed delay.</p><p>Continue with <Next to="first-investigation">your first investigation</Next>. If data is missing, use <Next to="troubleshooting">Troubleshooting</Next>.</p></> },
+  ],
+  'first-investigation': [
+    { id: 'scope', title: '1. Choose one workload', content: <><p>Select a cluster, check Pipeline &amp; Runtime Health, then open the workload in Kubernetes Inventory. Record its namespace, pod name, ServiceAccount, and evidence timestamp.</p><p>The captured example uses <code>fortuna-test/rbac-pod</code>. You can follow the same process with an existing workload. To create the deliberate cluster-admin fixture, follow the <Source path="docs/01-getting-started/FIRST_FINDING.md">isolated-lab RBAC walkthrough</Source>, including its prerequisites and cleanup.</p></> },
+    { id: 'grants', title: '2. Inspect the identity and grants', content: <><p>Open the ServiceAccount's effective permissions. Trace each relevant binding to its Role or ClusterRole, noting wildcard verbs, sensitive resources, and whether access is namespace-scoped or cluster-wide.</p><Capture name="live-serviceaccount-permissions" caption="Captured ServiceAccount permissions, including wildcard grants. Inspect the binding and role behind each permission." /></> },
+    { id: 'path', title: '3. Follow the RBAC path', content: <><p>In Attack Paths, locate the selected workload and expand the path detail. Match the pod, ServiceAccount, binding, and role to the inventory evidence.</p><Capture name="live-rbac-attack-path-detail" caption="Lab path: rbac-pod → sa-rbac → crb-rbac-admin → cluster-admin. This shows possible access through a grant, not an observed compromise." /><p>If a group label and its expanded path disagree, use the individual steps and Kubernetes objects to check the relationship before drawing a conclusion.</p></> },
+    { id: 'corroborate', title: '4. Check supporting evidence', content: <><p>Review the finding's contributing factors and any runtime evidence for the same workload and time window. Look at SBOM/CVE information only when a scan is available and matching coverage is ready.</p><p>In this capture, rbac-pod has no SBOM. PostgreSQL package data and NATS traffic shown elsewhere in the guide are separate examples, not evidence for this path. A low displayed score does not replace review of a broad RBAC grant.</p></> },
+    { id: 'remediate', title: '5. Choose and verify a fix', content: <><p>Determine which permissions the workload actually needs. Review a change to narrow the role or remove the unnecessary binding using your normal Kubernetes change process.</p><List><li>Record the grant and effective authorization before changing it.</li><li>Apply the reviewed change and verify Kubernetes authorization again.</li><li>Wait for a fresh Agent sync and graph reconciliation.</li><li>Confirm current path evidence no longer relies on the removed grant. Check timestamps and distinguish historical findings from current state.</li></List><p>If the grant remains in fresh evidence, record the discrepancy instead of marking remediation complete. The screenshots in this guide do not demonstrate a completed before/after test.</p></> },
+  ],
+  'user-guide': [
+    { id: 'scope', title: 'Set the investigation scope', content: <p>Choose a specific cluster when investigating a workload or opening Runtime Network. Keep cluster, namespace, workload, and time-window filters consistent when comparing pages. Widen the time range or clear filters before interpreting an empty view.</p> },
+    { id: 'workspaces', title: 'Find the right workspace', content: <Table headings={['Workspace', 'Use it to']} rows={[
+      ['Platform Integrity', 'Start with platform health and telemetry coverage.'],
+      ['Pipeline & Runtime Health', 'Inspect Agent sync, processing, catalog readiness, and runtime sensor activity.'],
+      ['Findings Queue', 'Select a finding and inspect its evidence, affected resource, score, and workflow state.'],
+      ['Kubernetes Inventory', 'Locate a pod or identity and inspect configuration, grants, SBOM, and available runtime context.'],
+      ['Attack Paths', 'Follow workload and identity relationships toward sensitive permissions.'],
+      ['Runtime Network', 'Inspect observed connections for a selected cluster and time window.'],
+      ['Policy Rules', 'Understand the rule associated with a finding.'],
+      ['Reports', 'Prepare a time-scoped operational summary, where available for your role.'],
+    ]} /> },
+    { id: 'triage', title: 'Triage a finding', content: <><p>Start with the risk score, then open the finding detail. Check the affected resource, rule, contributing factors, evidence timestamps, and runtime support. Follow its workload or path links to decide what requires investigation.</p><Capture name="live-finding-detail" caption="Example: excessive RBAC on kube-proxy, score 53, seven capabilities, and no runtime evidence. The score alone does not establish an active attack." /></> },
+    { id: 'packages', title: 'Review package and CVE evidence', content: <><p>Open a pod's SBOM, confirm the image and packages, then inspect matching status. An unavailable scan or empty catalog leaves the vulnerability assessment incomplete.</p><Capture name="live-pod-sbom-cve" caption="Separate PostgreSQL example: 48 packages from postgres:15-alpine. The OSV mirror was empty at capture time, so zero CVEs is not a clean verdict." /></> },
+    { id: 'network', title: 'Review observed network activity', content: <><p>Select the cluster and time window, then filter to the workload of interest. Inspect endpoints and connections. Observed traffic is not a complete reachability assessment or a ready-made network-policy recommendation.</p><Capture name="live-runtime-network" caption="Separate NATS example: two sources, two destinations, and three observed edges in a 15-minute window. This view does not show rbac-pod traffic or external destinations." /></> },
+    { id: 'states', title: 'Interpret empty and blocked views', content: <Table headings={['State', 'Next step']} rows={[
+      ['Unauthenticated', 'Sign in again; your session may have expired.'],
+      ['Forbidden or cluster outside scope', 'Ask an administrator to check your role and cluster access.'],
+      ['No matching data', 'Check filters and time range, then verify ingestion.'],
+      ['No telemetry or stale data', 'Check Agent or sensor health and the latest collection timestamp.'],
+      ['Unknown runtime status', 'Inspect sensor activity and processing separately; do not infer healthy collection from the summary alone.'],
+    ]} /> },
+  ],
+  architecture: [
+    { id: 'components', title: 'Components and responsibilities', content: <Table headings={['Component', 'Role']} rows={[
+      ['Agent · DaemonSet', 'Collects node/workload inventory, extracts SBOM evidence, and sends available runtime observations to Core.'],
+      ['Core · Deployment', 'Receives evidence, serves APIs, and coordinates matching, risk, and path processing.'],
+      ['Dashboard · Deployment', 'Presents Core data for investigation and operations.'],
+      ['PostgreSQL', 'Stores inventory, evidence, findings, and application state.'],
+      ['NATS JetStream', 'Queues asynchronous processing work.'],
+      ['Optional runtime sensors', 'Supply additional telemetry when installed, configured, and healthy.'],
+    ]} /> },
+    { id: 'flow', title: 'How evidence reaches the dashboard', content: <><p>Agents collect evidence from Kubernetes nodes and send it to Core, using gRPC with mTLS in the documented deployment. Core persists records and uses queued workers to process evidence. The dashboard reads Core APIs.</p><p>Collection, matching, and graph reconciliation are separate stages. A healthy dashboard connection does not mean every evidence pipeline is current.</p></> },
+    { id: 'clusters', title: 'Multi-cluster deployment', content: <p>Core, Dashboard, PostgreSQL, and NATS run in the management cluster. Remote clusters run Agents and any required runtime sensors. Remote Agents need connectivity and trusted credentials for the management Core. Keep cluster identity and selected scope consistent when checking their data.</p> },
+    { id: 'runtime', title: 'Runtime coverage', content: <p>Falco ingestion and the built-in eBPF path are separate. The current repository overview describes the built-in eBPF implementation as an experimental scaffold; simulated events are not observed workload activity. Verify the collector used by your version and its actual event timestamps.</p> },
+    { id: 'integration', title: 'Implementation and integration references', content: <><p>Use the source and documentation for your deployed version when integrating with Core. Dashboard routes are not an API contract, and a list of endpoint names is not a complete API reference.</p><List><li><Source path="docs/02-architecture/ARCHITECTURE.md">Architecture and API domain overview</Source></li><li><Source path="docs/03-components/README.md">Component details</Source></li><li><Source path="README.md">Current implementation coverage</Source></li></List></> },
+  ],
+  deployment: [
+    { id: 'plan', title: 'Plan the deployment', content: <><p>For a first lab, follow <Next to="getting-started">Getting Started</Next>. For an operational deployment, use the <Source path="docs/05-operations/PRODUCTION_DEPLOYMENT.md">production deployment guide</Source> from the matching release.</p><Table headings={['Input', 'Decision to make']} rows={[
+      ['Images', 'Choose a published version or digest reachable from every node. Keep Core, Agent, Dashboard, and manifests compatible.'],
+      ['Storage', 'Provide persistent storage for PostgreSQL and NATS; plan backup and restore before upgrades.'],
+      ['Credentials', 'Configure admin, database, JWT, ingest, and mTLS material required by the selected deployment.'],
+      ['Connectivity', 'Verify DNS and Agent-to-Core access. Define dashboard access and any remote-cluster ingress.'],
+      ['Evidence coverage', 'Decide whether CVE matching and optional runtime sensors are needed, then verify their readiness.'],
+    ]} /></> },
+    { id: 'rollout', title: 'Verify rollout and data', content: <><p>For the default namespace and workload names:</p><Code>{'kubectl -n fortuna rollout status deployment/fortuna-core\nkubectl -n fortuna rollout status daemonset/fortuna-agent\nkubectl -n fortuna rollout status deployment/fortuna-dashboard\nkubectl -n fortuna get pods,svc,pvc'}</Code><p>After rollout, check Agent sync, expected inventory, catalog readiness, and sensor activity in the dashboard. Ready pods alone do not confirm complete security coverage.</p></> },
+    { id: 'remote', title: 'Add remote clusters', content: <p>Follow the remote-cluster section of the <Source path="docs/01-getting-started/QUICKSTART.md">version-matched Quickstart</Source>. Confirm Core endpoints, certificate trust, registry access, and the remote Agent's first sync. Check that workloads appear under the correct cluster before comparing totals.</p> },
+    { id: 'change', title: 'Upgrade deliberately', content: <p>Review release changes, back up persistent state, and record the running image versions before an upgrade. Recheck both rollout and evidence freshness afterward. Database-reset scripts are for disposable environments and are not an upgrade procedure.</p> },
+  ],
+  security: [
+    { id: 'agent', title: 'Review Agent privileges', content: <p>The current Agent uses host PID access, root, host mounts including the containerd socket, and additional Linux capabilities. Review the <Source path="deploy/fortuna-agent-daemonset.yaml">Agent manifest</Source> and its RBAC for your release before granting access to a cluster.</p> },
+    { id: 'credentials', title: 'Manage credentials and sessions', content: <List><li>Configure a unique admin password during deployment and complete any required first-login change.</li><li>Use your secret-management process for database, JWT, ingest, and mTLS values.</li><li>An existing database keeps its current admin password; restarting Core is not a password-reset procedure.</li><li>Choose roles and cluster access appropriate to each user. A user-administration role does not imply access to workload findings.</li></List> },
+    { id: 'network', title: 'Protect access paths', content: <List><li>Keep local evaluation access on loopback with the documented port-forward.</li><li>For shared dashboard access, configure authenticated HTTPS access appropriate to your environment.</li><li>Limit Agent ingest and database access to the systems that require it; verify mTLS trust before adding remote clusters.</li><li>Rotate credentials and certificates through a planned change, then verify Agent reconnects and user access.</li></List> },
+    { id: 'report', title: 'Report a vulnerability', content: <><p>Follow the repository's <Source path="SECURITY.md">security reporting policy</Source>. Use private reporting when available. Remove credentials, tokens, kubeconfigs, and sensitive cluster data from diagnostic material.</p><p>See the <Source path="docs/06-reference/SECURITY.md">deployment security reference</Source> for version-specific configuration.</p></> },
+  ],
+  troubleshooting: [
+    { id: 'workload', title: 'An expected workload is missing', content: <List><li>Confirm the selected cluster, namespace, and filters.</li><li>Check the Agent's latest sync and connectivity in Pipeline &amp; Runtime Health.</li><li>Compare the Kubernetes object with the inventory timestamp. Wait for the configured collection and reconciliation cycle.</li><li>If the object is still absent after a fresh sync, collect the Agent error and affected resource details.</li></List> },
+    { id: 'cve', title: 'A workload shows no CVEs', content: <List><li>Confirm that the expected image has an SBOM and package records.</li><li>Check catalog availability and freshness, then matching status.</li><li>Resolve ingestion or matching failures before treating the result as complete. Zero matches with an empty catalog do not establish a clean image.</li></List> },
+    { id: 'runtime', title: 'Runtime or network views are empty', content: <List><li>Check the cluster, workload filter, and time window.</li><li>Confirm the required collector is installed, enabled, and reporting recent activity.</li><li>Inspect sensor activity separately from runtime-layer or promotion status.</li><li>Distinguish no observed events from disabled, stale, or unsupported collection.</li></List> },
+    { id: 'access', title: 'Sign-in or access fails', content: <p>Use the credentials configured for this deployment and complete any password-change prompt. For an existing database, use its current account credentials. Ask an administrator to check account status, role, and cluster scope; do not reset the database to recover access.</p> },
+    { id: 'pods', title: 'A Fortuna workload does not start', content: <><Table headings={['Symptom', 'Check first']} rows={[
+      ['ImagePullBackOff', 'Image name/tag, registry reachability, and pull secret if required.'],
+      ['Pending', 'Pod events, available node resources, scheduling constraints, and PVC binding.'],
+      ['CrashLoopBackOff', 'Container logs, database/NATS connectivity, required secrets, and migrations.'],
+      ['Agent cannot reach Core', 'Service endpoints, DNS, network rules, and certificate trust.'],
+    ]} /><Code>{'kubectl -n fortuna get pods,pvc\nkubectl -n fortuna get events --sort-by=.lastTimestamp\nkubectl -n fortuna logs deployment/fortuna-core --tail=100'}</Code><p>Adjust the namespace and workload names if your deployment differs.</p></> },
+    { id: 'support', title: 'Collect a useful issue report', content: <p>Record the Fortuna version, Kubernetes/runtime version, affected cluster and workload, selected time window, evidence timestamps, and expected versus observed behavior. Include relevant errors after removing secrets. Consult the <Source path="docs/05-operations/DEPLOYMENT.md">operations guide</Source> for deeper diagnostics.</p> },
+  ],
 };
 
 export default function DocPage() {
   const { slug } = useParams<{ slug: string }>();
-
-  if (!slug || !DOC_SLUGS.includes(slug as DocSlug)) {
-    return <Navigate to="/docs/overview" replace />;
-  }
-
-  const doc = DOC_META.find((d) => d.slug === slug)!;
-  const Icon = ICONS[doc.icon];
-  const content = DOC_CONTENT[slug as DocSlug];
-  const seoRoute = `docs_${slug}`.replace(/-/g, '_') as any; // Map slug to seo route
-
-  return (
-    <div className="w-full max-w-3xl mx-auto">
-      <SeoHead route={seoRoute} />
-      <div className="mb-6 flex items-center gap-3">
-        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-md border border-fortuna-pink/30 bg-fortuna-pink/15">
-          <Icon className="h-6 w-6 text-fortuna-pink" />
-        </div>
-        <div className="min-w-0">
-          <h1 className="text-2xl font-black uppercase leading-tight sm:text-3xl">{doc.title}</h1>
-          <p className="truncate font-mono text-xs text-white/62">/docs/{doc.slug}</p>
-        </div>
-      </div>
-
-      <div className="rounded-lg border border-white/10 bg-white/[0.035] p-6 lg:p-8">{content}</div>
-    </div>
-  );
+  if (slug && Object.hasOwn(DOC_ALIASES, slug)) return <Navigate to={`/docs/${DOC_ALIASES[slug]}`} replace />;
+  if (!slug || !DOC_SLUGS.includes(slug as DocSlug)) return <Navigate to="/docs/overview" replace />;
+  const doc = DOC_META.find(item => item.slug === slug)!;
+  const sections = DOC_CONTENT[doc.slug];
+  const next = DOC_META[DOC_META.indexOf(doc) + 1];
+  return <article className="max-w-4xl">
+    <SeoHead route={`docs_${slug.replace(/-/g, '_')}`} />
+    <header className="mb-8"><p className="mb-3 text-xs font-semibold text-fortuna-pink">{doc.group}</p><h1 className="text-3xl font-bold tracking-tight sm:text-4xl">{doc.title}</h1><p className="mt-4 max-w-2xl text-base leading-7 text-white/65">{doc.description}</p></header>
+    <nav aria-label="On this page" className="mb-10 rounded-lg border border-white/10 p-5"><p className="mb-3 text-sm font-semibold text-white">On this page</p><ul className="grid gap-2 sm:grid-cols-2">{sections.map(section => <li key={section.id}><a className="text-sm leading-6 text-white/65 hover:text-fortuna-pink" href={`#${section.id}`}>{section.title}</a></li>)}</ul></nav>
+    <div className="space-y-10">{sections.map(section => <section key={section.id} id={section.id} className="scroll-mt-24"><h2 className="mb-4 text-xl font-semibold text-white">{section.title}</h2><div className="space-y-4 text-sm leading-7 text-white/70">{section.content}</div></section>)}</div>
+    {next && <footer className="mt-12 border-t border-white/10 pt-6"><Next to={next.slug}>Next: {next.title}</Next></footer>}
+  </article>;
 }

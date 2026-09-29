@@ -2,6 +2,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { SEO_ROUTES, SCHEMA_ORG } from '../src/config/seo';
+import { DOC_ALIASES } from '../src/config/docs';
 
 const dist = path.resolve('dist');
 const template = fs.readFileSync(path.join(dist, 'index.html'), 'utf8');
@@ -39,6 +40,14 @@ for (const route of Object.values(SEO_ROUTES)) {
   const target = path.join(dist, route.path, 'index.html');
   fs.mkdirSync(path.dirname(target), { recursive: true });
   fs.writeFileSync(target, html);
+}
+// Preserve old bookmarks with the destination's canonical metadata and a static redirect.
+for (const [alias, target] of Object.entries(DOC_ALIASES)) {
+  const destination = `${base}/docs/${target}`;
+  const html = fs.readFileSync(path.join(dist, 'docs', target, 'index.html'), 'utf8')
+    .replace('</head>', `<meta http-equiv="refresh" content="0;url=${destination}" />\n</head>`);
+  fs.mkdirSync(path.join(dist, 'docs', alias), { recursive: true });
+  fs.writeFileSync(path.join(dist, 'docs', alias, 'index.html'), html);
 }
 // /docs is a real entry point; React redirects it to overview.
 fs.copyFileSync(path.join(dist, 'docs/overview/index.html'), path.join(dist, 'docs/index.html'));
