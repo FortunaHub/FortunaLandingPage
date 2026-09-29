@@ -19,7 +19,7 @@ export default function FeaturesPage() {
       />
 
       {/* Features Grid */}
-      <div className="bg-fortuna-dark">
+      <div className="bg-fortuna-dark page-header-spacing">
         <div className="container-max py-8 md:py-16">
           <div className="space-y-12 md:space-y-16">
             {FEATURES.map((item) => (

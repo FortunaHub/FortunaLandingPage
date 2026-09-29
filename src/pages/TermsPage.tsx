@@ -11,7 +11,7 @@ export default function TermsPage() {
       <PageHeader title="Terms of Service" />
 
       {/* Content */}
-      <div className="bg-fortuna-dark">
+      <div className="bg-fortuna-dark page-header-spacing">
         <div className="container-max py-16 md:py-20">
           <div className="max-w-3xl space-y-8">
             <div>
