@@ -23,7 +23,7 @@ export default function Capture({
   height = 936,
   lazy = true,
 }: CaptureProps) {
-  const url = `${import.meta.env.BASE_URL}images/${src}`;
+  const url = `${import.meta.env.BASE_URL}images/${src}.png`;
 
   return (
     <figure className="my-6 overflow-hidden rounded-lg border border-white/10 bg-fortuna-card">
