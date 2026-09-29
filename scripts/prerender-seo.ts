@@ -259,10 +259,28 @@ function prerenderStaticHtml(): void {
   console.log('\n=== Static SEO Pre-rendering ===\n');
   console.log(`Generating static HTML with SEO metadata...\n`);
 
+  // Extract script tag from Vite-built index.html (before we overwrite it)
+  const vitIndexPath = path.join(distDir, 'index.html');
+  let scriptTag = '';
+  
+  if (fs.existsSync(vitIndexPath)) {
+    const viteContent = fs.readFileSync(vitIndexPath, 'utf-8');
+    const scriptMatch = viteContent.match(/<script type="module"[^>]*><\/script>/);
+    if (scriptMatch) {
+      scriptTag = scriptMatch[0];
+      console.log(`✓ Extracted Vite script tag: ${scriptTag}\n`);
+    }
+  }
+
   const results: Array<{ path: string; file: string; status: string }> = [];
 
   Object.entries(SEO_ROUTES).forEach(([key, route]) => {
-    const html = generateHtmlWithMetadata(route);
+    let html = generateHtmlWithMetadata(route);
+
+    // Inject script tag before closing body if we have one
+    if (scriptTag) {
+      html = html.replace('  </body>', `    ${scriptTag}\n  </body>`);
+    }
 
     // Determine file path
     let filePath: string;
