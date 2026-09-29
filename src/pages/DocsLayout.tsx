@@ -152,6 +152,8 @@ export default function DocsLayout() {
                           if (element) {
                             element.scrollIntoView({ behavior: 'smooth', block: 'start' });
                             element.focus({ preventScroll: true });
+                            // Update URL hash so users can share the link
+                            window.history.pushState(null, '', `#${heading.id}`);
                           }
                         }}
                         className="text-sm leading-6 text-white/65 hover:text-fortuna-pink transition-colors"
