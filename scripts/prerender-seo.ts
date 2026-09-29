@@ -259,12 +259,22 @@ function prerenderStaticHtml(): void {
   console.log('\n=== Static SEO Pre-rendering ===\n');
   console.log(`Generating static HTML with SEO metadata...\n`);
 
-  // Extract script tag from Vite-built index.html (before we overwrite it)
+  // Extract script tag and stylesheet link from Vite-built index.html (before we overwrite it)
   const vitIndexPath = path.join(distDir, 'index.html');
   let scriptTag = '';
+  let stylesheetLink = '';
   
   if (fs.existsSync(vitIndexPath)) {
     const viteContent = fs.readFileSync(vitIndexPath, 'utf-8');
+    
+    // Extract stylesheet link
+    const styleMatch = viteContent.match(/<link[^>]*rel="stylesheet"[^>]*>/);
+    if (styleMatch) {
+      stylesheetLink = styleMatch[0];
+      console.log(`✓ Extracted Vite stylesheet: ${stylesheetLink}`);
+    }
+    
+    // Extract script tag
     const scriptMatch = viteContent.match(/<script type="module"[^>]*><\/script>/);
     if (scriptMatch) {
       scriptTag = scriptMatch[0];
@@ -277,9 +287,17 @@ function prerenderStaticHtml(): void {
   Object.entries(SEO_ROUTES).forEach(([key, route]) => {
     let html = generateHtmlWithMetadata(route);
 
-    // Inject script tag before closing body if we have one
+    // Inject stylesheet link and script tag before closing body if we have them
+    let injections = '';
+    if (stylesheetLink) {
+      injections += `    ${stylesheetLink}\n`;
+    }
     if (scriptTag) {
-      html = html.replace('  </body>', `    ${scriptTag}\n  </body>`);
+      injections += `    ${scriptTag}\n`;
+    }
+    
+    if (injections) {
+      html = html.replace('  </body>', `${injections}  </body>`);
     }
 
     // Determine file path
