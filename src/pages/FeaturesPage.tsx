@@ -52,14 +52,6 @@ export default function FeaturesPage() {
                       </span>
                     ))}
                   </div>
-
-                  {/* Documentation Link */}
-                  <a
-                    href={`/docs${item.docs_link || ''}`}
-                    className="inline-flex items-center gap-2 text-fortuna-pink font-semibold hover:text-[#EA2A70] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-fortuna-pink"
-                  >
-                    Learn more →
-                  </a>
                 </div>
 
                 {/* Image Column */}
