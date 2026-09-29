@@ -20,7 +20,7 @@ export default function FeaturesPage() {
 
       {/* Features Grid */}
       <div className="bg-fortuna-dark page-header-spacing">
-        <div className="container-max py-8 md:py-16">
+        <div className="container-max py-4 md:py-8">
           <div className="space-y-12 md:space-y-16">
             {FEATURES.map((item) => (
               <motion.section
@@ -30,7 +30,7 @@ export default function FeaturesPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.2 }}
                 transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                className="scroll-mt-header grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center border-t border-white/5 pt-8 lg:pt-12 first:border-t-0 first:pt-0"
+                className="scroll-mt-header grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start border-t border-white/5 pt-8 lg:pt-12 first:border-t-0 first:pt-0"
               >
                 {/* Text Column */}
                 <div className={item.order === 'img' ? 'lg:order-2' : 'lg:order-1'}>
