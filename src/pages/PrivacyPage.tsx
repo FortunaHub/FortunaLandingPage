@@ -14,13 +14,11 @@ export default function PrivacyPage() {
       {/* Content */}
       <div className="bg-fortuna-dark page-header-spacing">
         <div className="container-max py-4 md:py-8">
-          <div className="max-w-3xl space-y-8">
-            <div>
-              <p className="text-sm text-white/60 mb-6">Last updated: September 2026</p>
-            </div>
-
-            <section>
-              <h2 className="text-2xl font-bold text-white mb-4">Overview</h2>
+          <div className="max-w-3xl">
+            <p className="text-sm text-white/60 mb-6 md:mb-8">Last updated: September 2026</p>
+            <div className="space-y-8">
+              <section>
+                <h2 className="text-2xl font-bold text-white mb-4">Overview</h2>
               <p className="text-white/70 leading-relaxed">
                 FortunaHub ("we," "our," or "us") operates the FortunaHub landing page and documentation site. This privacy policy explains how we handle information when you interact with our website.
               </p>
@@ -134,6 +132,7 @@ export default function PrivacyPage() {
                 We may update this privacy policy from time to time. We will notify you of material changes by updating the "Last updated" date at the top of this page. Your continued use of the site following such modifications constitutes your acceptance of the updated policy.
               </p>
             </section>
+            </div>
           </div>
         </div>
       </div>

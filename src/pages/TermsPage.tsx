@@ -13,13 +13,11 @@ export default function TermsPage() {
       {/* Content */}
       <div className="bg-fortuna-dark page-header-spacing">
         <div className="container-max py-4 md:py-8">
-          <div className="max-w-3xl space-y-8">
-            <div>
-              <p className="text-sm text-white/60 mb-6">Last updated: September 2026</p>
-            </div>
-
-            <section>
-              <h2 className="text-2xl font-bold text-white mb-4">Overview</h2>
+          <div className="max-w-3xl">
+            <p className="text-sm text-white/60 mb-6 md:mb-8">Last updated: September 2026</p>
+            <div className="space-y-8">
+              <section>
+                <h2 className="text-2xl font-bold text-white mb-4">Overview</h2>
               <p className="text-white/70 leading-relaxed">
                 This landing page and documentation site are provided as-is for informational purposes. The FortunaHub landing page repository is public, and you may access and view content for personal use.
               </p>
@@ -92,6 +90,7 @@ export default function TermsPage() {
                 .
               </p>
             </section>
+            </div>
           </div>
         </div>
       </div>
