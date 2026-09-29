@@ -86,18 +86,36 @@ export default function HeroSection() {
 
               {/* Image */}
               <figure className="p-3">
-                <img
-                  src={`${base}images/live-rbac-attack-path.png`}
-                  alt="RBAC path from rbac-pod through sa-rbac to cluster-admin permissions"
-                  width={1363}
-                  height={936}
-                  loading="eager"
-                  fetchpriority="high"
-                  decoding="async"
-                  className="w-full rounded-md object-cover cursor-pointer hover:opacity-90 transition-opacity"
-                />
+                <a
+                  href={`${base}images/live-rbac-attack-path.png`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group block rounded-md overflow-hidden focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-fortuna-dark"
+                  aria-label="View full-size RBAC attack path diagram"
+                  title="Click or press Enter to view full-size image (opens in new tab)"
+                >
+                  <img
+                    src={`${base}images/live-rbac-attack-path.png`}
+                    alt="RBAC path from rbac-pod through sa-rbac to cluster-admin permissions"
+                    width={1363}
+                    height={936}
+                    loading="eager"
+                    fetchpriority="high"
+                    decoding="async"
+                    className="w-full object-cover cursor-pointer group-hover:opacity-90 transition-opacity"
+                  />
+                </a>
                 <figcaption className="mt-3 text-xs text-white/60">
-                  Live demo: pod → service account → role binding → cluster-admin. A possible access path, not proof of exploitation.
+                  Live demo: pod → service account → role binding → cluster-admin.{' '}
+                  <a
+                    href={`${base}images/live-rbac-attack-path.png`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-400 hover:text-blue-300 underline focus:outline-none focus:ring-1 focus:ring-blue-400"
+                  >
+                    View full-size
+                  </a>
+                  . A possible access path, not proof of exploitation.
                 </figcaption>
               </figure>
             </div>
