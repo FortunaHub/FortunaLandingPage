@@ -35,7 +35,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen flex flex-col overflow-x-hidden bg-fortuna-dark">
       <SiteHeader />
-      <div className="flex-grow">{children}</div>
+      <main className="flex-grow">
+        {children}
+      </main>
       <SiteFooter />
 
       {/* Scroll to Top Button */}

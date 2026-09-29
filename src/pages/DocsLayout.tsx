@@ -58,7 +58,8 @@ export default function DocsLayout() {
 
   return (
     <div className="min-h-screen bg-fortuna-dark pt-[var(--header-height)]">
-      <div className="mx-auto flex max-w-[calc(var(--content-max-width)+var(--sidebar-width))]">
+      <div className="container-max">
+        <div className="flex gap-8 lg:gap-12">{/* Reduced gap */}
         {/* Mobile Sidebar Toggle */}
         <div className="lg:hidden fixed bottom-24 right-8 z-40">
           <button
@@ -107,10 +108,11 @@ export default function DocsLayout() {
         </AnimatePresence>
 
         {/* Main Content */}
-        <div className="flex-1 min-w-0 px-4 md:px-6 lg:px-8 py-8 md:py-12">
+        <div className="flex-1 min-w-0 px-4 md:px-6 lg:px-0 py-8 md:py-12">
           <div className="w-full max-w-[var(--docs-content-width)]">
             <Outlet />
           </div>
+        </div>
         </div>
       </div>
     </div>
