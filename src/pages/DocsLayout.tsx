@@ -16,11 +16,16 @@ export default function DocsLayout() {
   // Extract headings from rendered content for TOC sidebar
   useEffect(() => {
     const extractHeadings = () => {
-      const h2s = document.querySelectorAll('article h2');
-      const extracted = Array.from(h2s).map(h2 => ({
-        id: h2.id || h2.textContent || '',
-        title: h2.textContent || '',
-      }));
+      // Get h2s that are inside section elements
+      const sections = document.querySelectorAll('article section');
+      const extracted = Array.from(sections).map(section => {
+        const h2 = section.querySelector('h2');
+        if (!h2) return null;
+        return {
+          id: section.id || '',
+          title: h2.textContent || '',
+        };
+      }).filter((item): item is { id: string; title: string } => !!item?.id && !!item?.title);
       setHeadings(extracted);
     };
     // Delay to allow content to render
@@ -141,6 +146,14 @@ export default function DocsLayout() {
                     <li key={heading.id}>
                       <a
                         href={`#${heading.id}`}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          const element = document.getElementById(heading.id);
+                          if (element) {
+                            element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                            element.focus({ preventScroll: true });
+                          }
+                        }}
                         className="text-sm leading-6 text-white/65 hover:text-fortuna-pink transition-colors"
                       >
                         {heading.title}
