@@ -34,9 +34,9 @@ export default function FeaturesPage() {
               >
                 {/* Text Column */}
                 <div className={item.order === 'img' ? 'lg:order-2' : 'lg:order-1'}>
-                  <h3 className="text-2xl md:text-3xl font-bold mb-3 text-white">
+                  <h2 className="text-2xl md:text-3xl font-bold mb-3 text-white">
                     {item.title}
-                  </h3>
+                  </h2>
                   <p className="text-white/70 text-base leading-relaxed mb-6">
                     {item.desc}
                   </p>

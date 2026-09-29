@@ -65,7 +65,7 @@ export default function LandingPage() {
         <div className="container-max text-center">
           <h2 className="text-2xl md:text-3xl font-bold mb-4 text-white">Ready to explore?</h2>
           <p className="text-white/70 mb-8 max-w-lg mx-auto">
-            Start with an interactive walkthrough of a real Kubernetes attack scenario.
+            Start with a step-by-step walkthrough of a real Kubernetes attack scenario.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
