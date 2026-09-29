@@ -12,9 +12,9 @@ export default function TermsPage() {
 
       {/* Content */}
       <div className="bg-fortuna-dark page-header-spacing">
-        <div className="container-max py-4 md:py-8">
+        <div className="container-max py-1 md:py-2">
           <div className="max-w-3xl">
-            <p className="text-sm text-white/60 mb-6 md:mb-8">Last updated: September 2026</p>
+            <p className="text-sm text-white/60 -mt-12 md:-mt-14 mb-4 md:mb-6">Last updated: September 2026</p>
             <div className="space-y-8">
               <section>
                 <h2 className="text-2xl font-bold text-white mb-4">Overview</h2>
