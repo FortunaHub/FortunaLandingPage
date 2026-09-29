@@ -42,7 +42,7 @@ export default function Capture({
           loading={lazy ? 'lazy' : 'eager'}
           decoding="async"
           fetchpriority={lazy ? 'low' : 'high'}
-          className="w-full h-auto object-cover"
+          className="w-full h-auto object-cover cursor-pointer"
         />
       </a>
       <figcaption className="px-4 py-3 text-xs leading-relaxed text-white/60 border-t border-white/5">

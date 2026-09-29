@@ -94,7 +94,7 @@ export default function HeroSection() {
                   loading="eager"
                   fetchpriority="high"
                   decoding="async"
-                  className="w-full rounded-md object-cover"
+                  className="w-full rounded-md object-cover cursor-pointer hover:opacity-90 transition-opacity"
                 />
                 <figcaption className="mt-3 text-xs text-white/60">
                   Live demo: pod → service account → role binding → cluster-admin. A possible access path, not proof of exploitation.
