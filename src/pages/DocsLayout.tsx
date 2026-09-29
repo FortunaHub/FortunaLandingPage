@@ -6,10 +6,26 @@ import { DOC_META } from '../config/docs';
 
 export default function DocsLayout() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [headings, setHeadings] = useState<Array<{ id: string; title: string }>>([]);
   const location = useLocation();
 
   useEffect(() => {
     setIsSidebarOpen(false);
+  }, [location.pathname]);
+
+  // Extract headings from rendered content for TOC sidebar
+  useEffect(() => {
+    const extractHeadings = () => {
+      const h2s = document.querySelectorAll('article h2');
+      const extracted = Array.from(h2s).map(h2 => ({
+        id: h2.id || h2.textContent || '',
+        title: h2.textContent || '',
+      }));
+      setHeadings(extracted);
+    };
+    // Delay to allow content to render
+    const timer = setTimeout(extractHeadings, 100);
+    return () => clearTimeout(timer);
   }, [location.pathname]);
 
   useEffect(() => {
@@ -113,8 +129,31 @@ export default function DocsLayout() {
             <Outlet />
           </div>
         </div>
-        </div>
+
+        {/* Right TOC Sidebar - Desktop only */}
+        <aside className="hidden lg:block shrink-0 w-64 border-l border-white/10 bg-[#080808] lg:sticky lg:top-[var(--header-height)] lg:h-[calc(100vh-var(--header-height))] lg:overflow-y-auto">
+          <div className="p-5 lg:p-6">
+            {headings.length > 0 && (
+              <nav aria-label="On this page" className="space-y-3">
+                <p className="text-sm font-semibold text-white">On this page</p>
+                <ul className="space-y-2">
+                  {headings.map(heading => (
+                    <li key={heading.id}>
+                      <a
+                        href={`#${heading.id}`}
+                        className="text-sm leading-6 text-white/65 hover:text-fortuna-pink transition-colors"
+                      >
+                        {heading.title}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+            )}
+          </div>
+        </aside>
       </div>
+    </div>
     </div>
   );
 }

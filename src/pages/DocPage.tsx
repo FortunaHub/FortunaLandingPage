@@ -124,11 +124,28 @@ export default function DocPage() {
   const doc = DOC_META.find(item => item.slug === slug)!;
   const sections = DOC_CONTENT[doc.slug];
   const next = DOC_META[DOC_META.indexOf(doc) + 1];
-  return <article className="max-w-4xl">
-    <SeoHead route={`docs_${slug.replace(/-/g, '_')}`} />
-    <header className="mb-8"><p className="mb-3 text-xs font-semibold text-fortuna-pink">{doc.group}</p><h1 className="text-3xl font-bold tracking-tight sm:text-4xl">{doc.title}</h1><p className="mt-4 max-w-2xl text-base leading-7 text-white/65">{doc.description}</p></header>
-    <nav aria-label="On this page" className="mb-10 rounded-lg border border-white/10 p-5"><p className="mb-3 text-sm font-semibold text-white">On this page</p><ul className="grid gap-2 sm:grid-cols-2">{sections.map(section => <li key={section.id}><a className="text-sm leading-6 text-white/65 hover:text-fortuna-pink" href={`#${section.id}`}>{section.title}</a></li>)}</ul></nav>
-    <div className="space-y-10">{sections.map(section => <section key={section.id} id={section.id} className="scroll-mt-24"><h2 className="mb-4 text-xl font-semibold text-white">{section.title}</h2><div className="space-y-4 text-base leading-7 text-white/70">{section.content}</div></section>)}</div>
-    {next && <footer className="mt-12 border-t border-white/10 pt-6"><Next to={next.slug}>Next: {next.title}</Next></footer>}
-  </article>;
+
+  const TableOfContents = () => (
+    <nav aria-label="On this page" className="rounded-lg border border-white/10 p-5">
+      <p className="mb-3 text-sm font-semibold text-white">On this page</p>
+      <ul className="grid gap-2 sm:grid-cols-2 lg:grid-cols-1">
+        {sections.map(section => <li key={section.id}><a className="text-sm leading-6 text-white/65 hover:text-fortuna-pink" href={`#${section.id}`}>{section.title}</a></li>)}
+      </ul>
+    </nav>
+  );
+
+  return (
+    <>
+      <SeoHead route={`docs_${slug.replace(/-/g, '_')}`} />
+      <article className="max-w-4xl">
+        <header className="mb-8"><p className="mb-3 text-xs font-semibold text-fortuna-pink">{doc.group}</p><h1 className="text-3xl font-bold tracking-tight sm:text-4xl">{doc.title}</h1><p className="mt-4 max-w-2xl text-base leading-7 text-white/65">{doc.description}</p></header>
+        {/* Mobile TOC */}
+        <div className="mb-10 lg:hidden">
+          <nav aria-label="On this page" className="rounded-lg border border-white/10 p-5"><p className="mb-3 text-sm font-semibold text-white">On this page</p><ul className="grid gap-2 sm:grid-cols-2">{sections.map(section => <li key={section.id}><a className="text-sm leading-6 text-white/65 hover:text-fortuna-pink" href={`#${section.id}`}>{section.title}</a></li>)}</ul></nav>
+        </div>
+        <div className="space-y-10">{sections.map(section => <section key={section.id} id={section.id} className="scroll-mt-24"><h2 className="mb-4 text-xl font-semibold text-white">{section.title}</h2><div className="space-y-4 text-base leading-7 text-white/70">{section.content}</div></section>)}</div>
+        {next && <footer className="mt-12 border-t border-white/10 pt-6"><Next to={next.slug}>Next: {next.title}</Next></footer>}
+      </article>
+    </>
+  );
 }
