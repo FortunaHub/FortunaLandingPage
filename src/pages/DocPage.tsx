@@ -18,7 +18,7 @@ function List({ children }: { children: React.ReactNode }) {
   return <ul className="list-disc space-y-2 pl-5">{children}</ul>;
 }
 function Table({ headings, rows }: { headings: string[]; rows: string[][] }) {
-  return <div className="overflow-x-auto"><table className="w-full text-left text-sm"><thead><tr>{headings.map(h => <th key={h} scope="col" className="border-b border-white/20 px-3 py-3 font-semibold text-white">{h}</th>)}</tr></thead><tbody>{rows.map((row, i) => <tr key={i}>{row.map((cell, j) => <td key={j} className="border-b border-white/10 px-3 py-3 align-top leading-6">{cell}</td>)}</tr>)}</tbody></table></div>;
+  return <div className="overflow-x-auto"><table className="w-full text-left text-base"><thead><tr>{headings.map(h => <th key={h} scope="col" className="border-b border-white/20 px-3 py-3 font-semibold text-white">{h}</th>)}</tr></thead><tbody>{rows.map((row, i) => <tr key={i}>{row.map((cell, j) => <td key={j} className="border-b border-white/10 px-3 py-3 align-top leading-7">{cell}</td>)}</tr>)}</tbody></table></div>;
 }
 type Section = { id: string; title: string; content: React.ReactNode };
 export const DOC_CONTENT: Record<DocSlug, Section[]> = {
@@ -128,7 +128,7 @@ export default function DocPage() {
     <SeoHead route={`docs_${slug.replace(/-/g, '_')}`} />
     <header className="mb-8"><p className="mb-3 text-xs font-semibold text-fortuna-pink">{doc.group}</p><h1 className="text-3xl font-bold tracking-tight sm:text-4xl">{doc.title}</h1><p className="mt-4 max-w-2xl text-base leading-7 text-white/65">{doc.description}</p></header>
     <nav aria-label="On this page" className="mb-10 rounded-lg border border-white/10 p-5"><p className="mb-3 text-sm font-semibold text-white">On this page</p><ul className="grid gap-2 sm:grid-cols-2">{sections.map(section => <li key={section.id}><a className="text-sm leading-6 text-white/65 hover:text-fortuna-pink" href={`#${section.id}`}>{section.title}</a></li>)}</ul></nav>
-    <div className="space-y-10">{sections.map(section => <section key={section.id} id={section.id} className="scroll-mt-24"><h2 className="mb-4 text-xl font-semibold text-white">{section.title}</h2><div className="space-y-4 text-sm leading-7 text-white/70">{section.content}</div></section>)}</div>
+    <div className="space-y-10">{sections.map(section => <section key={section.id} id={section.id} className="scroll-mt-24"><h2 className="mb-4 text-xl font-semibold text-white">{section.title}</h2><div className="space-y-4 text-base leading-7 text-white/70">{section.content}</div></section>)}</div>
     {next && <footer className="mt-12 border-t border-white/10 pt-6"><Next to={next.slug}>Next: {next.title}</Next></footer>}
   </article>;
 }
