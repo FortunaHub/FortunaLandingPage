@@ -20,7 +20,7 @@ export default function FeaturesPage() {
 
       {/* Features Grid */}
       <div className="bg-fortuna-dark page-header-spacing">
-        <div className="container-max py-4 md:py-8">
+        <div className="container-max py-3 md:py-4">
           <div className="space-y-12 md:space-y-16">
             {FEATURES.map((item) => (
               <motion.section

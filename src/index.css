@@ -98,12 +98,12 @@
 
   /* Page header component spacing */
   .page-header-spacing {
-    margin-top: var(--section-spacing-mobile);
+    margin-top: 40px;
   }
 
   @media (min-width: 1024px) {
     .page-header-spacing {
-      margin-top: var(--section-spacing-desktop);
+      margin-top: 48px;
     }
   }
 
