@@ -966,7 +966,7 @@ export default function DocPage() {
   const seoRoute = `docs_${slug}`.replace(/-/g, '_') as any; // Map slug to seo route
 
   return (
-    <div className="max-w-3xl">
+    <div className="w-full max-w-3xl mx-auto">
       <SeoHead route={seoRoute} />
       <div className="mb-6 flex items-center gap-3">
         <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-md border border-fortuna-pink/30 bg-fortuna-pink/15">
