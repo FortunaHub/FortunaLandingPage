@@ -1,7 +1,7 @@
 /** Run with node --import tsx scripts/test-seo.ts. */
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-import { SEO_ROUTES } from '../src/config/seo';
+import { SEO_ROUTES, INDEXABLE_ROUTES } from '../src/config/seo';
 import { DOC_META, DOC_ALIASES } from '../src/config/docs';
 
 const routes = Object.values(SEO_ROUTES);
@@ -15,6 +15,9 @@ for (const doc of DOC_META) {
 const sitemap = fs.readFileSync('dist/sitemap.xml', 'utf8');
 for (const route of routes) {
   assert(route.title.trim() && route.description.trim(), `${route.path}: metadata required`);
+  assert(route.title.length <= 70, `${route.path}: title longer than 70 characters`);
+}
+for (const route of INDEXABLE_ROUTES) {
   assert(sitemap.includes(`https://fortunahub.dev${route.path}</loc>`), `${route.path}: sitemap entry`);
   if (route.ogImage) assert(fs.existsSync(`public/images/${route.ogImage}`), `Missing image: ${route.ogImage}`);
 }

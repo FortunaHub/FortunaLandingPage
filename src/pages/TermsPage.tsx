@@ -8,13 +8,14 @@ export default function TermsPage() {
       <SeoHead route="terms" />
 
       {/* Page Header */}
-      <PageHeader title="Terms of Service" />
+      <PageHeader title="Terms of Service">
+        <p className="text-sm text-white/60">Last updated: September 2026</p>
+      </PageHeader>
 
       {/* Content */}
-      <div className="bg-fortuna-dark page-header-spacing">
-        <div className="container-max py-1 md:py-2">
+      <div className="bg-fortuna-dark">
+        <div className="container-max pt-6 pb-20 md:pb-24">
           <div className="max-w-3xl">
-            <p className="text-sm text-white/60 -mt-12 md:-mt-14 mb-4 md:mb-6">Last updated: September 2026</p>
             <div className="space-y-8">
               <section>
                 <h2 className="text-2xl font-bold text-white mb-4">Overview</h2>
@@ -54,7 +55,7 @@ export default function TermsPage() {
               <p className="text-white/70 leading-relaxed mb-3">
                 When you submit a demo request through this site, you agree that:
               </p>
-              <ul className="list-disc list-inside text-white/70 leading-relaxed space-y-2">
+              <ul className="list-disc pl-5 text-white/70 leading-relaxed space-y-2">
                 <li>We may use your submission to respond and follow up on your inquiry</li>
                 <li>Your data will be handled according to our Privacy Policy</li>
                 <li>Formspree processes the form submission on our behalf</li>
@@ -66,7 +67,7 @@ export default function TermsPage() {
               <p className="text-white/70 leading-relaxed mb-3">
                 You agree not to:
               </p>
-              <ul className="list-disc list-inside text-white/70 leading-relaxed space-y-2">
+              <ul className="list-disc pl-5 text-white/70 leading-relaxed space-y-2">
                 <li>Use automated tools (bots, scrapers) to access or download content</li>
                 <li>Engage in phishing, hacking, or other malicious activity</li>
                 <li>Frame or mirror this Site on another website</li>

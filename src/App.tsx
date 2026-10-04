@@ -8,6 +8,7 @@ import PrivacyPage from './pages/PrivacyPage';
 import TermsPage from './pages/TermsPage';
 import DocsLayout from './pages/DocsLayout';
 import DocPage from './pages/DocPage';
+import NotFoundPage from './pages/NotFoundPage';
 
 const normalizeBase = (value?: string) => {
   if (!value || value === '/' || value === './' || value === '.') return '/';
@@ -45,6 +46,7 @@ export default function App() {
             <Route path=":slug" element={<DocPage />} />
           </Route>
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Layout>
     </Router>

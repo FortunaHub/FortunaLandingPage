@@ -38,11 +38,11 @@ export default function HeroSection() {
           >
             {/* Badge */}
             <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-fortuna-pink/25 bg-fortuna-pink/10 px-4 py-2">
-              <span className="text-xs font-semibold text-fortuna-pink">Kubernetes Security</span>
+              <span className="text-xs font-semibold text-fortuna-pink">Open-source Kubernetes security</span>
             </div>
 
             {/* Headline */}
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-6 text-white">
+            <h1 className="text-4xl sm:text-5xl xl:text-6xl font-bold leading-[1.1] tracking-tight mb-6 text-white text-balance">
               Trace Kubernetes attack paths. Prioritize the fix.
             </h1>
 
@@ -57,7 +57,7 @@ export default function HeroSection() {
                 to="/docs/first-investigation"
                 className="inline-flex items-center justify-center gap-2 min-h-12 px-6 py-3 rounded-lg bg-fortuna-pink text-white font-semibold hover:bg-[#EA2A70] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-fortuna-pink"
               >
-                Explore your first attack path <ArrowRight className="w-4 h-4" />
+                Explore your first attack path <ArrowRight className="w-4 h-4" aria-hidden="true" />
               </Link>
               <Link
                 to="/features"
@@ -66,6 +66,10 @@ export default function HeroSection() {
                 View capabilities
               </Link>
             </div>
+
+            <p className="mt-6 text-sm text-white/55">
+              Apache 2.0 licensed · Self-hosted in your clusters · Multi-cluster telemetry
+            </p>
           </motion.div>
 
           {/* Image Column */}
@@ -78,10 +82,10 @@ export default function HeroSection() {
             <div className="relative overflow-hidden rounded-lg border border-white/10 bg-fortuna-card shadow-xl">
               {/* Browser mockup header */}
               <div className="flex items-center gap-2 border-b border-white/10 px-4 py-3">
-                <span className="h-2.5 w-2.5 rounded-full bg-[#EF476F]" />
-                <span className="h-2.5 w-2.5 rounded-full bg-[#FFD166]" />
-                <span className="h-2.5 w-2.5 rounded-full bg-[#06D6A0]" />
-                <span className="ml-auto text-xs font-medium text-white/40">attack paths</span>
+                <span aria-hidden="true" className="h-2.5 w-2.5 rounded-full bg-[#EF476F]" />
+                <span aria-hidden="true" className="h-2.5 w-2.5 rounded-full bg-[#FFD166]" />
+                <span aria-hidden="true" className="h-2.5 w-2.5 rounded-full bg-[#06D6A0]" />
+                <span className="ml-auto text-xs font-medium text-white/50">Fortuna · Attack Paths</span>
               </div>
 
               {/* Image */}
@@ -90,9 +94,8 @@ export default function HeroSection() {
                   href={`${base}images/live-rbac-attack-path.png`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group block rounded-md overflow-hidden focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-fortuna-dark"
+                  className="group block rounded-md overflow-hidden focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fortuna-pink"
                   aria-label="View full-size RBAC attack path diagram"
-                  title="Click or press Enter to view full-size image (opens in new tab)"
                 >
                   <img
                     src={`${base}images/live-rbac-attack-path.png`}
@@ -102,7 +105,7 @@ export default function HeroSection() {
                     loading="eager"
                     fetchpriority="high"
                     decoding="async"
-                    className="w-full object-cover cursor-pointer group-hover:opacity-90 transition-opacity"
+                    className="aspect-[1363/936] w-full object-contain group-hover:opacity-90 transition-opacity"
                   />
                 </a>
                 <figcaption className="mt-3 text-xs text-white/60">
@@ -111,7 +114,7 @@ export default function HeroSection() {
                     href={`${base}images/live-rbac-attack-path.png`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-blue-400 hover:text-blue-300 underline focus:outline-none focus:ring-1 focus:ring-blue-400"
+                    className="text-fortuna-pink underline underline-offset-2 hover:text-[#EA2A70]"
                   >
                     View full-size
                   </a>

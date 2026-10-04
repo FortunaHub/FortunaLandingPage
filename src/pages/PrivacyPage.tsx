@@ -9,13 +9,14 @@ export default function PrivacyPage() {
       <SeoHead route="privacy" />
 
       {/* Page Header */}
-      <PageHeader title="Privacy Policy" />
+      <PageHeader title="Privacy Policy">
+        <p className="text-sm text-white/60">Last updated: September 2026</p>
+      </PageHeader>
 
       {/* Content */}
-      <div className="bg-fortuna-dark page-header-spacing">
-        <div className="container-max py-1 md:py-2">
+      <div className="bg-fortuna-dark">
+        <div className="container-max pt-6 pb-20 md:pb-24">
           <div className="max-w-3xl">
-            <p className="text-sm text-white/60 -mt-12 md:-mt-14 mb-4 md:mb-6">Last updated: September 2026</p>
             <div className="space-y-8">
               <section>
                 <h2 className="text-2xl font-bold text-white mb-4">Overview</h2>
@@ -31,7 +32,7 @@ export default function PrivacyPage() {
                 <p className="text-white/70 leading-relaxed mb-3">
                   When you submit a demo request through our contact form, we collect only:
                 </p>
-                <ul className="list-disc list-inside text-white/70 leading-relaxed space-y-1 mb-3">
+                <ul className="list-disc pl-5 text-white/70 leading-relaxed space-y-1 mb-3">
                   <li>Full name</li>
                   <li>Work email address</li>
                   <li>Job title / role</li>
@@ -45,7 +46,7 @@ export default function PrivacyPage() {
 
             <section>
               <h2 className="text-2xl font-bold text-white mb-4">How We Use Your Information</h2>
-              <ul className="list-disc list-inside text-white/70 leading-relaxed space-y-2">
+              <ul className="list-disc pl-5 text-white/70 leading-relaxed space-y-2">
                 <li><strong className="text-white">Demo Requests:</strong> To respond to your inquiry and schedule a demonstration with the Fortuna team</li>
                 <li><strong className="text-white">Communication:</strong> To send follow-up messages related to your demo request</li>
                 <li><strong className="text-white">Legal Compliance:</strong> To comply with applicable laws and regulations</li>
@@ -77,7 +78,7 @@ export default function PrivacyPage() {
               <p className="text-white/70 leading-relaxed mb-3">
                 You have the right to:
               </p>
-              <ul className="list-disc list-inside text-white/70 leading-relaxed space-y-2 mb-3">
+              <ul className="list-disc pl-5 text-white/70 leading-relaxed space-y-2 mb-3">
                 <li>Access the personal information we hold about you</li>
                 <li>Request correction of inaccurate data</li>
                 <li>Request deletion of your data</li>

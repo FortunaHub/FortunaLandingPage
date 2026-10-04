@@ -6,7 +6,7 @@ import { Capture, Diagram } from '../components/UI';
 
 const repository = 'https://github.com/shino-337/Fortuna-Community';
 function Source({ path, children, version = 'main' }: { path: string; children: React.ReactNode; version?: string }) {
-  return <a className="text-fortuna-pink underline underline-offset-4" href={`${repository}/blob/${version}/${path}`}>{children}</a>;
+  return <a className="text-fortuna-pink underline underline-offset-4" href={`${repository}/blob/${version}/${path}`} target="_blank" rel="noopener noreferrer">{children}</a>;
 }
 function Next({ to, children }: { to: DocSlug; children: React.ReactNode }) {
   return <Link className="text-fortuna-pink underline underline-offset-4" to={`/docs/${to}`}>{children}</Link>;
@@ -123,28 +123,26 @@ export default function DocPage() {
   if (!slug || !DOC_SLUGS.includes(slug as DocSlug)) return <Navigate to="/docs/overview" replace />;
   const doc = DOC_META.find(item => item.slug === slug)!;
   const sections = DOC_CONTENT[doc.slug];
-  const next = DOC_META[DOC_META.indexOf(doc) + 1];
-
-  const TableOfContents = () => (
-    <nav aria-label="On this page" className="rounded-lg border border-white/10 p-5">
-      <p className="mb-3 text-sm font-semibold text-white">On this page</p>
-      <ul className="grid gap-2 sm:grid-cols-2 lg:grid-cols-1">
-        {sections.map(section => <li key={section.id}><a className="text-sm leading-6 text-white/65 hover:text-fortuna-pink" href={`#${section.id}`}>{section.title}</a></li>)}
-      </ul>
-    </nav>
-  );
+  const index = DOC_META.indexOf(doc);
+  const prev = index > 0 ? DOC_META[index - 1] : undefined;
+  const next = DOC_META[index + 1];
 
   return (
     <>
       <SeoHead route={`docs_${slug.replace(/-/g, '_')}`} />
       <article className="max-w-4xl">
-        <header className="mb-8"><p className="mb-3 text-xs font-semibold text-fortuna-pink">{doc.group}</p><h1 className="text-3xl font-bold tracking-tight sm:text-4xl">{doc.title}</h1><p className="mt-4 max-w-2xl text-base leading-7 text-white/65">{doc.description}</p></header>
+        <header className="mb-8"><nav aria-label="Breadcrumb" className="mb-3 text-xs font-semibold"><ol className="flex flex-wrap items-center gap-1.5 text-white/55"><li><Link className="hover:text-fortuna-pink" to="/docs/overview">Docs</Link></li><li aria-hidden="true">/</li><li className="text-fortuna-pink">{doc.group}</li></ol></nav><h1 className="text-3xl font-bold tracking-tight sm:text-4xl">{doc.title}</h1><p className="mt-4 max-w-2xl text-base leading-7 text-white/65">{doc.description}</p></header>
         {/* Mobile TOC */}
-        <div className="mb-10 lg:hidden">
-          <nav aria-label="On this page" className="rounded-lg border border-white/10 p-5"><p className="mb-3 text-sm font-semibold text-white">On this page</p><ul className="grid gap-2 sm:grid-cols-2">{sections.map(section => <li key={section.id}><a className="text-sm leading-6 text-white/65 hover:text-fortuna-pink" href={`#${section.id}`} onClick={(e) => { e.preventDefault(); const element = document.getElementById(section.id); if (element) { element.scrollIntoView({ behavior: 'smooth', block: 'start' }); element.focus({ preventScroll: true }); window.history.pushState(null, '', `#${section.id}`); } }}>{section.title}</a></li>)}</ul></nav>
+        <div className="mb-10 xl:hidden">
+          <nav aria-label="On this page" className="rounded-lg border border-white/10 p-5"><p className="mb-3 text-sm font-semibold text-white">On this page</p><ul className="grid gap-2 sm:grid-cols-2">{sections.map(section => <li key={section.id}><a className="text-sm leading-6 text-white/70 hover:text-fortuna-pink" href={`#${section.id}`} onClick={(e) => { e.preventDefault(); const element = document.getElementById(section.id); if (element) { const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches; element.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' }); element.focus({ preventScroll: true }); window.history.pushState(null, '', `#${section.id}`); } }}>{section.title}</a></li>)}</ul></nav>
         </div>
-        <div className="space-y-10">{sections.map(section => <section key={section.id} id={section.id} className="scroll-mt-24"><h2 className="mb-4 text-xl font-semibold text-white">{section.title}</h2><div className="space-y-4 text-base leading-7 text-white/70">{section.content}</div></section>)}</div>
-        {next && <footer className="mt-12 border-t border-white/10 pt-6"><Next to={next.slug}>Next: {next.title}</Next></footer>}
+        <div className="space-y-10">{sections.map(section => <section key={section.id} id={section.id} tabIndex={-1} className="scroll-mt-24 focus:outline-none"><h2 className="mb-4 text-xl font-semibold text-white">{section.title}</h2><div className="space-y-4 text-base leading-7 text-white/70">{section.content}</div></section>)}</div>
+        {(prev || next) && (
+          <footer className="mt-12 grid gap-4 border-t border-white/10 pt-6 sm:grid-cols-2">
+            {prev ? <Link to={`/docs/${prev.slug}`} className="rounded-lg border border-white/10 p-4 transition-colors hover:border-fortuna-pink/40"><span className="block text-xs text-white/55">Previous</span><span className="mt-1 block font-semibold text-white">{prev.title}</span></Link> : <span />}
+            {next && <Link to={`/docs/${next.slug}`} className="rounded-lg border border-white/10 p-4 text-right transition-colors hover:border-fortuna-pink/40 sm:col-start-2"><span className="block text-xs text-white/55">Next</span><span className="mt-1 block font-semibold text-white">{next.title}</span></Link>}
+          </footer>
+        )}
       </article>
     </>
   );
