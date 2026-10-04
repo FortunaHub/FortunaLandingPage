@@ -1,10 +1,3 @@
-export const STRENGTHS = [
-  'SBOM & OSV-backed CVE Matching',
-  'Unified Risk Scoring',
-  'Attack Paths & RBAC Context',
-  'Multi-cluster Runtime Telemetry',
-] as const;
-
 const slide = (src: string, alt: string) => ({ src, alt });
 
 export const FEATURES = [

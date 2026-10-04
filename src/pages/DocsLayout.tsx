@@ -80,12 +80,12 @@ export default function DocsLayout() {
   return (
     <div className="min-h-screen bg-fortuna-dark pt-[var(--header-height)]">
       <div className="container-max">
-        <div className="flex gap-8 lg:gap-12">{/* Reduced gap */}
+        <div className="flex gap-8 xl:gap-12">
         {/* Mobile Sidebar Toggle */}
-        <div className="lg:hidden fixed bottom-24 right-8 z-40">
+        <div className="lg:hidden fixed bottom-24 right-4 sm:right-8 z-40">
           <button
             type="button"
-            aria-label={isSidebarOpen ? 'Close sidebar' : 'Open sidebar'}
+            aria-label={isSidebarOpen ? 'Close documentation menu' : 'Open documentation menu'}
             aria-expanded={isSidebarOpen}
             aria-controls="docs-sidebar"
             onClick={() => setIsSidebarOpen(!isSidebarOpen)}
@@ -112,7 +112,8 @@ export default function DocsLayout() {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.2 }}
-                className="fixed inset-0 bg-black/50 z-30 lg:hidden"
+                aria-hidden="true"
+                className="fixed inset-0 bg-black/60 z-30 lg:hidden"
                 onClick={() => setIsSidebarOpen(false)}
               />
               <motion.div
@@ -120,7 +121,10 @@ export default function DocsLayout() {
                 animate={{ x: 0 }}
                 exit={{ x: '-100%' }}
                 transition={{ duration: 0.3, type: 'tween' }}
-                className="fixed left-0 top-[var(--header-height)] bottom-0 w-64 bg-[#080808] border-r border-white/10 z-40 overflow-y-auto lg:hidden"
+                role="dialog"
+                aria-modal="true"
+                aria-label="Documentation menu"
+                className="fixed left-0 top-[var(--header-height)] bottom-0 w-72 max-w-[85vw] bg-[#080808] border-r border-white/10 z-40 overflow-y-auto lg:hidden"
               >
                 <SidebarContent />
               </motion.div>
@@ -129,14 +133,14 @@ export default function DocsLayout() {
         </AnimatePresence>
 
         {/* Main Content */}
-        <div className="flex-1 min-w-0 px-4 md:px-6 lg:px-0 py-8 md:py-12">
+        <div className="flex-1 min-w-0 py-8 md:py-12 pb-24">
           <div className="w-full max-w-[var(--docs-content-width)]">
             <Outlet />
           </div>
         </div>
 
         {/* Right TOC Sidebar - Desktop only */}
-        <aside className="hidden lg:block shrink-0 w-64 border-l border-white/10 bg-[#080808] lg:sticky lg:top-[var(--header-height)] lg:h-[calc(100vh-var(--header-height))] lg:overflow-y-auto">
+        <aside className="hidden xl:block shrink-0 w-60 border-l border-white/10 bg-[#080808] lg:sticky lg:top-[var(--header-height)] lg:h-[calc(100vh-var(--header-height))] lg:overflow-y-auto">
           <div className="p-5 lg:p-6">
             {headings.length > 0 && (
               <nav aria-label="On this page" className="space-y-3">
@@ -150,7 +154,8 @@ export default function DocsLayout() {
                           e.preventDefault();
                           const element = document.getElementById(heading.id);
                           if (element) {
-                            element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                            const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+                            element.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
                             element.focus({ preventScroll: true });
                             // Update URL hash so users can share the link
                             window.history.pushState(null, '', `#${heading.id}`);

@@ -3,28 +3,42 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>FortunaHub - Kubernetes Risk Operations Platform</title>
-    <meta name="description" content="FortunaHub helps teams operate Kubernetes risk with SBOM/CVE evidence, attack-path analysis, identity and RBAC context, runtime network visibility, Falco signals, unified scoring, and multi-cluster telemetry." />
+    <meta name="theme-color" content="#050505" />
+    <meta name="color-scheme" content="dark" />
+    <title>Fortuna — Kubernetes RBAC Attack Paths & Workload Security</title>
+    <meta name="description" content="Trace Kubernetes RBAC and ServiceAccount attack paths, connect SBOM/CVE and runtime evidence, inspect workload activity, and prioritize remediation with Fortuna." />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <link rel="canonical" href="https://fortunahub.dev/" />
 
     <!-- Favicon & Icons -->
     <link rel="icon" type="image/png" href="%BASE_URL%favicon.png" sizes="32x32" />
     <link rel="icon" type="image/png" href="%BASE_URL%logo.png" sizes="192x192" />
     <link rel="apple-touch-icon" href="%BASE_URL%logo.png" />
 
-    <!-- Open Graph / Logo đại diện (social sharing) -->
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content="FortunaHub - Kubernetes Risk Operations Platform" />
-    <meta property="og:description" content="FortunaHub helps teams operate Kubernetes risk with SBOM/CVE evidence, attack-path analysis, identity and RBAC context, runtime network visibility, Falco signals, unified scoring, and multi-cluster telemetry." />
-    <meta property="og:image" content="%BASE_URL%logo.png" />
-    <meta property="og:image:alt" content="Fortuna - Kubernetes Security & Risk Management" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:image" content="%BASE_URL%logo.png" />
+    <!-- Fonts: preconnect + stylesheet link avoids the render-blocking CSS @import chain -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" />
 
-    <!-- SEO and Sitemap -->
+    <!-- Open Graph / Twitter (replaced per route by scripts/prerender-seo.ts) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="FortunaHub" />
+    <meta property="og:title" content="Fortuna — Kubernetes RBAC Attack Paths & Workload Security" />
+    <meta property="og:description" content="Trace Kubernetes RBAC and ServiceAccount attack paths, connect SBOM/CVE and runtime evidence, inspect workload activity, and prioritize remediation with Fortuna." />
+    <meta property="og:image" content="https://fortunahub.dev/images/live-rbac-attack-path.png" />
+    <meta property="og:image:alt" content="Fortuna attack path graph: pod → service account → role binding → cluster-admin" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://fortunahub.dev/images/live-rbac-attack-path.png" />
+
     <link rel="sitemap" type="application/xml" href="%BASE_URL%sitemap.xml" />
-    <link rel="canonical" href="https://fortunahub.dev" />
   </head>
   <body>
+    <noscript>
+      <p style="padding:16px;color:#fff;background:#050505;font-family:sans-serif">
+        Fortuna is an open-source Kubernetes risk operations platform. Enable JavaScript to view this site, or visit
+        <a style="color:#D11A5E" href="https://github.com/shino-337/Fortuna-Community">the GitHub repository</a>.
+      </p>
+    </noscript>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

@@ -1,29 +1,8 @@
 # FortunaHub robots.txt
-# Production deployment guidance for search engines
-
 User-agent: *
 Allow: /
-Disallow: /404
-Disallow: /.git
-Disallow: /.github
 
-# Allow crawling of all public pages
-# Sitemap is provided separately
-Allow: /features
-Allow: /about
-Allow: /docs
-Allow: /register
-
-# Specific rules for major search engines
-User-agent: Googlebot
-Allow: /
-Crawl-delay: 1
-
-User-agent: Bingbot
-Allow: /
-Crawl-delay: 1
-
-# Block bad bots
+# SEO tool crawlers add load without search benefit
 User-agent: AhrefsBot
 Disallow: /
 
@@ -33,5 +12,4 @@ Disallow: /
 User-agent: SemrushBot
 Disallow: /
 
-# Sitemap location
 Sitemap: https://fortunahub.dev/sitemap.xml

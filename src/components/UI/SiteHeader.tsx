@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X } from 'lucide-react';
+import { Github, Menu, X } from 'lucide-react';
 import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
 import Logo from '../Logo';
+
+const GITHUB_URL = 'https://github.com/shino-337/Fortuna-Community';
 
 const navLinks = [
   { name: 'Platform', to: '/' },
@@ -49,11 +51,12 @@ export default function SiteHeader() {
         </Link>
 
         {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center gap-8">
+        <nav aria-label="Main" className="hidden md:flex items-center gap-6 lg:gap-8">
           {navLinks.map((link) => (
             <Link
               key={link.name}
               to={link.to}
+              aria-current={isActive(link.to) ? 'page' : undefined}
               className={`text-sm font-semibold uppercase tracking-[0.08em] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-fortuna-pink rounded-sm ${
                 isActive(link.to) ? 'text-fortuna-pink' : 'text-white/60 hover:text-fortuna-pink'
               }`}
@@ -61,6 +64,15 @@ export default function SiteHeader() {
               {link.name}
             </Link>
           ))}
+          <a
+            href={GITHUB_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hidden lg:inline-flex min-h-10 items-center gap-2 rounded-md border border-white/20 px-4 text-sm font-semibold text-white transition-colors hover:border-fortuna-pink/60 hover:bg-fortuna-pink/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-fortuna-pink"
+          >
+            <Github className="h-4 w-4" aria-hidden="true" />
+            GitHub
+          </a>
         </nav>
 
         {/* Mobile Menu Button */}
@@ -87,11 +99,12 @@ export default function SiteHeader() {
             transition={{ duration: 0.2 }}
             className="md:hidden bg-fortuna-card border-t border-white/5"
           >
-            <div className="container-max py-4 flex flex-col gap-2">
+            <nav aria-label="Main" className="container-max py-4 flex flex-col gap-2">
               {navLinks.map((link) => (
                 <Link
                   key={link.name}
                   to={link.to}
+                  aria-current={isActive(link.to) ? 'page' : undefined}
                   onClick={() => setIsMenuOpen(false)}
                   className={`block px-3 py-2.5 text-sm font-semibold uppercase tracking-[0.08em] transition-colors rounded-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fortuna-pink ${
                     isActive(link.to)
@@ -102,7 +115,16 @@ export default function SiteHeader() {
                   {link.name}
                 </Link>
               ))}
-            </div>
+              <a
+                href={GITHUB_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-2 inline-flex min-h-11 items-center justify-center gap-2 rounded-md border border-white/20 px-3 text-sm font-semibold text-white hover:bg-white/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fortuna-pink"
+              >
+                <Github className="h-4 w-4" aria-hidden="true" />
+                View on GitHub
+              </a>
+            </nav>
           </motion.div>
         )}
       </AnimatePresence>

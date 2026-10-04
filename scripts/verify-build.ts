@@ -13,7 +13,12 @@ for (const route of [...routes.map(route => route.path), '/docs', '/404.html', .
   assert.equal((html.match(/<script\b[^>]*type="module"/g) || []).length, 1, `${route}: one JS entry`);
   assert.match(html, /<link[^>]*rel="stylesheet"/, `${route}: CSS required`);
   assert.equal((html.match(/<title>/g) || []).length, 1, `${route}: one title`);
-  assert.equal((html.match(/rel="canonical"/g) || []).length, 1, `${route}: one canonical`);
+  if (route === '/404.html') {
+    assert.equal((html.match(/rel="canonical"/g) || []).length, 0, `${route}: no canonical`);
+    assert.match(html, /name="robots" content="noindex/, `${route}: noindex`);
+  } else {
+    assert.equal((html.match(/rel="canonical"/g) || []).length, 1, `${route}: one canonical`);
+  }
   assert.match(html, /property="og:image" content="https:\/\/fortunahub.dev\//, `${route}: absolute image`);
   for (const match of html.matchAll(/(?:src|href)="([^" ]*\/assets\/[^" ]+)"/g)) {
     assert(fs.existsSync(path.join('dist', match[1].replace(base, ''))), `${route}: missing ${match[1]}`);

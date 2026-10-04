@@ -1,4 +1,6 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import { ArrowRight } from 'lucide-react';
 import { motion, useReducedMotion } from 'motion/react';
 import { FEATURES } from '../config/landing';
 import { PageHeader } from '../components/UI';
@@ -20,7 +22,7 @@ export default function FeaturesPage() {
 
       {/* Features Grid */}
       <div className="bg-fortuna-dark page-header-spacing">
-        <div className="container-max py-3 md:py-4">
+        <div className="container-max pt-3 md:pt-4 pb-20 md:pb-24">
           <div className="space-y-12 md:space-y-16">
             {FEATURES.map((item) => (
               <motion.section
@@ -61,6 +63,21 @@ export default function FeaturesPage() {
               </motion.section>
             ))}
           </div>
+
+          <section aria-labelledby="features-next" className="mt-16 md:mt-20 rounded-lg border border-white/10 bg-white/[0.03] p-6 md:p-10 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+            <div className="max-w-xl">
+              <h2 id="features-next" className="text-2xl font-bold text-white mb-2">See the capabilities in one investigation</h2>
+              <p className="text-white/70">Follow a workload from pod to ServiceAccount to cluster-admin, then verify the fix.</p>
+            </div>
+            <div className="flex flex-col sm:flex-row gap-3 shrink-0">
+              <Link to="/docs/first-investigation" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg bg-fortuna-pink px-6 py-3 font-semibold text-white transition-colors hover:bg-[#EA2A70]">
+                Start the walkthrough <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              </Link>
+              <Link to="/docs/getting-started" className="inline-flex min-h-12 items-center justify-center rounded-lg border border-white/20 px-6 py-3 font-semibold text-white transition-colors hover:border-white/40 hover:bg-white/5">
+                Install Fortuna
+              </Link>
+            </div>
+          </section>
         </div>
       </div>
     </div>
